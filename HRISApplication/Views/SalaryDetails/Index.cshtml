@@ -1,0 +1,104 @@
+﻿@model IEnumerable<HRISApplication.Models.SalaryDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (ViewBag.MilitaryNo != null)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success btn-sm" asp-route-id="@ViewBag.MilitaryNo">Create New <i class="fa-solid fa-circle-plus"></i></a>
+    </p>
+}
+
+
+<table class="table" bgcolor="access">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BasicPay)
+            </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.Cola)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponsibiltyAllowance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepresentationAllowance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HouseAllowance)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.GrossTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pension)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalDeduction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NetPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MilitaryNoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BasicPay)
+            </td>
+           @*  <td>
+                @Html.DisplayFor(modelItem => item.Cola)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponsibiltyAllowance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepresentationAllowance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HouseAllowance)
+            </td> *@
+            <td>
+                @Html.DisplayFor(modelItem => item.GrossTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDeduction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NetPay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MilitaryNoNavigation.MilitaryNo)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-solid fa-gear text-progress"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detail"><i class="fa-solid fa-circle-info text-black"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash text-danger"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

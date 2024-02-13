@@ -1,0 +1,107 @@
+﻿@model HRISApplication.Models.PersonalDetail
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="d-flex flex-row justify-content-center text-center"> 
+    <img src="~/SSPDF Flag.png" class="img-responsive img-round" style="margin-inline-end:50px; max-height:100px; max-width: 100px;" />
+    <h1 class="text-xxl-center">SUDAN PEOPLE'S LIBERATION ARMY </h1>
+
+</div>
+
+<div style="margin-top:50px;">
+    <h4 class="text-center">PersonalDetail</h4>
+    <hr />
+
+
+    <dl class="row justify-content-center text-center">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfilePicture)
+        </dt>
+        <dd class="col-sm-10">
+            @* @Html.DisplayFor(model => model.ProfilePicture) *@
+            <img class="img-responsive img-round" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePicture)" style="max-height:200px; max-width: 200px;"/>
+
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoldierRank)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoldierRank)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BloodGroup)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BloodGroup)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ethnicity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ethnicity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShieldNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShieldNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+            
+        </dt>
+        <dd class = "col-sm-10">
+           @*  @Html.DisplayFor(model => model.Gender) *@
+
+            @if (Model.Gender)
+            {
+
+                @:Male
+            }
+            else
+            {
+                @:Female
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MaritalStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaritalStatus)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MilitaryNo">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+    

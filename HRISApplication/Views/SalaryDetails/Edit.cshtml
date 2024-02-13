@@ -1,0 +1,89 @@
+﻿@model HRISApplication.Models.SalaryDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SalaryDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label"></label>
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BasicPay" class="control-label"></label>
+                <input asp-for="BasicPay" class="form-control" />
+                <span asp-validation-for="BasicPay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cola" class="control-label"></label>
+                <input asp-for="Cola" class="form-control" />
+                <span asp-validation-for="Cola" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResponsibiltyAllowance" class="control-label"></label>
+                <input asp-for="ResponsibiltyAllowance" class="form-control" />
+                <span asp-validation-for="ResponsibiltyAllowance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RepresentationAllowance" class="control-label"></label>
+                <input asp-for="RepresentationAllowance" class="form-control" />
+                <span asp-validation-for="RepresentationAllowance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseAllowance" class="control-label"></label>
+                <input asp-for="HouseAllowance" class="form-control" />
+                <span asp-validation-for="HouseAllowance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrossTotal" class="control-label"></label>
+                <input asp-for="GrossTotal" class="form-control" />
+                <span asp-validation-for="GrossTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pit" class="control-label"></label>
+                <input asp-for="Pit" class="form-control" />
+                <span asp-validation-for="Pit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pension" class="control-label"></label>
+                <input asp-for="Pension" class="form-control" />
+                <span asp-validation-for="Pension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalDeduction" class="control-label"></label>
+                <input asp-for="TotalDeduction" class="form-control" />
+                <span asp-validation-for="TotalDeduction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NetPay" class="control-label"></label>
+                <input asp-for="NetPay" class="form-control" />
+                <span asp-validation-for="NetPay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class="form-control" readonly value="@ViewBag.MilitaryNo" />
+                <span asp-validation-for="MilitaryNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

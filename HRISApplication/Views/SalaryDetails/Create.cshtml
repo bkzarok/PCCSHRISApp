@@ -1,0 +1,412 @@
+﻿@model HRISApplication.Models.SalaryDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>SalaryDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label"></label>
+                <select asp-for="Grade" class="form-control" id="rankdropdown" > 
+                    <option>Please Select</option>
+                    <option value="-1">-1</option>
+                    <option value="-2"> -2</option>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                    <option value="13">Grade 13</option>
+                    <option value="14">Grade 14</option>
+                    <option value="15">Grade 15</option>
+                    <option value="16">Grade 16</option>
+                    <option value="17">Grade 17</option>
+                </select>
+                <span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BasicPay" class="control-label"></label>
+                <div class="form-group-prepend">
+                    <span class="form-group-text">SSP</span>
+                </div>
+                <input asp-for="BasicPay" class="form-control" input="text" id="basicpayid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Cola" class="control-label"></label>
+                <input asp-for="Cola" class="form-control" readonly input="number" id="colaid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ResponsibiltyAllowance" class="control-label"></label>
+                <input asp-for="ResponsibiltyAllowance" class="form-control" input="number" readonly id="responsibilityid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RepresentationAllowance" class="control-label"></label>
+                <input asp-for="RepresentationAllowance" class="form-control" input="number" readonly id="respresentationid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseAllowance" class="control-label"></label>
+                <input asp-for="HouseAllowance" class="form-control" input="number" readonly id="houseallowanceid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="GrossTotal" class="control-label"></label>
+                <input asp-for="GrossTotal" class="form-control" input="number" readonly id="grosstotalid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Pit" class="control-label"></label>
+                <input asp-for="Pit" class="form-control"  readonly id="pitid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Pension" class="control-label"></label>
+                <input asp-for="Pension" class="form-control" readonly id="pensionid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalDeduction" class="control-label"></label>
+                <input asp-for="TotalDeduction" class="form-control"readonly id="totaldeductionid" />          
+            </div>
+            <div class="form-group">
+                <label asp-for="NetPay" class="control-label"></label>
+                <input asp-for="NetPay" class="form-control"readonly id="netpayid" />               
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class ="form-control" readonly  value="@ViewBag.MilitaryNo"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        $(function () {
+
+            $('#rankdropdown').change(function () {
+
+                var selectedValue = $(this).val();
+
+                switch (selectedValue) {
+                    case '-1':
+
+
+                        var basicpay = 172712;
+                       // $('#basicpayid').val;
+                        $('#basicpayid').val(basicpay);//.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $('#colaid').val(2400);
+                        $('#respresentationid').val(2400);
+                        $('#responsibilityid').val(2800);
+                        $('#houseallowanceid').val(36000);
+                        var grosstotal = 172712 + +2400 + 2400 + 2800 + 36000 + 36000;
+                        $('#grosstotalid').val(grosstotal);    
+                        var pit =  Math.round( grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round( grosstotal * 0.1);
+                        $('#pensionid').val(pension);                        
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+
+                        break;
+
+                    case '-2':
+                        $('#basicpayid').val(170212);
+                        $('#colaid').val(1600);
+                        $('#respresentationid').val(1600);
+                        $('#responsibilityid').val(2000);
+                        $('#houseallowanceid').val(32000);
+                        var grosstotal = 170212 + +1600 + 1600 + 2000 + 32000 + 32000;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '1':
+                        $('#basicpayid').val(167712);
+                        $('#colaid').val(1000);
+                        $('#respresentationid').val(1000);
+                        $('#responsibilityid').val(1200);
+                        $('#houseallowanceid').val(28000);
+                        var grosstotal = 167712 + +1000 + 1000 + 1200 + 28000 + 28000;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '2':
+                        $('#basicpayid').val(157712);
+                        $('#colaid').val(600);
+                        $('#respresentationid').val(800);
+                        $('#responsibilityid').val(800);
+                        $('#houseallowanceid').val(26400);
+                        var grosstotal = 157712 + +600 + 800 + 800 + 26400 + 24800;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '3':
+                        $('#basicpayid').val(148112);
+                        $('#colaid').val(600);
+                        $('#respresentationid').val(704);
+                        $('#responsibilityid').val(704);
+                        $('#houseallowanceid').val(24800);
+                        var grosstotal = 148112 + +600 + 704 + 704 + 24800 + 14400;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '4':
+                        $('#basicpayid').val(138912);
+                        $('#colaid').val(600);
+                        $('#respresentationid').val(600);
+                        $('#responsibilityid').val(600);
+                        $('#houseallowanceid').val(23200);
+                        var grosstotal = 138912 + +600 + 600 + 600 + 23200 +9600;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '5':
+                        $('#basicpayid').val(127912);
+                        $('#colaid').val(600);
+                        $('#respresentationid').val(504);
+                        $('#responsibilityid').val(504);
+                        $('#houseallowanceid').val(21600);
+                        var grosstotal = 127912 + +600 + 624 + 624 + 21600 + 7200;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '6':
+                        $('#basicpayid').val(117412);
+                        $('#colaid').val(504);
+                        $('#respresentationid').val(400);
+                        $('#responsibilityid').val(400);
+                        $('#houseallowanceid').val(21600);
+                        var grosstotal = 117412 + +504 + 624 + 624 + 21600 + 7200;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '7':
+                        $('#basicpayid').val(107412);
+                        $('#colaid').val(504);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(20000);
+                        var grosstotal = 127912 + +504 + 0 + 0 + 20000 + 5040;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '8':
+                        $('#basicpayid').val(97912);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(18400);
+                        var grosstotal = 97912 + +400 + 0 + 0 + 18400 +5040;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '9':
+                        $('#basicpayid').val(88912);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(16800);
+                        var grosstotal = 88912 + +400 + 0 + 0 + 16800 + 5040;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '10':
+                        $('#basicpayid').val(74512);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(15200);
+                        var grosstotal = 74512 + +400 + 0 + 0 + 15200 + 3600;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '11':
+                        $('#basicpayid').val(64912);
+                        $('#colaid').val(304);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(13600);
+                        var grosstotal = 64912 + +304 + 0 + 0 + 13600 + 3600;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '12':
+                        $('#basicpayid').val(55312);
+                        $('#colaid').val(304);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(12000);
+                        var grosstotal = 55312 + +304 + 0 + 0 + 12000 + 3600;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '13':
+                        $('#basicpayid').val(45712);
+                        $('#colaid').val(304);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(10400);
+                        var grosstotal = 45712 + +304 + 0 + 0 + 10400 + 2880;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '14':
+                        $('#basicpayid').val(36112);
+                        $('#colaid').val(240);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(8800);
+                        var grosstotal = 36112 + +240 + 0 + 0 + 8800 + 2880;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '15':
+                        $('#basicpayid').val(97912);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(18400);
+                        var grosstotal = 97912 + +400 + 0 + 0 + 18400;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '16':
+                        $('#basicpayid').val(97912);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(18400);
+                        var grosstotal = 97912 + +400 + 0 + 0 + 18400;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    case '17':
+                        $('#basicpayid').val(97912);
+                        $('#colaid').val(400);
+                        $('#respresentationid').val(0);
+                        $('#responsibilityid').val(0);
+                        $('#houseallowanceid').val(18400);
+                        var grosstotal = 97912 + +400 + 0 + 0 + 18400;
+                        $('#grosstotalid').val(grosstotal);
+                        var pit = Math.round(grosstotal * 0.05);
+                        $('#pitid').val(pit);
+                        var pension = Math.round(grosstotal * 0.1);
+                        $('#pensionid').val(pension);
+                        $('#totaldeductionid').val(pit + pension);
+                        $('#netpayid').val(grosstotal - (pit + pension))
+                        break;
+                    default:
+                        break;
+
+                }
+            
+            });
+           
+        });
+    </script>
+}

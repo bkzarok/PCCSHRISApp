@@ -1,0 +1,73 @@
+﻿@model HRISApplication.Models.Address
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Address</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <select asp-for="State" class="form-control">
+                    <option value="">Please select State</option>
+                    <option value="Central Equatoria State">CES</option>
+                    <option value="Eastern Equatoria State">EES</option>
+                    <option value="Jonglei State">JS</option>
+                    <option value="Lakes State">LS</option>
+                    <option value="Northern Bhar-El-Ghazal State">NBGS</option>
+                    <option value="Western Bhar-El-Ghazal State">WBGS</option>
+                    <option value="Upper Nile State">UNS</option>
+                    <option value="Unity State">US</option>
+                    <option value="Western Equatoria State">WES</option>
+                    <option value="Warrap State">WS</option>
+                    <option value="Abyei Administrative Area">AAA</option>
+                    <option value="Pibor Administrative Area">PAA</option>
+                    <option value="Ruweng Administrative Area">RAA</option>
+                </select>
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Counuty" class="control-label"></label>
+                <input asp-for="Counuty" class="form-control" />
+                <span asp-validation-for="Counuty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Payam" class="control-label"></label>
+                <input asp-for="Payam" class="form-control" />
+                <span asp-validation-for="Payam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Boma" class="control-label"></label>
+                <input asp-for="Boma" class="form-control" />
+                <span asp-validation-for="Boma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class="form-control"  readonly value="@ViewBag.MilitaryNo"/>
+                @* <select asp-for="MilitaryNo" class ="form-control" asp-items="ViewBag.MilitaryNo"></select> *@
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="PersonalDetails" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

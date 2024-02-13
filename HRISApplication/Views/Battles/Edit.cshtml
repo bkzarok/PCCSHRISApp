@@ -1,0 +1,54 @@
+﻿@model HRISApplication.Models.Battle
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Battle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DateOfBattle" class="control-label"></label>
+                <input asp-for="DateOfBattle" class="form-control" />
+                <span asp-validation-for="DateOfBattle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceOfBattle" class="control-label"></label>
+                <input asp-for="PlaceOfBattle" class="form-control" />
+                <span asp-validation-for="PlaceOfBattle" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="InjurySustained" /> @Html.DisplayNameFor(model => model.InjurySustained)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfInjury" class="control-label"></label>
+                <input asp-for="TypeOfInjury" class="form-control" />
+                <span asp-validation-for="TypeOfInjury" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class="form-control" readonly value="@ViewBag.MilitaryNo">
+                <span asp-validation-for="MilitaryNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id="@Model?.MilitaryNo">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

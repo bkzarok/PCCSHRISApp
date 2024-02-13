@@ -1,0 +1,43 @@
+﻿@model HRISApplication.Models.Promotion
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Promotion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SoldierRank" class="control-label"></label>
+                <input asp-for="SoldierRank" class="form-control" />
+                <span asp-validation-for="SoldierRank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfPromotion" class="control-label"></label>
+                <input asp-for="DateOfPromotion" class="form-control" />
+                <span asp-validation-for="DateOfPromotion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class="form-control" readonly value="@ViewBag.MilitaryNo" />
+                <span asp-validation-for="MilitaryNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

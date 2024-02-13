@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HRISApplication.Models.Training>
+
+@{
+    ViewData["Title"] = "Index";
+    var index = 0;
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-success btn-sm" asp-route-id="@ViewBag.MilitaryNo">Create New <i class="fa-solid fa-circle-plus"></i></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingCenter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MilitaryNo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            index++;
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => index)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingCenter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MilitaryNo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-gear"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info text-black"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
