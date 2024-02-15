@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HRISApplication.Controllers
 {
-    [Authorize(Roles = "Admin, User")]
+   // [Authorize(Roles = "Admin, User")]
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -18,7 +18,7 @@ namespace HRISApplication.Controllers
             return View(roles);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {

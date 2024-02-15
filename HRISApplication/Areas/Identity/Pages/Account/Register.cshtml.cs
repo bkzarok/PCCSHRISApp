@@ -129,7 +129,7 @@ namespace HRISApplication.Areas.Identity.Pages.Account
 
             Input = new InputModel()
             {
-                Role = _roleManager.Roles.Where(x => x.Name == "User").FirstOrDefault().Name,
+                Role = _roleManager.Roles.Where(x => x.Name == "Admin").FirstOrDefault().Name,
             };
         }
 
