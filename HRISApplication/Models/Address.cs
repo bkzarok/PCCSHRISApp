@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace HRISApplication.Models;
 
@@ -20,5 +21,6 @@ public partial class Address
 
     public string MilitaryNo { get; set; } = null!;
     [ValidateNever]
+    [JsonIgnore]
     public virtual PersonalDetail MilitaryNoNavigation { get; set; } = null!;
 }

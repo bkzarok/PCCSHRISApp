@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HRISApplication.Models;
 
@@ -19,5 +20,7 @@ public partial class Assignment
 
     public string MilitaryNo { get; set; } = null!;
     [ValidateNever]
+    [JsonIgnore]
+
     public virtual PersonalDetail MilitaryNoNavigation { get; set; } = null!;
 }

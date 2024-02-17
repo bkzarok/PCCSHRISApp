@@ -9,6 +9,7 @@ using HRISApplication.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection;
 
 namespace HRISApplication.Controllers
 {
@@ -41,8 +42,7 @@ namespace HRISApplication.Controllers
                 return NotFound();
             }
 
-            var personalDetail = await _context.PersonalDetails                
-                .FirstOrDefaultAsync(m => m.MilitaryNo== id);
+            var personalDetail = await _context.PersonalDetails.FindAsync(id);
             if (personalDetail == null)
             {
                 return NotFound();
@@ -65,7 +65,7 @@ namespace HRISApplication.Controllers
                 .Include(x => x.Address)
                 .Include(x => x.Schools)
                 .Include(x => x.Languages)
-                // .Include(x => x.Parents)
+                .Include(x => x.Parents)
                 .Include(x => x.Spouses)
                 .Include(x => x.NextOfKins)
                 .Include(x => x.Imprisonments)
@@ -77,12 +77,15 @@ namespace HRISApplication.Controllers
                 .Include(x => x.HealthConditions)
                 .Include(x => x.SalaryDetail)
                 .FirstOrDefaultAsync(m => m.MilitaryNo == id);
-
+         
+            
             if (personalDetail == null)
             {
                 return NotFound();
             }
+            //personalDetail = SetMilitaryNavToNull(personalDetail);
 
+            //SetPropertyToNull(personalDetail, "MilitaryNoNavigation");
             return View(personalDetail);
         }
 
@@ -235,6 +238,7 @@ namespace HRISApplication.Controllers
                 .Include(x => x.Battles)
                 .Include(x => x.Promotions)
                 .Include(x => x.HealthConditions)
+                .Include(x => x.SalaryDetail)
                 .FirstOrDefaultAsync(x => x.MilitaryNo == id);
 
             var log = new Log
@@ -254,6 +258,159 @@ namespace HRISApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // A recursive function that searches for a property in an object and sets it to null
+        public static void SetPropertyToNull(object obj, string propertyName)
+        {
+            // Check if the object is null or not
+            if (obj == null  ) return;
+
+            
+            // Get the type of the object
+            Type objType = obj.GetType();
+            objType = objType.IsArray ? objType.GetElementType() : objType; 
+
+            if (IsSimpleType(objType)) return;
+
+            // Get the properties of the type
+            PropertyInfo[] properties = objType.GetProperties();
+
+            // Loop through the properties
+            foreach (PropertyInfo property in properties)
+            {
+                // Get the name and value of the property
+                string name = property.Name;
+
+                object value;
+                try
+                {
+                    value = property.GetValue(obj);
+
+                }
+                catch (Exception)
+                {
+
+                    return;
+                }
+                    
+              
+                // Check if the name matches the property name
+                if (name == propertyName)
+                {
+                    // Set the value to null
+                    property.SetValue(obj, null);
+                }
+                else
+                {
+                    // Call the function recursively on the value
+                    SetPropertyToNull(value, propertyName);
+                }
+            }
+
+            //// Get the fields of the type
+            //FieldInfo[] fields = objType.GetFields();
+
+            //// Loop through the fields
+            //foreach (FieldInfo field in fields)
+            //{
+            //    // Get the name and value of the field
+            //    string name = field.Name;
+            //    object value = field.GetValue(obj);
+
+            //    // Check if the name matches the property name
+            //    if (name == propertyName)
+            //    {
+            //        // Set the value to null
+            //        field.SetValue(obj, null);
+            //    }
+            //    else
+            //    {
+            //        // Call the function recursively on the value
+            //        SetPropertyToNull(value, propertyName);
+            //    }
+            //}
+        }
+
+        public static bool IsSimpleType(Type type)
+        {
+            return
+                type.IsPrimitive ||
+                new Type[] {
+            typeof(string),
+            typeof(decimal),
+            typeof(DateTime),
+            typeof(DateTimeOffset),
+            typeof(TimeSpan),
+            typeof(Guid)
+                }.Contains(type) ||
+                type.IsEnum ||
+                Convert.GetTypeCode(type) != TypeCode.Object ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]))
+                ;
+        }
+
+        private PersonalDetail SetMilitaryNavToNull(PersonalDetail personalDetail)
+        {
+            
+
+            if (personalDetail.Children.FirstOrDefault() != null)
+            {
+                personalDetail.Children.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Address.FirstOrDefault() != null)
+            {
+                personalDetail.Address.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Schools.FirstOrDefault() != null)
+            {
+                personalDetail.Schools.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Languages.FirstOrDefault() != null)
+            {
+                personalDetail.Languages.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Parents.FirstOrDefault() != null)
+            {
+                personalDetail.Parents.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Spouses.FirstOrDefault() != null)
+            {
+                personalDetail.Spouses.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.NextOfKins.FirstOrDefault() != null)
+            {
+                personalDetail.NextOfKins.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Imprisonments.FirstOrDefault() != null)
+            {
+                personalDetail.Imprisonments.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Enrollments.FirstOrDefault() != null)
+            {
+                personalDetail.Enrollments.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Assignments.FirstOrDefault() != null)
+            {
+                personalDetail.Assignments.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Battles.FirstOrDefault() != null)
+            {
+                personalDetail.Battles.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.Promotions.FirstOrDefault() != null)
+            {
+                personalDetail.Promotions.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.HealthConditions.FirstOrDefault() != null)
+            {
+                personalDetail.HealthConditions.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+            if (personalDetail.SalaryDetail.FirstOrDefault() != null)
+            {
+                personalDetail.SalaryDetail.FirstOrDefault().MilitaryNoNavigation = null!;
+            }
+
+            return personalDetail;
+        }
         private bool PersonalDetailExists(string id)
         {
             return _context.PersonalDetails.Any(e => e.MilitaryNo == id);
