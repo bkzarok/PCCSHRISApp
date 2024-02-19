@@ -22,9 +22,12 @@ namespace HRISApplication.Controllers
         //The parameter int Id is actually militaryNo value
         public async Task<IActionResult> Index(string id)
         {
-            var sspdfContext = _context.Addresses.Where(x => x.MilitaryNo == id);
-            ViewData["MilitaryNo"] = id;
-            return View(await sspdfContext.ToListAsync());
+            var sspdfContext =  await _context.Addresses.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+
+            if (sspdfContext != null)
+                return RedirectToAction(nameof(Edit), new { id =  sspdfContext.Id });
+
+            return RedirectToAction(nameof(Create), new { id = id });
         }
 
         // GET: Addresses/Details/5
@@ -66,7 +69,7 @@ namespace HRISApplication.Controllers
             {
                 _context.Add(address);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {Id = address.MilitaryNo});
+                return RedirectToAction( nameof(Index), "PersonalDetails", new {Id = address.MilitaryNo});
             }
             ViewData["MilitaryNo"] = address.MilitaryNo;
             return View(address);
@@ -119,7 +122,7 @@ namespace HRISApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new {id = address.MilitaryNo});
+                return RedirectToAction(nameof(Index), "PersonalDetails", new { Id = address.MilitaryNo });
             }
             ViewData["MilitaryNo"] = address.MilitaryNo;
             return View(address);
