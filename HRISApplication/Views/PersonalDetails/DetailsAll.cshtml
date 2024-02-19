@@ -521,58 +521,14 @@
 
 
 
-
-    @* <div>
-        <h4> @Html.DisplayNameFor(model => model.Enrollments)</h4>
-        <hr />
-        @foreach (var enrollment in Model.Enrollments)
-        {
-        <div>
-        <dl class="row">
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(enrollmentItem => enrollment.DateOfEnrollment)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(enrollmentItem => enrollment.DateOfEnrollment)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(enrollmentItem => enrollment.PlaceOfEnrollment)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(enrollmentItem => enrollment.PlaceOfEnrollment)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(enrollmentItem => enrollment.ServiceOutsideSspdf)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(enrollmentItem => enrollment.ServiceOutsideSspdf)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(enrollmentItem => enrollment.PeriodFrom)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(enrollmentItem => enrollment.PeriodFrom)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(enrollmentItem => enrollment.PeriodTo)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(enrollmentItem => enrollment.PeriodTo)
-        </dd>
-
-
-        </dl>
-        </div>
-        }
-        </div> *@
-
     @if (Model.Training.Count != 0)
     {
         <div class="col-md" style="margin-top:50px;">
-            <h4> @Html.DisplayNameFor(model => model.Training)</h4>
-            <hr />
-
-            <div class="table-reponsive">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Training)</h4>
+                </div>
+                    <div class="table-reponsive">
                 <table class="table">
                     <thead>
                         <tr>
@@ -619,153 +575,361 @@
             </tbody>
             </table>
       </div>
+            </div>
         </div>
     }
 
-       @*  <div>
-        <h4> @Html.DisplayNameFor(model => model.Assignments)</h4>
-        <hr />
-        @foreach (var assignment in Model.Assignments)
+    @if (Model.Imprisonments.Count != 0)
+    {
+
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Imprisonments)</h4>
+                </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Imprisoned)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Place)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().ForHowLong)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Conviction)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().ExplainTheReason)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var imprisontment in Model.Imprisonments)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(imprisonmentItem => imprisontment.Imprisoned)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(imprisontmentItem => imprisontment.Place)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(imprisontmentItem => imprisontment.ForHowLong)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(imprisontmentItem => imprisontment.Conviction)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(imprisontmentItem => imprisontment.ExplainTheReason)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    }
+
+
+    <div class="col-md" style="margin-top:50px;"> 
+
+        @foreach (var enrollment in Model.Enrollments)
         {
-        <div>
-        <dl class="row">
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(assignmentItem => assignment.Unit)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(assignmentItem => assignment.Unit)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(assignmentItem => assignment.PeriodFrom)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(assignmentItem => assignment.PeriodFrom)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(assignmentItem => assignment.PeriodTo)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(assignmentItem => assignment.PeriodTo)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(assignmentItem => assignment.PositionHeld)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(assignmentItem => assignment.PositionHeld)
-        </dd>
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Enrollments)</h4>
+                </div>
+               <ul class="list-group list-group-flush">
+                   <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(EnrollmentItem => enrollment.DateOfEnrollment) </b>
+                        @Html.DisplayFor(EnrollmentItem => enrollment.DateOfEnrollment)
+                   </li>
+                   <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(EnrollmentItem => enrollment.PlaceOfEnrollment) </b>
+                        @Html.DisplayFor(EnrollmentItem => enrollment.PlaceOfEnrollment)
+                   </li>
+                   <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(EnrollmentItem => enrollment.ServiceOutsideSspdf) </b>
+                        @Html.DisplayFor(EnrollmentItem => enrollment.ServiceOutsideSspdf)
+                   </li>
+                   <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(EnrollmentItem => enrollment.PeriodFrom) </b>
+                        @Html.DisplayFor(EnrollmentItem => enrollment.PeriodFrom)
+                   </li>
+                    <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(EnrollmentItem => enrollment.PeriodTo) </b>
+                        @Html.DisplayFor(EnrollmentItem => enrollment.PeriodTo)
+                    </li>
+               </ul>
 
-        </dl>
-        </div>
+                
+            </div>
         }
+    </div>
+   
+    @if (Model.Training.Count != 0)
+    {
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Training)</h4>
+                </div>
+
+                <div class="table-reponsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().TrainingType)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().TrainingCenter)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().Place)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().PeriodFrom)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().PeriodTo)
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var training in Model.Training)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(trainingItem => training.TrainingType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(trainingItem => training.TrainingCenter)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(trainingItem => training.Place)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(trainingItem => training.PeriodFrom)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(trainingItem => training.PeriodTo)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
         </div>
+    }
 
-        <div>
-        <h4> @Html.DisplayNameFor(model => model.Battles)</h4>
-        <hr />
-        @foreach (var battle in Model.Battles)
-        {
-        <div>
-        <dl class="row">
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(battleItem => battle.DateOfBattle)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(battleItem => battle.DateOfBattle)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(battleItem => battle.PlaceOfBattle)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(battleItem => battle.PlaceOfBattle)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(battleItem => battle.InjurySustained)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(battleItem => battle.InjurySustained)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(battleItem => battle.TypeOfInjury)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(battleItem => battle.TypeOfInjury)
-        </dd>
+    @if (Model.Assignments.Count != 0)
+    {
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Assignments)</h4>
+                </div>
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(assignmentItem => assignmentItem.Assignments.FirstOrDefault().Unit)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(assignmentItem => assignmentItem.Assignments.FirstOrDefault().PeriodFrom)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(assignmentItem => assignmentItem.Assignments.FirstOrDefault().PeriodTo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(assignmentItem => assignmentItem.Assignments.FirstOrDefault().PositionHeld)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var assignment in Model.Assignments)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(assignmentItem => assignment.Unit)
+                                </td>
 
-        </dl>
-        </div>
-        }
-        </div> *@
-
-       @*  <div>
-        <h4> @Html.DisplayNameFor(model => model.Promotions)</h4>
-        <hr />
-        <div class="table-responsive">
-        <table class="table">
-        <thead>
-        <tr>
-        <th>
-        @Html.DisplayNameFor(model => model.Promotions.FirstOrDefault().SoldierRank)
-        </th>
-
-        <th>
-        @Html.DisplayNameFor(model => model.Promotions.FirstOrDefault().DateOfPromotion)
-        </th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var promotion in Model.Promotions)
-        {
-        <tr>
-        <td>
-        @Html.DisplayFor(promotionItem => promotion.SoldierRank)
-        </td>
-        <td>
-        @Html.DisplayFor(promotionItem => promotion.DateOfPromotion)
-        </td>
-        </tr>
-
-        }
-        </tbody>
-        </table>
+                                <td>
+                                    @Html.DisplayFor(assignmentItem => assignment.PeriodFrom)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(assignmentItem => assignment.PeriodTo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(assignmentItem => assignment.PositionHeld)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
         </div>
         </div>
+    </div>
+    }
 
-        <div>
-        <h4> @Html.DisplayNameFor(model => model.HealthConditions)</h4>
-        <hr />
-        @foreach (var healthCondition in Model.HealthConditions)
-        {
-        <div>
-        <dl class="row">
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(healthConditionItem => healthCondition.HaveAhealthCondition)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(healthConditionItem => healthCondition.HaveAhealthCondition)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(healthConditionItem => healthCondition.IfYesExplain)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(healthConditionItem => healthCondition.IfYesExplain)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(healthConditionItem => healthCondition.DegreeOfHealthProblem)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(healthConditionItem => healthCondition.DegreeOfHealthProblem)
-        </dd>
-        <dt class="col-sm-2">
-        @Html.DisplayNameFor(healthConditionItem => healthCondition.WhenStarted)
-        </dt>
-        <dd class="col-sm-10">
-        @Html.DisplayFor(healthConditionItem => healthCondition.WhenStarted)
-        </dd>
+    @if (Model.Battles.Count != 0)
+    {
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Battles)</h4>
+                </div>
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(battleItem => battleItem.Battles.FirstOrDefault().DateOfBattle)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(battleItem => battleItem.Battles.FirstOrDefault().PlaceOfBattle)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(battleItem => battleItem.Battles.FirstOrDefault().InjurySustained)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(battleItem => battleItem.Battles.FirstOrDefault().TypeOfInjury)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var battle in Model.Battles)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(battletItem => battle.DateOfBattle)
+                                </td>
 
-        </dl>
+                                <td>
+                                    @Html.DisplayFor(battletItem => battle.PlaceOfBattle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(battletItem => battle.InjurySustained)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(battletItem => battle.TypeOfInjury)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
         </div>
-        }
-        </div> *@
+        </div>
+    </div>
+    }
+
+    @if (Model.Promotions.Count != 0)
+    {
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.Promotions)</h4>
+                </div>
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(promotionItem => promotionItem.Promotions.FirstOrDefault().SoldierRank)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(promotionItem => promotionItem.Promotions.FirstOrDefault().DateOfPromotion)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var promotion in Model.Promotions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(promotionItem => promotion.SoldierRank)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(promotionItem => promotion.DateOfPromotion)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    }
+
+    @if (Model.HealthConditions.Count != 0)
+    {
+        <div class="col-md" style="margin-top:50px;">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @Html.DisplayNameFor(model => model.HealthConditions)</h4>
+                </div>
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(healthConditionItem => healthConditionItem.HealthConditions.FirstOrDefault().HaveAhealthCondition)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(healthConditionItem => healthConditionItem.HealthConditions.FirstOrDefault().IfYesExplain)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(healthConditionItem => healthConditionItem.HealthConditions.FirstOrDefault().DegreeOfHealthProblem)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(healthConditionItem => healthConditionItem.HealthConditions.FirstOrDefault().WhenStarted)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var healthCondition in Model.HealthConditions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(healthContionItem => healthCondition.HaveAhealthCondition)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(healthContionItem => healthCondition.IfYesExplain)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(healthContionItem => healthCondition.DegreeOfHealthProblem)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(healthContionItem => healthCondition.WhenStarted)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            
+        </div>
+    }
+
+
 
 </div>  
 
