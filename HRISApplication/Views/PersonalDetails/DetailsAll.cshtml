@@ -92,10 +92,10 @@
             </ul>
         </div>                       
     </div>
-
-    <div class="col-md" style="margin-top:50px;">
-        @foreach (var Address in Model.Address)
-    {
+     @foreach (var Address in Model.Address)
+     {
+        <div class="col-md" style="margin-top:50px;">
+       
             <div class="card" style="width: 18rem;">
                 <div class="card-header">
                     <h4> @Html.DisplayNameFor(model => model.Address)</h4>
@@ -124,10 +124,9 @@
                         @Html.DisplayFor(AddressItem => Address.Boma)
                     </li>
                 </ul>
-            </div>
-              
+            </div>             
+        </div>
     }
-    </div>
        
     @if (Model.Children.Count != 0)
     {
@@ -462,123 +461,6 @@
         </div>
     }
 
-
-    @if (Model.Imprisonments.Count != 0)
-    {
-        <div class="col-md" style="margin-top:50px;">
-            <div class="card">
-                <div class="card-header">
-                    <h4> @Html.DisplayNameFor(model => model.Imprisonments)</h4>
-                </div>
-                <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Imprisoned)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Place)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().ForHowLong)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Conviction)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().ExplainTheReason)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var imprisontment in Model.Imprisonments)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(imprisonmentItem => imprisontment.Imprisoned)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(imprisontmentItem => imprisontment.Place)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(imprisontmentItem => imprisontment.ForHowLong)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(imprisontmentItem => imprisontment.Conviction)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(imprisontmentItem => imprisontment.ExplainTheReason)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-               </table>
-           </div>
-           </div>
-        </div>
-    }
-
-
-
-    @if (Model.Training.Count != 0)
-    {
-        <div class="col-md" style="margin-top:50px;">
-            <div class="card">
-                <div class="card-header">
-                    <h4> @Html.DisplayNameFor(model => model.Training)</h4>
-                </div>
-                    <div class="table-reponsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().TrainingType)
-                            </th>
-
-                            <th>
-                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().TrainingCenter)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().Place)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().PeriodFrom)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().PeriodTo)
-                            </th>
-                        </tr>
-                    </thead>        
-
-                    <tbody>
-                        @foreach (var training in Model.Training)
-                        {
-                            <tr>
-                                <td>
-                            @Html.DisplayNameFor(trainingItem => training.TrainingType)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(trainingItem => training.TrainingCenter)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(trainingItem => training.Place)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(trainingItem => training.PeriodFrom)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(trainingItem => training.PeriodTo)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-            </table>
-      </div>
-            </div>
-        </div>
-    }
-
     @if (Model.Imprisonments.Count != 0)
     {
 
@@ -636,11 +518,10 @@
         </div>
     }
 
-
-    <div class="col-md" style="margin-top:50px;"> 
-
-        @foreach (var enrollment in Model.Enrollments)
-        {
+    
+    @foreach (var enrollment in Model.Enrollments)
+    {
+        <div class="col-md" style="margin-top:50px;"> 
             <div class="card" style="width: 18rem;">
                 <div class="card-header">
                     <h4> @Html.DisplayNameFor(model => model.Enrollments)</h4>
@@ -670,8 +551,8 @@
 
                 
             </div>
-        }
-    </div>
+        </div>
+    }
    
     @if (Model.Training.Count != 0)
     {

@@ -60,32 +60,14 @@ namespace HRISApplication.Controllers
                 return NotFound();
             }
 
-            var personalDetail = await _context.PersonalDetails
-                .Include(x => x.Children)
-                .Include(x => x.Address)
-                .Include(x => x.Schools)
-                .Include(x => x.Languages)
-                .Include(x => x.Parents)
-                .Include(x => x.Spouses)
-                .Include(x => x.NextOfKins)
-                .Include(x => x.Imprisonments)
-                .Include(x => x.Enrollments)
-                .Include(x => x.Training)
-                .Include(x => x.Assignments)
-                .Include(x => x.Battles)
-                .Include(x => x.Promotions)
-                .Include(x => x.HealthConditions)
-                .Include(x => x.SalaryDetail)
-                .FirstOrDefaultAsync(m => m.MilitaryNo == id);
-         
-            
+            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+           
             if (personalDetail == null)
             {
                 return NotFound();
             }
-            //personalDetail = SetMilitaryNavToNull(personalDetail);
+            personalDetail = await PersonalDetailIncludeAll(personalDetail, id);
 
-            //SetPropertyToNull(personalDetail, "MilitaryNoNavigation");
             return View(personalDetail);
         }
 
@@ -223,23 +205,8 @@ namespace HRISApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var personalDetail = await _context.PersonalDetails
-                 .Include(x => x.Children)
-                .Include(x => x.Address)
-                .Include(x => x.Schools)
-                .Include(x => x.Languages)
-                .Include(x => x.Parents)
-                .Include(x => x.Spouses)
-                .Include(x => x.NextOfKins)
-                .Include(x => x.Imprisonments)
-                .Include(x => x.Enrollments)
-                .Include(x => x.Training)
-                .Include(x => x.Assignments)
-                .Include(x => x.Battles)
-                .Include(x => x.Promotions)
-                .Include(x => x.HealthConditions)
-                .Include(x => x.SalaryDetail)
-                .FirstOrDefaultAsync(x => x.MilitaryNo == id);
+            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+
 
             var log = new Log
             {
@@ -248,7 +215,8 @@ namespace HRISApplication.Controllers
                 CreatedOn = DateTime.UtcNow,
             };
             if (personalDetail != null)
-            {               
+            {
+               personalDetail = await PersonalDetailIncludeAll(personalDetail, id);
                 _context.Add(log);
                 _context.PersonalDetails.Remove(personalDetail);
             }
@@ -256,6 +224,27 @@ namespace HRISApplication.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<PersonalDetail> PersonalDetailIncludeAll(PersonalDetail personalDetail, string id)
+        {
+            personalDetail.Children = await _context.Children.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Address = await _context.Addresses.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Schools = await _context.Schools.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Languages = await _context.Languages.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Parents = await _context.Parents.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Spouses = await _context.Spouses.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.NextOfKins = await _context.NextOfKins.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Imprisonments = await _context.Imprisonments.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Enrollments = await _context.Enrollments.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Training = await _context.Training.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Assignments = await _context.Assignments.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Battles = await _context.Battles.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.Promotions = await _context.Promotions.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.HealthConditions = await _context.HealthConditions.Where(x => x.MilitaryNo == id).ToListAsync();
+            personalDetail.SalaryDetail = await _context.SalaryDetails.Where(x => x.MilitaryNo == id).ToListAsync();
+
+            return personalDetail;
         }
 
         // A recursive function that searches for a property in an object and sets it to null
@@ -348,69 +337,6 @@ namespace HRISApplication.Controllers
                 ;
         }
 
-        private PersonalDetail SetMilitaryNavToNull(PersonalDetail personalDetail)
-        {
-            
-
-            if (personalDetail.Children.FirstOrDefault() != null)
-            {
-                personalDetail.Children.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Address.FirstOrDefault() != null)
-            {
-                personalDetail.Address.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Schools.FirstOrDefault() != null)
-            {
-                personalDetail.Schools.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Languages.FirstOrDefault() != null)
-            {
-                personalDetail.Languages.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Parents.FirstOrDefault() != null)
-            {
-                personalDetail.Parents.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Spouses.FirstOrDefault() != null)
-            {
-                personalDetail.Spouses.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.NextOfKins.FirstOrDefault() != null)
-            {
-                personalDetail.NextOfKins.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Imprisonments.FirstOrDefault() != null)
-            {
-                personalDetail.Imprisonments.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Enrollments.FirstOrDefault() != null)
-            {
-                personalDetail.Enrollments.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Assignments.FirstOrDefault() != null)
-            {
-                personalDetail.Assignments.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Battles.FirstOrDefault() != null)
-            {
-                personalDetail.Battles.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.Promotions.FirstOrDefault() != null)
-            {
-                personalDetail.Promotions.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.HealthConditions.FirstOrDefault() != null)
-            {
-                personalDetail.HealthConditions.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-            if (personalDetail.SalaryDetail.FirstOrDefault() != null)
-            {
-                personalDetail.SalaryDetail.FirstOrDefault().MilitaryNoNavigation = null!;
-            }
-
-            return personalDetail;
-        }
         private bool PersonalDetailExists(string id)
         {
             return _context.PersonalDetails.Any(e => e.MilitaryNo == id);
