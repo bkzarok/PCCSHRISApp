@@ -20,7 +20,8 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddDbContext<SspdfContext>(options =>
-    options.UseSqlServer(connectionString));
+   options.UseLazyLoadingProxies()
+    .UseSqlServer(connectionString));
 
 var app = builder.Build();
 
