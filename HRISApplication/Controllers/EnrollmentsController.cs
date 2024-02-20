@@ -21,9 +21,12 @@ namespace HRISApplication.Controllers
         // GET: Enrollments
         public async Task<IActionResult> Index(string id)
         {
-            var sspdfContext = _context.Enrollments.Where(x => x.MilitaryNo == id).ToListAsync();
-            ViewData ["MilitaryNo"] = id;
-            return View(await sspdfContext);
+            var sspdfContext = await _context.Enrollments.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+
+            if (sspdfContext != null)
+                return RedirectToAction(nameof(Edit), new { id = sspdfContext.Id });
+
+            return RedirectToAction(nameof(Create), new { id = id });
         }
 
         // GET: Enrollments/Details/5
@@ -62,7 +65,7 @@ namespace HRISApplication.Controllers
             {
                 _context.Add(enrollment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {id=enrollment.MilitaryNo});
+                return RedirectToAction(nameof(Index), "PersonalDetials", new {id=enrollment.MilitaryNo});
             }
             ViewData["militaryNo"]= enrollment.MilitaryNo;
             return View(enrollment);
@@ -115,7 +118,7 @@ namespace HRISApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new {id=enrollment.MilitaryNo});
+                return RedirectToAction(nameof(Index), "PersonalDetails",new {id=enrollment.MilitaryNo});
             }
             ViewData["MilitaryNo"] = enrollment.MilitaryNo;
             return View(enrollment);
