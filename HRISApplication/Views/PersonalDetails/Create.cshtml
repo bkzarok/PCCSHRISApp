@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FormFile" class="control-label"></label>
-                <input asp-for="FormFile" type="file" class="form-control" />
+                <input asp-for="FormFile" type="file" class="form-control" formnovalidate />
                 <span asp-validation-for="FormFile" class="text-danger"></span>
             </div>
             
@@ -84,6 +84,12 @@
                     <input asp-for="MaritalStatus" class="form-control" />
                     <span asp-validation-for="MaritalStatus" class="text-danger"></span>
             </div>
+
+            <input asp-for="CreatedBy" hidden />
+            <input asp-for="CreatedOn" hidden />
+            <input asp-for="ModifiedBy" hidden />
+            <input asp-for="ModifiedOn" hidden />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

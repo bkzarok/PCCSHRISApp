@@ -20,11 +20,12 @@ namespace HRISApplication.Controllers
         private static readonly string CREATE_ACTION = "CREATED";
         private static readonly string DELETED_ACTION = "DELETED";
         private static readonly string EDITED_ACTION = "EDITED";
-              
 
-        public PersonalDetailsController(SspdfContext context)
+        private IWebHostEnvironment _env;
+        public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
             
         }
 
@@ -86,6 +87,8 @@ namespace HRISApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MilitaryNo,SoldierRank,FormFile,ProfilePicture,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus")] PersonalDetail personalDetail)
         {
+
+
             //Assign the profilepicture to a byte array
             if (personalDetail.FormFile != null)
             {
@@ -99,14 +102,17 @@ namespace HRISApplication.Controllers
                 personalDetail.ProfilePicture = file.ToArray();
             }
 
-            var log = new Log {
-                UserName = User.Identity.Name,
-                Action = CREATE_ACTION+" "+nameof(PersonalDetail),
-                CreatedOn = DateTime.UtcNow,               
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(PersonalDetail),
+                CreatedOn = DateTime.UtcNow,
             };
 
             if (ModelState.IsValid)
             {
+                personalDetail.CreatedBy = User.Identity != null ? User.Identity.Name : "NoUser";
+                personalDetail.CreatedOn = DateTime.UtcNow;
                 _context.Add(personalDetail);
                 _context.Add(log);
                 await _context.SaveChangesAsync();
@@ -115,6 +121,7 @@ namespace HRISApplication.Controllers
             return View(personalDetail);
         }
 
+       
         [Authorize(Roles = "Admin")]
         // GET: PersonalDetails/Edit/5
         public async Task<IActionResult> Edit(string id)
@@ -143,7 +150,8 @@ namespace HRISApplication.Controllers
         [Authorize(Roles = "Admin")]  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus")] PersonalDetail personalDetail)
+        public async Task<IActionResult> Edit(string id, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
+            "CreatedBy,CreatedOn, ModifiedBy, ModifiedOn")] PersonalDetail personalDetail)
         {
             if (id != personalDetail.MilitaryNo)
             {
@@ -151,13 +159,15 @@ namespace HRISApplication.Controllers
             }
             var log = new Log
             {
-                UserName = User.Identity.Name,
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
                 Action = EDITED_ACTION + " "+nameof(PersonalDetail),
                 CreatedOn = DateTime.UtcNow,
             };
 
             if (ModelState.IsValid)
             {
+                personalDetail.ModifiedBy = User.Identity != null ? User.Identity.Name : "NoUser"; 
+                personalDetail.ModifiedOn = DateTime.UtcNow;
                 try
                 {
                     _context.Add(log);

@@ -20,8 +20,7 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddDbContext<SspdfContext>(options =>
-   options.UseLazyLoadingProxies()
-    .UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -39,6 +38,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 
 app.UseRouting();
 

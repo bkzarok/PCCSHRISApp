@@ -108,7 +108,7 @@ namespace HRISApplication.Controllers
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
-                {
+                    {
                     if (!EnrollmentExists(enrollment.Id))
                     {
                         return NotFound();
