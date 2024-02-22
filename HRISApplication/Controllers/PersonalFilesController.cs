@@ -104,7 +104,7 @@ namespace HRISApplication.Controllers
             {
                 return NotFound();
             }
-            ViewData["MilitaryNo"] = new SelectList(_context.PersonalDetails, "MilitaryNo", "MilitaryNo", personalFile.MilitaryNo);
+            ViewData["MilitaryNo"] = id;
             return View(personalFile);
         }
 
@@ -140,7 +140,7 @@ namespace HRISApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MilitaryNo"] = new SelectList(_context.PersonalDetails, "MilitaryNo", "MilitaryNo", personalFile.MilitaryNo);
+            ViewData["MilitaryNo"] = personalFile.MilitaryNo;
             return View(personalFile);
         }
 
@@ -175,7 +175,7 @@ namespace HRISApplication.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new {id = id});
         }
 
 
