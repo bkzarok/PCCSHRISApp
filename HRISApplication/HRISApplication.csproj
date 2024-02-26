@@ -24,12 +24,42 @@
 
   <ItemGroup>
     <Folder Include="Areas\AddressArea\Data\" />
+    <Folder Include="Areas\AppRoleArea\Data\" />
+    <Folder Include="Areas\AppRoleArea\Models\" />
+    <Folder Include="Areas\AssignmentArea\Data\" />
+    <Folder Include="Areas\AssignmentArea\Models\" />
+    <Folder Include="Areas\BattleArea\Data\" />
+    <Folder Include="Areas\BattleArea\Models\" />
     <Folder Include="Areas\ChildArea\Data\" />
     <Folder Include="Areas\ChildArea\Models\" />
+    <Folder Include="Areas\EnrollmentArea\Data\" />
+    <Folder Include="Areas\EnrollmentArea\Models\" />
+    <Folder Include="Areas\HealthConditionArea\Data\" />
+    <Folder Include="Areas\HealthConditionArea\Models\" />
+    <Folder Include="Areas\ImprisonmentArea\Data\" />
+    <Folder Include="Areas\ImprisonmentArea\Models\" />
+    <Folder Include="Areas\LanguageArea\Data\" />
+    <Folder Include="Areas\LanguageArea\Models\" />
     <Folder Include="Areas\LogsArea\Data\" />
     <Folder Include="Areas\LogsArea\Models\" />
+    <Folder Include="Areas\NextOfKinArea\Data\" />
+    <Folder Include="Areas\NextOfKinArea\Models\" />
+    <Folder Include="Areas\ParentArea\Data\" />
+    <Folder Include="Areas\ParentArea\Models\" />
     <Folder Include="Areas\PersonalDetailsArea\Data\" />
     <Folder Include="Areas\PersonalDetailsArea\Models\" />
+    <Folder Include="Areas\PersonalFileArea\Data\" />
+    <Folder Include="Areas\PersonalFileArea\Models\" />
+    <Folder Include="Areas\PromotionArea\Data\" />
+    <Folder Include="Areas\PromotionArea\Models\" />
+    <Folder Include="Areas\SalaryDetailArea\Data\" />
+    <Folder Include="Areas\SalaryDetailArea\Models\" />
+    <Folder Include="Areas\SchoolArea\Data\" />
+    <Folder Include="Areas\SchoolArea\Models\" />
+    <Folder Include="Areas\SpouseArea\Data\" />
+    <Folder Include="Areas\SpouseArea\Models\" />
+    <Folder Include="Areas\TrainingArea\Data\" />
+    <Folder Include="Areas\TrainingArea\Models\" />
   </ItemGroup>
 
   <ItemGroup>

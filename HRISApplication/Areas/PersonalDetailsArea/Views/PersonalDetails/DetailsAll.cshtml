@@ -183,7 +183,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class ="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Schools.FirstOrDefault().SchoolLevel)
@@ -256,7 +256,7 @@
             
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
+                        <thead class ="table-dark">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Languages.FirstOrDefault().Type)
@@ -302,7 +302,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Parents.FirstOrDefault().Parent1)
@@ -360,7 +360,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Spouses.FirstOrDefault().Id)
@@ -428,7 +428,7 @@
                 </div>
                 <div class="table-responsive">
             <table class="table">
-                <thead>
+                        <thead class="table-dark">
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.NextOfKins.FirstOrDefault().Name)
@@ -447,10 +447,10 @@
                                 @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
+                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Occupation)
                             </td>
                             <td>
-                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
+                                @Html.DisplayFor(nextOfKinItem => nextOfKin.TelephoneNo)
                             </td>
                         </tr>
                     }
@@ -471,7 +471,7 @@
                 </div>
             <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Imprisonments.FirstOrDefault().Imprisoned)
@@ -564,7 +564,7 @@
 
                 <div class="table-reponsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(trainingItem => trainingItem.Training.FirstOrDefault().TrainingType)
@@ -622,7 +622,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(assignmentItem => assignmentItem.Assignments.FirstOrDefault().Unit)
@@ -673,7 +673,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(battleItem => battleItem.Battles.FirstOrDefault().DateOfBattle)
@@ -724,7 +724,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(promotionItem => promotionItem.Promotions.FirstOrDefault().SoldierRank)
@@ -765,7 +765,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                        <thead class="table-dark">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(healthConditionItem => healthConditionItem.HealthConditions.FirstOrDefault().HaveAhealthCondition)
