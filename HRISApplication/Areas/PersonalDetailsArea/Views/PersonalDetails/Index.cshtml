@@ -1,0 +1,119 @@
+﻿@model IEnumerable<HRISApplication.Models.PersonalDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfilePicture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoldierRank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ethnicity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShieldNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaritalStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfilePicture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoldierRank)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BloodGroup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ethnicity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShieldNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaritalStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedOn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MilitaryNo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MilitaryNo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MilitaryNo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
