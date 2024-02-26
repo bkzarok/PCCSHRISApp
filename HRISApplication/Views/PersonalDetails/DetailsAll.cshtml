@@ -138,7 +138,7 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table">
-                        <thead class="table-dark">
+                        <thead class="table-success">
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Children.FirstOrDefault().Name)
@@ -184,7 +184,7 @@
                 </div>
                 <div class="table-responsive">
                 <table class="table">
-                    <thead>
+                    <thead class="table-success">
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Schools.FirstOrDefault().SchoolLevel)
@@ -364,9 +364,6 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Spouses.FirstOrDefault().Id)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.Spouses.FirstOrDefault().Name)
                             </th>
                             <th>
@@ -390,9 +387,7 @@
                         @foreach (var spouse in Model.Spouses)
                         {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(spouseItem => spouse.Id)
-                                </td>
+                                
                                 <td>
                                     @Html.DisplayFor(spouseItem => spouse.Name)
                                 </td>
@@ -448,10 +443,10 @@
                                 @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
+                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Occupation)
                             </td>
                             <td>
-                                @Html.DisplayFor(nextOfKinItem => nextOfKin.Name)
+                                @Html.DisplayFor(nextOfKinItem => nextOfKin.TelephoneNo)
                             </td>
                         </tr>
                     }
@@ -552,23 +547,23 @@
                     </thead>        
 
                     <tbody>
-                        @foreach (var training in Model.Training)
+                        @foreach (var Training in Model.Training)
                         {
-                            <tr>
-                                <td>
-                            @Html.DisplayNameFor(trainingItem => training.TrainingType)
+                        <tr>
+                        <td>
+                            @Html.DisplayFor(TrainingItem => Training.TrainingType)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(trainingItem => training.TrainingCenter)
+                            @Html.DisplayFor(trainingItem => Training.TrainingCenter)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(trainingItem => training.Place)
+                            @Html.DisplayFor(trainingItem => Training.Place)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(trainingItem => training.PeriodFrom)
+                            @Html.DisplayFor(trainingItem => Training.PeriodFrom)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(trainingItem => training.PeriodTo)
+                            @Html.DisplayFor(trainingItem => Training.PeriodTo)
                         </td>
                     </tr>
                 }
@@ -1080,7 +1075,7 @@
                     },
                     {
                         alignment: "center",
-                        text: "S. SUDAN PEOPLE LIBERATION ARMY",
+                        text: "SOUTH SUDAN PEOPLE DEFENCE FORCES",
                         style: "header",
                         fontSize: 35,
                         color: "darkgreen",
@@ -1190,7 +1185,7 @@
                                 text: [
                                     "Date of Birth: ",
                                     {
-                                        text: personalDetailJson["dataOfBirth"],
+                                        text: personalDetailJson["dateOfBirth"],
                                         bold: false,
                                     },
                                 ],
