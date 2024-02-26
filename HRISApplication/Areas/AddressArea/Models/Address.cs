@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using HRISApplication.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace HRISApplication.Models;
+namespace HRISApplication.Areas.AddressArea.Models;
 
 public partial class Address
 {

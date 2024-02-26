@@ -1,5 +1,6 @@
 using HRISApplication.Data;
 using HRISApplication.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,14 +45,38 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-            name: "areas",
-            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-          );
+//app.MapControllerRoute(
+//            name: "areas",
+//            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//          );
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=PersonalDetails}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=PersonalDetails}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+app.UseEndpoints(endpoints =>
+{
+    //endpoints.MapAreaControllerRoute(
+    //  name: "PersonalDetailsArea",
+    //  areaName: "PersonalDetailsArea",
+    //  pattern: "PersonalDetailsArea/{controller=PersonalDetails}/{action=Index}/{id?}"
+    //);
+
+    endpoints.MapControllerRoute(
+     name: "areas",
+     pattern: "{area:exists}/{controller=PersonalDetails}/{action=Index}/{id?}"
+   );
+
+    endpoints.MapControllerRoute(
+        name: "default",
+       // pattern: "{area=PersonalDetailsArea}/{controller=PersonalDetails}/{action=Index}/{id?}" );
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+});
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+
+
 
 app.Run();

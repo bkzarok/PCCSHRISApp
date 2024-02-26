@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
+using HRISApplication.Areas.AddressArea.Models;
 
-namespace HRISApplication.Controllers
+namespace HRISApplication.Areas.AddressArea.Controllers
 {
+    [Area("AddressArea")]
     public class AddressesController : Controller
     {
         private readonly SspdfContext _context;
@@ -22,12 +24,12 @@ namespace HRISApplication.Controllers
         //The parameter int Id is actually militaryNo value
         public async Task<IActionResult> Index(string id)
         {
-            var sspdfContext =  await _context.Addresses.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+            var sspdfContext = await _context.Addresses.FirstOrDefaultAsync(x => x.MilitaryNo == id);
 
             if (sspdfContext != null)
-                return RedirectToAction(nameof(Edit), new { id =  sspdfContext.Id });
+                return RedirectToAction(nameof(Edit), new { id = sspdfContext.Id });
 
-            return RedirectToAction(nameof(Create), new { id = id });
+            return RedirectToAction(nameof(Create), new { id });
         }
 
         // GET: Addresses/Details/5
@@ -69,7 +71,7 @@ namespace HRISApplication.Controllers
             {
                 _context.Add(address);
                 await _context.SaveChangesAsync();
-                return RedirectToAction( nameof(Index), "PersonalDetails", new {Id = address.MilitaryNo});
+                return RedirectToAction(nameof(Index), "PersonalDetails", new { Area = "PersonalDetailsArea" });
             }
             ViewData["MilitaryNo"] = address.MilitaryNo;
             return View(address);
@@ -122,7 +124,7 @@ namespace HRISApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), "PersonalDetails", new { Id = address.MilitaryNo });
+                return RedirectToAction(nameof(Index), "PersonalDetails", new { Area ="PersonalDetailsArea" });
             }
             ViewData["MilitaryNo"] = address.MilitaryNo;
             return View(address);
@@ -159,7 +161,7 @@ namespace HRISApplication.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new {id =address!.MilitaryNo});
+            return RedirectToAction(nameof(Index), "PersonalDetails", new { Area = "PersonalDetailsArea" });
         }
 
         private bool AddressExists(int id)

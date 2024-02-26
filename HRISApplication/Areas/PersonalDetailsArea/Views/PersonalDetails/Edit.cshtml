@@ -10,14 +10,28 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MilitaryNo" />
-            <div class="form-group">
+
+            <img class="img-responsive img-round" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePicture)" style="max-height:200px; max-width: 200px;" />
+            
+           @*  <div class="form-group">
                 <label asp-for="ProfilePicture" class="control-label"></label>
-                <input asp-for="ProfilePicture" class="form-control" />
-                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                <input asp-for="ProfilePicture"  type="hi" class="form-control" />
+            </div> *@
+
+            <input asp-for="ProfilePicture" type="hidden" />
+
+            <input  type="radio"/>
+
+            <div class="form-group">
+                <label asp-for="FormFile" class="control-label"></label>
+                <input asp-for="FormFile"  type="file" class="form-control" />
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+
             </div>
+
             <div class="form-group">
                 <label asp-for="SoldierRank" class="control-label"></label>
                 <input asp-for="SoldierRank" class="form-control" />
@@ -68,26 +82,12 @@
                 <input asp-for="MaritalStatus" class="form-control" />
                 <span asp-validation-for="MaritalStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedOn" class="control-label"></label>
-                <input asp-for="CreatedOn" class="form-control" />
-                <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
-            </div>
+
+            <input asp-for="CreatedBy" hidden />
+            <input asp-for="CreatedOn" hidden />
+            <input asp-for="ModifiedBy" hidden />
+            <input asp-for="ModifiedOn" hidden />
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

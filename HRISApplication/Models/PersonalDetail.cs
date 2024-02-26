@@ -1,4 +1,5 @@
 ﻿
+using HRISApplication.Areas.AddressArea.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using NuGet.Packaging.Core;
 using System;

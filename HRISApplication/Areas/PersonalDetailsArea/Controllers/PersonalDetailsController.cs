@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
-namespace HRISApplication.Controllers
+namespace HRISApplication.Areas.Controllers
 {
+    [Area("PersonalDetailsArea")]
     [Authorize(Roles = "Admin, User")]
     public class PersonalDetailsController : Controller
     {

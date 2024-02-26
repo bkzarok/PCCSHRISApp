@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using HRISApplication.Areas.AddressArea.Models;
 using Microsoft.EntityFrameworkCore;
-using HRISApplication.Models;
 
 namespace HRISApplication.Models;
 

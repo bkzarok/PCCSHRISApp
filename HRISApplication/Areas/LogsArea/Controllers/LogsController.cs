@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
 
-namespace HRISApplication.Controllers
+namespace HRISApplication.Areas.LogsArea.Controllers
 {
+    [Area("LogsArea")]
     public class LogsController : Controller
     {
         private readonly SspdfContext _context;

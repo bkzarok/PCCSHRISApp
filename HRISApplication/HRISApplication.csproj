@@ -23,9 +23,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\PersonalDetailsArea\Controllers\" />
+    <Folder Include="Areas\AddressArea\Data\" />
+    <Folder Include="Areas\LogsArea\Data\" />
+    <Folder Include="Areas\LogsArea\Models\" />
     <Folder Include="Areas\PersonalDetailsArea\Data\" />
     <Folder Include="Areas\PersonalDetailsArea\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Delete.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\DetailsAll.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
