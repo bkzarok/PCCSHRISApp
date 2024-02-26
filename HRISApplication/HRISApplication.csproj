@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\AddressArea\Data\" />
+    <Folder Include="Areas\ChildArea\Data\" />
+    <Folder Include="Areas\ChildArea\Models\" />
     <Folder Include="Areas\LogsArea\Data\" />
     <Folder Include="Areas\LogsArea\Models\" />
     <Folder Include="Areas\PersonalDetailsArea\Data\" />

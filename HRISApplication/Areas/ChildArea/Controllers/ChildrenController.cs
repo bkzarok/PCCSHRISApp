@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
 
-namespace HRISApplication.Controllers
+namespace HRISApplication.Areas.ChildArea.Controllers
 {
+    [Area("ChildArea")]
     public class ChildrenController : Controller
     {
         private readonly SspdfContext _context;
@@ -65,7 +66,7 @@ namespace HRISApplication.Controllers
             {
                 _context.Add(child);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new {id=child.MilitaryNo});
+                return RedirectToAction(nameof(Index), new { id = child.MilitaryNo });
             }
             ViewData["MilitaryNo"] = child.MilitaryNo;
             return View(child);
@@ -118,7 +119,7 @@ namespace HRISApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new {id=child.MilitaryNo});
+                return RedirectToAction(nameof(Index), new { id = child.MilitaryNo });
             }
             ViewData["MilitaryNo"] = child.MilitaryNo;
             return View(child);
@@ -155,7 +156,7 @@ namespace HRISApplication.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new {id=child!.MilitaryNo});
+            return RedirectToAction(nameof(Index), new { id = child!.MilitaryNo });
         }
 
         private bool ChildExists(int? id)
