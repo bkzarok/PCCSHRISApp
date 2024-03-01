@@ -53,6 +53,10 @@ namespace HRISApplication.Areas.Controllers
             return View(personalDetail);
         }
 
+        public async Task<IActionResult> PersonalCharts() { 
+
+            return View();
+        }
 
         // GET: PersonalDetails/Details/5
         public async Task<IActionResult> DetailsAll(string id)
