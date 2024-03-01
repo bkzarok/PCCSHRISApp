@@ -82,7 +82,7 @@ namespace HRISApplication.Areas.LanguageArea.Controllers
             {
                 return NotFound();
             }
-            ViewData["language"] = language.MilitaryNo;
+            ViewData["militaryNo"] = language.MilitaryNo;
             return View(language);
         }
 
