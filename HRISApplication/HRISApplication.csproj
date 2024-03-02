@@ -52,6 +52,8 @@
     <Folder Include="Areas\PersonalFileArea\Models\" />
     <Folder Include="Areas\PromotionArea\Data\" />
     <Folder Include="Areas\PromotionArea\Models\" />
+    <Folder Include="Areas\RoleAssignmentArea\Data\" />
+    <Folder Include="Areas\RoleAssignmentArea\Models\" />
     <Folder Include="Areas\SalaryDetailArea\Data\" />
     <Folder Include="Areas\SalaryDetailArea\Models\" />
     <Folder Include="Areas\SchoolArea\Data\" />

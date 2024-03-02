@@ -29,7 +29,7 @@
                             <a class="nav-link text-dark" asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="Index">PersonalDetials</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SalaryDetails" asp-action="Index">SalaryDetails</a>
+                            <a class="nav-link text-dark" asp-area="SalaryDetailArea" asp-controller="SalaryDetails" asp-action="Index">SalaryDetails</a>
                         </li>
 
                         <li class="nav-item">
@@ -42,7 +42,7 @@
                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Roles</a>
                            <div class="dropdown-menu">
                                 <a class="nav-link text-dark" asp-area="AppRoleArea" asp-controller="AppRoles" asp-action="Index">AppRoles</a>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="RoleAssignments" asp-action="Index">Role Assignment</a>
+                                <a class="nav-link text-dark" asp-area="RoleAssignmentArea" asp-controller="RoleAssignments" asp-action="Index">Role Assignment</a>
 
                            </div>
                        </li>
@@ -84,7 +84,9 @@
     <script src="~/lib/datatables.net-buttons/js/buttons.html5.js"></script>
     <script src="~/lib/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="~/lib/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-    
+
+    <script src="~/lib/Chart.js/chart.umd.min.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

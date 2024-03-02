@@ -10,8 +10,9 @@ using HRISApplication.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
-namespace HRISApplication.Controllers
+namespace HRISApplication.Areas.RoleAssignmentArea.Controllers
 {
+    [Area("RoleAssignmentArea")]
     [Authorize(Roles = "Admin, User")]
     public class RoleAssignmentsController : Controller
     {
@@ -20,7 +21,7 @@ namespace HRISApplication.Controllers
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleAssignmentsController(ApplicationDbContext context, IUserStore<IdentityUser> userStore, 
+        public RoleAssignmentsController(ApplicationDbContext context, IUserStore<IdentityUser> userStore,
             RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _context = context;
@@ -33,11 +34,11 @@ namespace HRISApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var userNamesAndRoles = await _context.Users
-                .Join(_context.UserRoles, 
+                .Join(_context.UserRoles,
                 u => u.Id,
                 ur => ur.UserId,
-                (u, ur) => new {u.Id, u.UserName, ur.RoleId})
-                .Join( _context.Roles,
+                (u, ur) => new { u.Id, u.UserName, ur.RoleId })
+                .Join(_context.Roles,
                 uur => uur.RoleId,
                 r => r.Id,
                 (uur, r) => new RoleAssignment { Id = uur.Id, UserName = uur.UserName, RoleId = uur.RoleId, Name = r.Name })
@@ -63,7 +64,7 @@ namespace HRISApplication.Controllers
                uur => uur.RoleId,
                r => r.Id,
                (uur, r) => new RoleAssignment { Id = uur.Id, UserName = uur.UserName, RoleId = uur.RoleId, Name = r.Name })
-               .FirstOrDefaultAsync( ra => ra.Id.Equals(id) && ra.RoleId.Equals(roleId));
+               .FirstOrDefaultAsync(ra => ra.Id.Equals(id) && ra.RoleId.Equals(roleId));
 
             if (roleAssignment == null)
             {
@@ -92,16 +93,16 @@ namespace HRISApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Id")] RoleAssignment roleAssignment)
         {
-            
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == roleAssignment.Id);    
+
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == roleAssignment.Id);
 
             if (ModelState.IsValid && user != null)
             {
-                if(!await _userManager.IsInRoleAsync(user, roleAssignment.Name))
+                if (!await _userManager.IsInRoleAsync(user, roleAssignment.Name))
                 {
                     await _userManager.AddToRoleAsync(user, roleAssignment.Name);
                 }
-             
+
                 return RedirectToAction(nameof(Index));
             }
             return View(roleAssignment);
@@ -136,7 +137,7 @@ namespace HRISApplication.Controllers
         }
 
         // POST: RoleAssignments/Delete/5
-        [Authorize(Roles ="Admin, User")]   
+        [Authorize(Roles = "Admin, User")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id, string name)

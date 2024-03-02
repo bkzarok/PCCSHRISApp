@@ -10,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
+using HRISApplication.Models.ChartModels;
 
 namespace HRISApplication.Areas.Controllers
 {
@@ -53,9 +54,16 @@ namespace HRISApplication.Areas.Controllers
             return View(personalDetail);
         }
 
-        public async Task<IActionResult> PersonalCharts() { 
+        public async Task<IActionResult> PersonalCharts() {
 
-            return View();
+           
+            var query =
+              from s in _context.PersonalDetails
+              group s by s.SoldierRank into g
+              select new WordCount{ Word = g.Key, Count = g.Count() };
+
+
+            return View(query.ToList());
         }
 
         // GET: PersonalDetails/Details/5
