@@ -1,0 +1,104 @@
+﻿@model HRISApplication.Models.PersonalDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PersonalDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MilitaryNo" />
+
+            <img class="img-responsive img-round" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePicture)" style="max-height:200px; max-width: 200px;" />
+            
+           @*  <div class="form-group">
+                <label asp-for="ProfilePicture" class="control-label"></label>
+                <input asp-for="ProfilePicture"  type="hi" class="form-control" />
+            </div> *@
+
+            <input asp-for="ProfilePicture" type="hidden" />
+
+            <input  type="radio"/>
+
+            <div class="form-group">
+                <label asp-for="FormFile" class="control-label"></label>
+                <input asp-for="FormFile"  type="file" class="form-control" />
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SoldierRank" class="control-label"></label>
+                <input asp-for="SoldierRank" class="form-control" />
+                <span asp-validation-for="SoldierRank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BloodGroup" class="control-label"></label>
+                <input asp-for="BloodGroup" class="form-control" />
+                <span asp-validation-for="BloodGroup" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ethnicity" class="control-label"></label>
+                <input asp-for="Ethnicity" class="form-control" />
+                <span asp-validation-for="Ethnicity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShieldNo" class="control-label"></label>
+                <input asp-for="ShieldNo" class="form-control" />
+                <span asp-validation-for="ShieldNo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Gender" /> @Html.DisplayNameFor(model => model.Gender)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaritalStatus" class="control-label"></label>
+                <input asp-for="MaritalStatus" class="form-control" />
+                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+            </div>
+
+            <input asp-for="CreatedBy" hidden />
+            <input asp-for="CreatedOn" hidden />
+            <input asp-for="ModifiedBy" hidden />
+            <input asp-for="ModifiedOn" hidden />
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

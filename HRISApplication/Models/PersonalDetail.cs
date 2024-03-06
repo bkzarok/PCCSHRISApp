@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿
+using HRISApplication.Areas.AddressArea.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using NuGet.Packaging.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,6 +43,18 @@ public partial class PersonalDetail
 
     public string MaritalStatus { get; set; } = null!;
 
+    [ValidateNever]
+    public string CreatedBy { get; set; } = null!;
+
+    [ValidateNever]
+    public DateTime CreatedOn { get; set; }
+
+    [ValidateNever]
+    public string? ModifiedBy { get; set; }
+
+    [ValidateNever]
+    public DateTime? ModifiedOn { get; set; }
+
     public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
 
     public virtual ICollection<Battle> Battles { get; set; } = new List<Battle>();
@@ -68,6 +83,8 @@ public partial class PersonalDetail
     public virtual ICollection<Address> Address { get; set; } = new List<Address>();
 
     public virtual ICollection<SalaryDetail> SalaryDetail { get; set; } = new List<SalaryDetail>();
+
+    public virtual ICollection<PersonalFile> PersonalFile { get; set; } = new List<PersonalFile>();
 
 
 }

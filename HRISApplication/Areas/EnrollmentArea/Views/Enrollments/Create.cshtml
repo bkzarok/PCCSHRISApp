@@ -1,0 +1,58 @@
+﻿@model HRISApplication.Models.Enrollment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Enrollment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateOfEnrollment" class="control-label"></label>
+                <input asp-for="DateOfEnrollment" class="form-control" />
+                <span asp-validation-for="DateOfEnrollment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceOfEnrollment" class="control-label"></label>
+                <input asp-for="PlaceOfEnrollment" class="form-control" />
+                <span asp-validation-for="PlaceOfEnrollment" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ServiceOutsideSspdf" /> @Html.DisplayNameFor(model => model.ServiceOutsideSspdf)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodFrom" class="control-label"></label>
+                <input asp-for="PeriodFrom" class="form-control" />
+                <span asp-validation-for="PeriodFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodTo" class="control-label"></label>
+                <input asp-for="PeriodTo" class="form-control" />
+                <span asp-validation-for="PeriodTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" class="form-control" readonly value="@ViewBag.MilitaryNo" />
+                <span asp-validation-for="MilitaryNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

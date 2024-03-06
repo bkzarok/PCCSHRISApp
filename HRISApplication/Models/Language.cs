@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace HRISApplication.Models;
 
@@ -15,6 +16,7 @@ public partial class Language
     public string FluencyLevel { get; set; } = null!;
 
     public string MilitaryNo { get; set; } = null!;
+    [JsonIgnore]
     [ValidateNever]
     public virtual PersonalDetail MilitaryNoNavigation { get; set; } = null!;
 }

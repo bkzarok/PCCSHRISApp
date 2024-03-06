@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HRISApplication.Models.PersonalFile>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success btn-sm" asp-route-id="@ViewBag.MilitaryNo">Create New <i class="fa-solid fa-circle-plus"></i></a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>         
+            <td>
+                <a asp-action="Download" asp-route-id="@item.Id" title="Download"><i class="fa fa-download"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info text-black"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HRISApplication.Areas.AddressArea.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRISApplication.Models;
@@ -49,10 +50,10 @@ public partial class SspdfContext : DbContext
 
     public virtual DbSet<SalaryDetail> SalaryDetails { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-1019\\SQLEXPRESS;Database=sspdf;Trusted_Connection=True;TrustServerCertificate=true;");
-
+        //  => optionsBuilder.UseSqlServer("Server=DESKTOP-1019\\SQLEXPRESS;Database=sspdf;Trusted_Connection=True;TrustServerCertificate=true;");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -234,6 +235,9 @@ public partial class SspdfContext : DbContext
             entity.Property(e => e.MiddleName).HasMaxLength(50);
             entity.Property(e => e.ProfilePicture).HasColumnType("image");
             entity.Property(e => e.SoldierRank).HasMaxLength(50);
+            entity.Property(e => e.CreatedBy).HasMaxLength(50);
+            entity.Property(e => e.ModifiedBy).HasMaxLength(50); 
+            
             
         });
 
@@ -249,6 +253,20 @@ public partial class SspdfContext : DbContext
                 .HasForeignKey(d => d.MilitaryNo)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Promotion_PersonalDetail");
+        });
+
+        modelBuilder.Entity<PersonalFile>(entity =>
+        {
+            entity.ToTable("PersonalFile");
+            entity.Property(e => e.Id).HasColumnName("Id").ValueGeneratedOnAdd();
+            entity.Property(e => e.CreateBy);
+            entity.Property(e => e.Location);
+            entity.Property(e => e.MilitaryNo).HasMaxLength(50);
+            entity.Property(e => e.Name);
+            entity.HasOne(d => d.MilitaryNoNavigation).WithMany(p => p.PersonalFile)
+                .HasForeignKey(d => d.MilitaryNo)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_PersonalFile_PersonalDetail");
         });
 
         modelBuilder.Entity<School>(entity =>
@@ -338,4 +356,6 @@ public partial class SspdfContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<HRISApplication.Models.PersonalFile> PersonalFile { get; set; } = default!;
 }

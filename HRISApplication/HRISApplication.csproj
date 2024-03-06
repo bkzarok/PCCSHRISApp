@@ -8,18 +8,87 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\AddressArea\Data\" />
+    <Folder Include="Areas\AppRoleArea\Data\" />
+    <Folder Include="Areas\AppRoleArea\Models\" />
+    <Folder Include="Areas\AssignmentArea\Data\" />
+    <Folder Include="Areas\AssignmentArea\Models\" />
+    <Folder Include="Areas\BattleArea\Data\" />
+    <Folder Include="Areas\BattleArea\Models\" />
+    <Folder Include="Areas\ChildArea\Data\" />
+    <Folder Include="Areas\ChildArea\Models\" />
+    <Folder Include="Areas\EnrollmentArea\Data\" />
+    <Folder Include="Areas\EnrollmentArea\Models\" />
+    <Folder Include="Areas\HealthConditionArea\Data\" />
+    <Folder Include="Areas\HealthConditionArea\Models\" />
+    <Folder Include="Areas\ImprisonmentArea\Data\" />
+    <Folder Include="Areas\ImprisonmentArea\Models\" />
+    <Folder Include="Areas\LanguageArea\Data\" />
+    <Folder Include="Areas\LanguageArea\Models\" />
+    <Folder Include="Areas\LogsArea\Data\" />
+    <Folder Include="Areas\LogsArea\Models\" />
+    <Folder Include="Areas\NextOfKinArea\Data\" />
+    <Folder Include="Areas\NextOfKinArea\Models\" />
+    <Folder Include="Areas\ParentArea\Data\" />
+    <Folder Include="Areas\ParentArea\Models\" />
+    <Folder Include="Areas\PersonalDetailsArea\Data\" />
+    <Folder Include="Areas\PersonalDetailsArea\Models\" />
+    <Folder Include="Areas\PersonalFileArea\Data\" />
+    <Folder Include="Areas\PersonalFileArea\Models\" />
+    <Folder Include="Areas\PromotionArea\Data\" />
+    <Folder Include="Areas\PromotionArea\Models\" />
+    <Folder Include="Areas\RoleAssignmentArea\Data\" />
+    <Folder Include="Areas\RoleAssignmentArea\Models\" />
+    <Folder Include="Areas\SalaryDetailArea\Data\" />
+    <Folder Include="Areas\SalaryDetailArea\Models\" />
+    <Folder Include="Areas\SchoolArea\Data\" />
+    <Folder Include="Areas\SchoolArea\Models\" />
+    <Folder Include="Areas\SpouseArea\Data\" />
+    <Folder Include="Areas\SpouseArea\Models\" />
+    <Folder Include="Areas\TrainingArea\Data\" />
+    <Folder Include="Areas\TrainingArea\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Delete.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\DetailsAll.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\PersonalDetailsArea\Views\PersonalDetails\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

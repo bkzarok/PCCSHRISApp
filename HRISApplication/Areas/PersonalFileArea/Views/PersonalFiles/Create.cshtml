@@ -1,0 +1,50 @@
+﻿@model HRISApplication.Models.PersonalFile
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PersonalFile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create"  enctype="multipart/form-data" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          
+
+            <input asp-for="Name" hidden class="form-control" />
+
+            <input asp-for="Location" hidden class="form-control" />
+            
+            
+            
+
+            <div class="form-group">
+                <label asp-for="FormFile" class="control-label"></label>
+                <input asp-for="FormFile" class="form-control"   />
+                @* <span asp-validation-for="FormFile" class="text-danger"></span> *@
+            </div>
+
+            
+
+            <div class="form-group">
+                <label asp-for="MilitaryNo" class="control-label"></label>
+                <input asp-for="MilitaryNo" value="@ViewBag.MilitaryNo" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create"   class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id="@ViewBag.MilitaryNo">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
