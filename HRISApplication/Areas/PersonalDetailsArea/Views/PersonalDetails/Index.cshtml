@@ -5,19 +5,19 @@
     var total = 0;
 }
 
-<div>
-    <p>
-        <a asp-action="PersonalCharts" > Personal Charts</a>
-    </p>
-
-</div>
-<div class="row"> 
-    <div class="col-md-6" >
-        <p>
-            <a asp-action="Create" class="btn btn-success btn-sm">Create New <i class="fa-solid fa-circle-plus"></i></a>
-        </p>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <p>
+                <a asp-action="Create" class="btn btn-success btn-sm">Create New <i class="fa-solid fa-circle-plus"></i></a>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>
+                <a class="btn btn-info btn-sm" asp-action="PersonalCharts"> <i class="fa fa-solid fa-chart-line"></i>Charts</a>
+            </p>
+        </div>
     </div>
-
 </div>
 
 

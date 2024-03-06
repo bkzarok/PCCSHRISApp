@@ -1,22 +1,47 @@
-﻿@model IEnumerable<WordCount>;
+﻿@model Tuple<IEnumerable<WordCount>, IEnumerable<WordCount> , IEnumerable<WordCount> ,IEnumerable<WordCount> >;
 
 @{
     ViewData["Title"] = "Create";
 }
+<div class="container">
+    <div class="row">
 
-<div class="row">
-    <div class="col-md">
-        <canvas id="myBarChart"></canvas>
+        <div class="col-md" style="margin-top:50px">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Rank Count</h4>
+                </div>
+                <canvas id="rankBarChart" ></canvas>
 
-    </div>
-    <div class="col-md">
-        <canvas id="myDonutChart"></canvas>
+            </div>
+        </div>
 
-    </div>
+        <div class="col-md" style="margin-top:50px">
+            <div class="card">
+                <div class="card-header">
+                    <h4>BloodGroup Count</h4>
+                </div>               
+                <canvas id="bloodGroupBarChart"></canvas>
+            </div>
+        </div>
 
-    <div class="col-md">
-        <canvas id="myLineChart"></canvas>
+        <div class="col-md" style="margin-top:50px">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Gender Count</h4>
+                </div>
+                <canvas id="genderDoughnutChart"></canvas>
+            </div>
+        </div>
 
+        <div class="col-md" style="margin-top:50px">
+            <div class="card">
+                <div class="card-header">
+                    <h4>BirthDay Count</h4>
+                </div>
+                <canvas id="birthdayLineChart"></canvas>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -27,31 +52,28 @@
 
     <script type="text/javascript">
 
-        var rankcount = @Html.Raw(Json.Serialize(Model));
+        var rankcount = @Html.Raw(Json.Serialize(Model.Item1));
+        var bloodGroupCount = @Html.Raw(Json.Serialize(Model.Item2));
+        var genderCount = @Html.Raw(Json.Serialize(Model.Item3));
+        var birthdayCount = @Html.Raw(Json.Serialize(Model.Item4));
 
         console.log(JSON.stringify(rankcount));
         
-        var words = rankcount.map(function (item) {
+        var rankWords = rankcount.map(function (item) {
 
             return `${ item.word }`;
         });
 
-        var counts = rankcount.map(function (item) {
+        var rankCounts = rankcount.map(function (item) {
             return `${item.count}`;
         });
 
-        console.log(words);
 
-        const ctx = document.getElementById('myBarChart');
-        const ctxDonut = document.getElementById('myDonutChart');
-        const ctxLine = document.getElementById('myLineChart');
-
-
-        const data = {
-            labels: words,
+        const rankData = {
+            labels: rankWords,
             datasets: [{
                 label: '# of Ranks',
-                data: counts,
+                data: rankCounts,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 159, 64, 0.2)',
@@ -74,22 +96,121 @@
             }]
         };
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: data,            
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+        var bloodGroupWords = bloodGroupCount.map(function (item) {
+
+            return `${item.word}`;
         });
 
+        var bloodGroupCounts = bloodGroupCount.map(function (item) {
+            return `${item.count}`;
+        });
 
-        new Chart(ctxDonut, {
+        const bloodGroupData = {
+            labels: bloodGroupWords,
+            datasets: [{
+                label: '# of BloodGroups',
+                data: bloodGroupCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var genderWords = genderCount.map(function (item) {
+            return `${item.word}`;
+        });
+
+        var genderCounts = genderCount.map(function (item) {
+            return `${item.count}`;
+        });
+
+        const genderData = {
+            labels: genderWords,
+            datasets: [{
+                label: '# of Ranks',
+                data: genderCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var birthdayWords = birthdayCount.map(function (item) {
+
+            return `${item.word}`;
+        });
+
+        var birthdayCounts = birthdayCount.map(function (item) {
+            return `${item.count}`;
+        });
+
+        const birthdayData = {
+            labels: birthdayWords,
+            datasets: [{
+                label: '# of Ranks',
+                data: birthdayCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const rankBarChart = document.getElementById('rankBarChart');
+        const bloodGroupBarChart = document.getElementById('bloodGroupBarChart');
+        const genderDoughnutChart = document.getElementById('genderDoughnutChart');
+        const birthdayLineChart = document.getElementById('birthdayLineChart');
+
+        new Chart(rankBarChart, {
             type: 'doughnut',
-            data: data,
+            data: rankData,            
             options: {
                 scales: {
                     y: {
@@ -99,9 +220,9 @@
             }
         });
 
-        new Chart(ctxLine, {
-            type: 'line',
-            data: data,
+        new Chart(bloodGroupBarChart, {
+            type: 'bar',
+            data: bloodGroupData,
             options: {
                 scales: {
                     y: {
@@ -110,6 +231,33 @@
                 }
             }
         });
+
+        new Chart(genderDoughnutChart, {
+            type: 'doughnut',
+            data: genderData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(birthdayLineChart, {
+            type: 'bar',
+            data: birthdayData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+       
+
     </script>
 
 }
