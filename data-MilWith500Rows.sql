@@ -1,10 +1,10 @@
 --IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('myTable'))
 --BEGIN;
---    DROP TABLE [myTable];
+--    DROP TABLE [sspdf].[dbo].[PersonalDetail];
 --END;
 --GO
 
---CREATE TABLE [myTable] (
+--CREATE TABLE [sspdf].[dbo].[PersonalDetail] (
 --    [myTableID] INTEGER NOT NULL IDENTITY(1, 1),
 --    [MilitaryNo] VARCHAR(255) NULL,
 --    [ProfilePicture] VARCHAR(MAX) NULL,
@@ -24,7 +24,7 @@
 --);
 --GO
 
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A04280','defaultProfilePicture.jpg','Major','Ferris','Chancellor','Sacha','Feb 8, 1971',0,'B-','Azandi',197,'Single','admin2@gmail.com','Jan 24, 2024'),
   ('A47278','defaultProfilePicture.jpg','General','Ivan','Plato','Hasad','Feb 13, 1981',0,'O+','Luo',580,'Married','user1@gmail.com','Jan 10, 2024'),
@@ -46,7 +46,7 @@ VALUES
   ('A33627','defaultProfilePicture.jpg','Lt','Larissa','Laurel','Bevis','Dec 21, 1992',1,'B+','Nuer',964,'Married','admin2@gmail.com','Apr 17, 2024'),
   ('A48317','defaultProfilePicture.jpg','Lt','Natalie','Kalia','Igor','Dec 19, 1949',1,'A-','Bari',215,'Single','user2@gmail.com','Jan 22, 2024'),
   ('A34097','defaultProfilePicture.jpg','Major','Kerry','Raphael','Ralph','Mar 16, 1963',1,'B+','Azandi',938,'Single','admin2@gmail.com','Oct 5, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A26660','defaultProfilePicture.jpg','General','Nicole','Maggy','Alexa','Dec 31, 2004',1,'AB-','Dinka',863,'Single','user2@gmail.com','Jul 9, 2023'),
   ('A71813','defaultProfilePicture.jpg','General','Rosalyn','MacKenzie','Tatyana','Feb 5, 1987',0,'A-','Nuer',972,'Single','user1@gmail.com','Jan 6, 2024'),
@@ -68,7 +68,7 @@ VALUES
   ('A67444','defaultProfilePicture.jpg','General','Inga','Haley','Rahim','Dec 20, 1987',0,'A-','Shilluk',666,'Married','user2@gmail.com','Oct 29, 2023'),
   ('A33557','defaultProfilePicture.jpg','Captain','Elijah','Macey','Cally','Aug 30, 1968',0,'O-','Acholi',762,'Single','admin1@gmail.com','Feb 14, 2024'),
   ('A17850','defaultProfilePicture.jpg','Major','Brittany','Lisandra','Tara','Nov 22, 1994',1,'A-','Bari',206,'Married','admin2@gmail.com','Feb 4, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A26516','defaultProfilePicture.jpg','General','Alyssa','Dawn','Veda','Apr 22, 2002',0,'A-','Shilluk',828,'Single','user2@gmail.com','Oct 20, 2024'),
   ('A63644','defaultProfilePicture.jpg','General','Tyrone','Noah','Janna','Sep 7, 1980',0,'AB+','Nuer',293,'Married','user2@gmail.com','Nov 22, 2024'),
@@ -80,7 +80,7 @@ VALUES
   ('A25034','defaultProfilePicture.jpg','Major','Petra','Desirae','Britanney','Mar 23, 1951',0,'B+','Balanda',286,'Married','admin2@gmail.com','Dec 13, 2022'),
   ('A88755','defaultProfilePicture.jpg','Major','Glenna','Melissa','Hayden','Feb 20, 1957',1,'B-','Nuer',575,'Single','admin1@gmail.com','Sep 6, 2024'),
   ('A51879','defaultProfilePicture.jpg','Lt','Herrod','Axel','Len','Mar 2, 1961',1,'B+','Balanda',662,'Married','user2@gmail.com','Jan 21, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A31875','defaultProfilePicture.jpg','Private','Stone','Odysseus','Hedy','Dec 20, 1960',0,'AB-','Acholi',425,'Single','user1@gmail.com','Apr 23, 2024'),
   ('A32637','defaultProfilePicture.jpg','Private','Mercedes','Craig','Donna','Feb 3, 1999',1,'B-','Bari',782,'Married','admin2@gmail.com','Sep 6, 2023'),
@@ -102,7 +102,7 @@ VALUES
   ('A84127','defaultProfilePicture.jpg','General','Fallon','Mira','Martin','Dec 19, 1958',0,'B-','Nuer',289,'Married','admin2@gmail.com','Jul 19, 2023'),
   ('A47338','defaultProfilePicture.jpg','General','Coby','Minerva','Ingrid','Apr 13, 1990',1,'O+','Balanda',223,'Single','user1@gmail.com','Jan 14, 2025'),
   ('A85385','defaultProfilePicture.jpg','Major','Zachery','Chase','Mufutau','Jul 26, 1965',0,'B-','Nuer',775,'Single','user1@gmail.com','Sep 4, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A55476','defaultProfilePicture.jpg','Major','Cameron','Gregory','Vance','Dec 16, 1962',0,'B+','Fur',570,'Married','user1@gmail.com','Apr 5, 2023'),
   ('A53171','defaultProfilePicture.jpg','General','Geoffrey','Unity','Jelani','Mar 3, 1984',0,'AB-','Dinka',974,'Single','admin2@gmail.com','Mar 21, 2023'),
@@ -124,7 +124,7 @@ VALUES
   ('A71932','defaultProfilePicture.jpg','General','Brenda','Ariana','Penelope','Feb 19, 1978',0,'B-','Nuer',475,'Married','user1@gmail.com','Jul 21, 2023'),
   ('A41452','defaultProfilePicture.jpg','Captain','Quinlan','Avye','Galena','Nov 6, 1998',1,'O-','Shilluk',502,'Married','user1@gmail.com','Jan 19, 2024'),
   ('A95001','defaultProfilePicture.jpg','Lt','Merritt','Willa','Mechelle','Jul 11, 1959',0,'O+','Nuer',767,'Single','admin2@gmail.com','Sep 16, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A51804','defaultProfilePicture.jpg','General','Seth','Lane','Josephine','Jul 1, 1969',0,'AB+','Nuer',698,'Single','admin1@gmail.com','Aug 12, 2023'),
   ('A94811','defaultProfilePicture.jpg','Major','Blaze','Jakeem','Brenda','May 14, 1959',1,'O+','Shilluk',106,'Married','user1@gmail.com','Dec 3, 2023'),
@@ -136,7 +136,7 @@ VALUES
   ('A29983','defaultProfilePicture.jpg','General','Hunter','Cooper','Addison','Jun 25, 1956',1,'AB+','Shilluk',661,'Single','user2@gmail.com','Oct 27, 2023'),
   ('A23417','defaultProfilePicture.jpg','Captain','Reagan','Noelani','Kieran','Dec 17, 1954',0,'A+','Fur',748,'Married','user1@gmail.com','Jun 2, 2023'),
   ('A69070','defaultProfilePicture.jpg','General','Davis','Grady','Lawrence','Sep 27, 1950',1,'O+','Balanda',882,'Single','admin2@gmail.com','Jan 13, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A29215','defaultProfilePicture.jpg','General','Sacha','Yoshi','Emery','Sep 22, 1977',0,'AB-','Bari',303,'Married','admin2@gmail.com','Dec 26, 2022'),
   ('A52317','defaultProfilePicture.jpg','Major','Allen','Buffy','Uriah','Sep 2, 1955',1,'B+','Acholi',894,'Single','user1@gmail.com','Nov 16, 2022'),
@@ -158,7 +158,7 @@ VALUES
   ('A89199','defaultProfilePicture.jpg','Major','Britanney','Raya','Josephine','Jun 10, 1996',1,'AB-','Nuer',131,'Single','admin2@gmail.com','Jan 21, 2024'),
   ('A76504','defaultProfilePicture.jpg','Major','Bernard','Tasha','Xaviera','Sep 21, 1973',0,'B-','Balanda',456,'Married','admin2@gmail.com','Jan 27, 2025'),
   ('A91390','defaultProfilePicture.jpg','Captain','Nehru','Amir','Nayda','Nov 3, 1986',1,'A+','Bari',357,'Married','user1@gmail.com','Nov 25, 2022');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A43137','defaultProfilePicture.jpg','Captain','Molly','Gage','Barclay','Mar 18, 1990',0,'O+','Balanda',819,'Married','admin2@gmail.com','Mar 17, 2024'),
   ('A27621','defaultProfilePicture.jpg','Private','Rachel','Peter','Abbot','Jan 26, 1967',1,'O+','Luo',945,'Married','admin2@gmail.com','Dec 18, 2023'),
@@ -180,7 +180,7 @@ VALUES
   ('A76564','defaultProfilePicture.jpg','General','Brett','Dean','Karina','Jan 11, 2002',1,'B+','Fur',265,'Married','user2@gmail.com','Jul 4, 2024'),
   ('A83682','defaultProfilePicture.jpg','Lt','Hall','Randall','Daquan','Dec 13, 2000',0,'AB+','Acholi',469,'Single','user1@gmail.com','Feb 6, 2023'),
   ('A39881','defaultProfilePicture.jpg','General','Ciara','Elliott','Sawyer','Apr 12, 1971',0,'B+','Fur',885,'Single','admin2@gmail.com','Apr 27, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A54518','defaultProfilePicture.jpg','General','Kelly','Jena','David','Oct 18, 1980',1,'AB+','Acholi',870,'Single','user2@gmail.com','Jun 25, 2023'),
   ('A57424','defaultProfilePicture.jpg','General','Zenaida','Raya','Quintessa','Nov 27, 1979',1,'AB-','Bari',605,'Single','user1@gmail.com','Jul 1, 2024'),
@@ -192,7 +192,7 @@ VALUES
   ('A11163','defaultProfilePicture.jpg','General','Latifah','Madeline','Stewart','Oct 26, 1958',0,'B+','Shilluk',730,'Single','user1@gmail.com','Jun 29, 2024'),
   ('A78335','defaultProfilePicture.jpg','Private','Meghan','Oscar','Savannah','Apr 20, 2002',0,'B+','Nuer',606,'Married','admin2@gmail.com','Sep 6, 2023'),
   ('A86414','defaultProfilePicture.jpg','General','Nehru','Elliott','Priscilla','Aug 5, 1966',1,'A-','Acholi',987,'Single','user1@gmail.com','Apr 2, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A96685','defaultProfilePicture.jpg','General','Brielle','Adrian','Maggie','Nov 24, 1952',0,'O+','Azandi',466,'Single','admin2@gmail.com','Sep 22, 2023'),
   ('A17101','defaultProfilePicture.jpg','Lt','Flynn','Keelie','Chaim','Feb 6, 1998',1,'AB-','Shilluk',875,'Married','admin1@gmail.com','Jun 19, 2024'),
@@ -214,7 +214,7 @@ VALUES
   ('A72651','defaultProfilePicture.jpg','General','Hanae','Yoshi','Hilary','Sep 17, 1982',0,'AB+','Fur',389,'Married','user1@gmail.com','Dec 1, 2022'),
   ('A56364','defaultProfilePicture.jpg','General','Susan','Darrel','Maggy','Sep 17, 1953',0,'AB+','Azandi',542,'Single','admin2@gmail.com','Aug 12, 2024'),
   ('A68421','defaultProfilePicture.jpg','Major','Benjamin','Fiona','Joseph','Jun 1, 2001',1,'AB+','Dinka',906,'Married','admin2@gmail.com','Jul 31, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A43893','defaultProfilePicture.jpg','General','Caleb','Steel','Barry','Nov 23, 1998',1,'B+','Fur',614,'Single','admin1@gmail.com','Dec 23, 2022'),
   ('A61488','defaultProfilePicture.jpg','General','Amaya','Levi','Hyacinth','Apr 20, 2003',0,'A+','Balanda',942,'Single','admin1@gmail.com','Mar 1, 2023'),
@@ -236,7 +236,7 @@ VALUES
   ('A86553','defaultProfilePicture.jpg','Lt','Amethyst','Kerry','Hayley','Jul 31, 1951',0,'AB+','Balanda',134,'Married','admin1@gmail.com','Oct 22, 2023'),
   ('A64792','defaultProfilePicture.jpg','Lt','Harrison','Jennifer','Chloe','Mar 27, 1965',0,'B+','Azandi',236,'Single','user2@gmail.com','Mar 1, 2024'),
   ('A47953','defaultProfilePicture.jpg','Major','Kamal','Melinda','Russell','Jan 13, 2002',1,'O+','Balanda',393,'Married','user1@gmail.com','Nov 19, 2022');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A40326','defaultProfilePicture.jpg','Lt','Ariana','Murphy','Josephine','Nov 17, 1993',1,'A-','Fur',692,'Single','user1@gmail.com','May 10, 2023'),
   ('A73272','defaultProfilePicture.jpg','General','Tad','Isaac','Vance','Dec 9, 1981',0,'A-','Dinka',934,'Single','user1@gmail.com','May 20, 2023'),
@@ -248,7 +248,7 @@ VALUES
   ('A38526','defaultProfilePicture.jpg','Major','Astra','Mariko','Brody','Dec 13, 1960',0,'AB-','Luo',386,'Married','admin1@gmail.com','May 26, 2024'),
   ('A19614','defaultProfilePicture.jpg','Private','Fallon','Channing','Tatum','Oct 24, 1961',0,'AB-','Luo',950,'Married','user1@gmail.com','Mar 19, 2024'),
   ('A65572','defaultProfilePicture.jpg','General','Xander','Brenda','Mercedes','Jul 2, 2000',1,'O+','Bari',432,'Single','admin2@gmail.com','Feb 1, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A13201','defaultProfilePicture.jpg','Private','Mason','Orli','Chaney','Jan 21, 1953',1,'B-','Shilluk',130,'Single','admin2@gmail.com','Feb 26, 2024'),
   ('A22425','defaultProfilePicture.jpg','Private','Carson','Kiayada','Uriah','Jun 15, 1982',1,'A-','Dinka',477,'Single','admin1@gmail.com','Apr 6, 2023'),
@@ -270,7 +270,7 @@ VALUES
   ('A13843','defaultProfilePicture.jpg','General','Rose','McKenzie','Cruz','Jun 4, 1979',1,'O+','Luo',335,'Married','user1@gmail.com','Dec 22, 2023'),
   ('A88214','defaultProfilePicture.jpg','General','Kyle','Jasper','Nora','Nov 29, 1970',1,'A+','Fur',411,'Married','user1@gmail.com','Dec 9, 2022'),
   ('A45710','defaultProfilePicture.jpg','Captain','Samson','Shelby','Rahim','Jan 18, 2004',0,'B+','Azandi',927,'Single','user2@gmail.com','Mar 14, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A55678','defaultProfilePicture.jpg','General','Adam','Vladimir','Deborah','Mar 7, 1955',1,'AB+','Fur',313,'Single','user1@gmail.com','Dec 9, 2023'),
   ('A15748','defaultProfilePicture.jpg','General','Andrew','Kaitlin','Meredith','Jan 6, 1958',1,'O+','Azandi',216,'Married','admin2@gmail.com','Jun 3, 2023'),
@@ -292,7 +292,7 @@ VALUES
   ('A82653','defaultProfilePicture.jpg','General','Cassidy','Upton','Dahlia','Sep 14, 1951',0,'A-','Bari',151,'Married','user2@gmail.com','Feb 20, 2023'),
   ('A26914','defaultProfilePicture.jpg','General','Emma','Emerald','Raja','Oct 16, 2001',0,'A-','Luo',119,'Married','user2@gmail.com','Dec 10, 2024'),
   ('A69953','defaultProfilePicture.jpg','General','Hanae','Elvis','Nathan','Jul 2, 1967',0,'B+','Balanda',801,'Married','user2@gmail.com','May 1, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A46020','defaultProfilePicture.jpg','General','Solomon','Dalton','Nero','Jul 2, 1994',0,'O+','Acholi',253,'Married','admin2@gmail.com','Dec 7, 2023'),
   ('A89770','defaultProfilePicture.jpg','Captain','Ferris','Selma','Hyacinth','Apr 15, 1962',0,'A-','Azandi',894,'Married','admin2@gmail.com','Aug 25, 2023'),
@@ -304,7 +304,7 @@ VALUES
   ('A63530','defaultProfilePicture.jpg','Captain','Lareina','Coby','Melissa','Jan 24, 1952',1,'A-','Acholi',822,'Married','admin2@gmail.com','May 5, 2024'),
   ('A29786','defaultProfilePicture.jpg','General','Raven','Amela','Helen','May 4, 1974',1,'B+','Dinka',314,'Married','user2@gmail.com','Jun 9, 2024'),
   ('A62829','defaultProfilePicture.jpg','General','Anne','Warren','Jin','May 9, 1956',1,'A-','Dinka',799,'Single','admin1@gmail.com','Dec 11, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A60219','defaultProfilePicture.jpg','Major','Daryl','Yasir','Lois','Nov 10, 1984',1,'AB+','Fur',761,'Married','admin1@gmail.com','Jun 7, 2024'),
   ('A62354','defaultProfilePicture.jpg','General','Alec','Althea','Brett','Jan 21, 1968',1,'AB-','Fur',632,'Single','user1@gmail.com','May 9, 2024'),
@@ -326,7 +326,7 @@ VALUES
   ('A21178','defaultProfilePicture.jpg','Lt','Luke','Palmer','Kaitlin','Jul 22, 1967',0,'AB+','Bari',159,'Single','admin2@gmail.com','Feb 17, 2024'),
   ('A22833','defaultProfilePicture.jpg','Lt','Kelly','Aaron','Alfreda','Feb 14, 1984',1,'A-','Balanda',729,'Single','admin2@gmail.com','Jun 1, 2024'),
   ('A66147','defaultProfilePicture.jpg','Captain','Jemima','Asher','Sawyer','Mar 27, 1996',0,'AB+','Balanda',976,'Single','admin2@gmail.com','Aug 25, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A49222','defaultProfilePicture.jpg','General','Reagan','Rylee','Myra','Apr 17, 1994',0,'O+','Balanda',668,'Married','user1@gmail.com','Jan 13, 2025'),
   ('A17469','defaultProfilePicture.jpg','Private','Nomlanga','Gage','Driscoll','Feb 1, 1982',1,'B+','Shilluk',902,'Married','user1@gmail.com','Jun 12, 2023'),
@@ -348,7 +348,7 @@ VALUES
   ('A20232','defaultProfilePicture.jpg','General','Emery','Steven','Maia','Apr 15, 1977',1,'AB+','Nuer',620,'Married','admin2@gmail.com','Feb 26, 2023'),
   ('A01576','defaultProfilePicture.jpg','Lt','Roth','Lenore','Nevada','Dec 5, 1993',1,'A-','Bari',498,'Married','user2@gmail.com','Dec 6, 2022'),
   ('A80239','defaultProfilePicture.jpg','General','Mannix','Jolie','Lee','Oct 31, 1998',0,'A-','Acholi',136,'Single','user2@gmail.com','Jun 12, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A66798','defaultProfilePicture.jpg','General','Morgan','Kasper','Holmes','Feb 6, 1977',0,'AB+','Azandi',265,'Married','user2@gmail.com','Feb 14, 2025'),
   ('A56575','defaultProfilePicture.jpg','Captain','Ora','Carlos','Meghan','Jan 30, 1972',1,'O-','Fur',945,'Married','user1@gmail.com','Dec 8, 2024'),
@@ -360,7 +360,7 @@ VALUES
   ('A82144','defaultProfilePicture.jpg','Captain','Kirestin','Jessamine','Dylan','Jun 11, 1949',0,'AB-','Azandi',887,'Married','admin1@gmail.com','May 13, 2023'),
   ('A52776','defaultProfilePicture.jpg','General','Hiroko','Colleen','Xander','Apr 24, 1952',1,'B-','Shilluk',716,'Single','user1@gmail.com','Dec 25, 2022'),
   ('A64955','defaultProfilePicture.jpg','Lt','Stacy','Moana','Hedley','Jul 16, 1957',1,'B+','Balanda',667,'Married','admin1@gmail.com','Nov 5, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A33694','defaultProfilePicture.jpg','General','Jakeem','Tashya','Oscar','Dec 31, 2002',1,'O+','Balanda',650,'Single','user2@gmail.com','May 26, 2023'),
   ('A25707','defaultProfilePicture.jpg','Lt','Simon','Keiko','Brock','Oct 22, 1955',0,'A+','Fur',111,'Single','admin2@gmail.com','Jan 19, 2023'),
@@ -382,7 +382,7 @@ VALUES
   ('A56377','defaultProfilePicture.jpg','Lt','Porter','Nevada','Owen','Mar 11, 1967',1,'O+','Fur',946,'Single','user1@gmail.com','Apr 21, 2024'),
   ('A20082','defaultProfilePicture.jpg','Private','Bell','Chandler','Finn','Mar 16, 1996',0,'AB-','Shilluk',236,'Married','admin1@gmail.com','Jul 10, 2024'),
   ('A70129','defaultProfilePicture.jpg','General','Jenna','Oscar','Candace','Dec 10, 1958',1,'O+','Dinka',868,'Single','admin1@gmail.com','Jun 25, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A01786','defaultProfilePicture.jpg','General','Xyla','Jakeem','Kareem','May 11, 1969',0,'AB-','Nuer',519,'Married','admin1@gmail.com','Feb 13, 2023'),
   ('A18631','defaultProfilePicture.jpg','Captain','Adara','Molly','Lareina','Apr 26, 1958',0,'O-','Nuer',633,'Married','user1@gmail.com','Feb 2, 2025'),
@@ -404,7 +404,7 @@ VALUES
   ('A76812','defaultProfilePicture.jpg','Captain','Walter','Risa','Oliver','Aug 8, 1952',0,'B-','Acholi',386,'Single','user1@gmail.com','Nov 21, 2024'),
   ('A12714','defaultProfilePicture.jpg','General','Brock','Aline','Karen','Nov 7, 1984',1,'B-','Acholi',272,'Single','admin2@gmail.com','Jun 21, 2023'),
   ('A70059','defaultProfilePicture.jpg','Major','Lara','Prescott','Erin','Apr 18, 1956',1,'B-','Bari',664,'Single','user2@gmail.com','Mar 2, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A39151','defaultProfilePicture.jpg','Major','Zephania','Shelley','Lisandra','Apr 21, 1997',0,'B+','Bari',936,'Married','admin1@gmail.com','Sep 30, 2024'),
   ('A61231','defaultProfilePicture.jpg','Major','Nyssa','Louis','Lacey','Sep 5, 1963',0,'O+','Nuer',289,'Married','user1@gmail.com','Apr 23, 2023'),
@@ -416,7 +416,7 @@ VALUES
   ('A56319','defaultProfilePicture.jpg','Major','Quynn','Zephania','Neve','Feb 9, 1988',0,'O+','Dinka',865,'Married','admin1@gmail.com','Mar 5, 2023'),
   ('A12957','defaultProfilePicture.jpg','Lt','Giselle','Jarrod','Kathleen','Nov 28, 1981',0,'O+','Fur',219,'Single','user1@gmail.com','Jun 6, 2024'),
   ('A10838','defaultProfilePicture.jpg','General','Quemby','Joshua','Emery','May 4, 1982',0,'AB+','Nuer',989,'Single','user1@gmail.com','Dec 28, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A35122','defaultProfilePicture.jpg','Captain','Donovan','Alvin','Aretha','Dec 19, 1991',1,'A-','Azandi',393,'Married','admin2@gmail.com','Apr 23, 2023'),
   ('A88133','defaultProfilePicture.jpg','General','Kylan','Molly','Holmes','Jan 5, 1992',1,'A+','Bari',913,'Married','user1@gmail.com','Sep 14, 2024'),
@@ -438,7 +438,7 @@ VALUES
   ('A70662','defaultProfilePicture.jpg','Major','Amanda','Neve','Phillip','Apr 20, 1949',1,'B+','Nuer',731,'Single','admin1@gmail.com','Feb 26, 2025'),
   ('A86237','defaultProfilePicture.jpg','Captain','Berk','Brielle','Judith','Nov 19, 1992',1,'O-','Dinka',257,'Single','user2@gmail.com','Aug 7, 2024'),
   ('A49667','defaultProfilePicture.jpg','General','Wade','Wendy','Hedy','Feb 11, 1963',0,'A+','Acholi',195,'Married','user1@gmail.com','Feb 17, 2025');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A61595','defaultProfilePicture.jpg','Captain','Nadine','Bert','Beck','Feb 17, 2004',0,'AB+','Fur',590,'Single','user1@gmail.com','Apr 6, 2023'),
   ('A73610','defaultProfilePicture.jpg','Private','Herrod','Maris','Stacy','Nov 2, 1951',0,'AB+','Bari',982,'Single','user2@gmail.com','May 30, 2024'),
@@ -460,7 +460,7 @@ VALUES
   ('A32494','defaultProfilePicture.jpg','General','Julie','Daquan','Jasmine','Jun 6, 1994',1,'B-','Azandi',297,'Single','user2@gmail.com','Jul 21, 2024'),
   ('A56181','defaultProfilePicture.jpg','General','Mason','May','Rhona','Aug 16, 1990',0,'O+','Balanda',361,'Married','user2@gmail.com','Nov 29, 2022'),
   ('A33212','defaultProfilePicture.jpg','General','Wanda','Brittany','Ila','Oct 23, 1965',1,'AB-','Nuer',453,'Single','admin2@gmail.com','Dec 5, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A43478','defaultProfilePicture.jpg','Major','Noelani','Giacomo','Solomon','Apr 28, 1969',0,'A+','Acholi',578,'Single','admin1@gmail.com','Nov 8, 2023'),
   ('A77336','defaultProfilePicture.jpg','Captain','Gloria','Nehru','Jennifer','Dec 30, 1995',1,'A-','Acholi',183,'Single','admin2@gmail.com','May 3, 2023'),
@@ -472,7 +472,7 @@ VALUES
   ('A65753','defaultProfilePicture.jpg','Captain','Kim','Aaron','Tana','Jan 25, 1959',0,'AB+','Fur',682,'Married','user1@gmail.com','Sep 24, 2024'),
   ('A23640','defaultProfilePicture.jpg','General','Larissa','Dustin','Tobias','Apr 6, 1987',0,'B+','Acholi',432,'Married','admin1@gmail.com','Aug 3, 2023'),
   ('A64160','defaultProfilePicture.jpg','Captain','Veronica','Astra','Jerome','Feb 20, 1963',0,'A+','Shilluk',329,'Married','admin2@gmail.com','Aug 11, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A62118','defaultProfilePicture.jpg','Lt','Gregory','Carissa','Ifeoma','May 17, 2003',1,'O-','Azandi',596,'Single','user1@gmail.com','Jan 11, 2023'),
   ('A80544','defaultProfilePicture.jpg','General','Mary','Boris','Nina','Jan 4, 1967',1,'A-','Balanda',987,'Single','admin2@gmail.com','Apr 21, 2023'),
@@ -494,7 +494,7 @@ VALUES
   ('A47579','defaultProfilePicture.jpg','Captain','Hiram','Grace','Colt','Mar 18, 1981',0,'B-','Nuer',331,'Married','admin2@gmail.com','Aug 22, 2024'),
   ('A25465','defaultProfilePicture.jpg','General','Zena','Oscar','Janna','Aug 11, 1956',1,'B+','Dinka',640,'Married','user1@gmail.com','Nov 20, 2022'),
   ('A21485','defaultProfilePicture.jpg','Lt','Zane','Jayme','Tanisha','Oct 23, 1979',0,'A-','Dinka',632,'Single','admin1@gmail.com','Sep 17, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A51124','defaultProfilePicture.jpg','Captain','Chase','Dante','Laith','Jun 5, 1964',1,'AB-','Bari',744,'Married','user2@gmail.com','Dec 1, 2022'),
   ('A32415','defaultProfilePicture.jpg','General','Noble','Mallory','Derek','Jan 30, 1993',1,'B-','Acholi',554,'Single','user2@gmail.com','Oct 13, 2023'),
@@ -516,7 +516,7 @@ VALUES
   ('A65382','defaultProfilePicture.jpg','Major','Fiona','Rinah','Jemima','Jan 3, 1951',0,'A+','Dinka',780,'Single','admin2@gmail.com','Apr 17, 2024'),
   ('A43928','defaultProfilePicture.jpg','Captain','Laith','Lars','Maite','Oct 17, 1952',1,'O+','Nuer',451,'Married','admin1@gmail.com','Apr 24, 2024'),
   ('A59362','defaultProfilePicture.jpg','Major','Anne','Ciaran','Yvonne','May 22, 1990',1,'B-','Luo',898,'Single','admin2@gmail.com','Apr 5, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A62847','defaultProfilePicture.jpg','Lt','Fulton','Zahir','Walter','Mar 31, 1965',1,'A-','Dinka',792,'Married','admin2@gmail.com','Dec 9, 2024'),
   ('A74838','defaultProfilePicture.jpg','General','Dominic','Kelsie','Ali','Jan 16, 1953',1,'B-','Dinka',674,'Single','admin2@gmail.com','Dec 5, 2022'),
@@ -528,7 +528,7 @@ VALUES
   ('A61357','defaultProfilePicture.jpg','General','Lynn','Austin','Carter','Sep 17, 2000',1,'A+','Fur',594,'Single','user2@gmail.com','Jan 15, 2025'),
   ('A65550','defaultProfilePicture.jpg','Lt','Prescott','Mark','Phillip','Oct 25, 1953',1,'A-','Nuer',464,'Married','user1@gmail.com','Oct 9, 2023'),
   ('A52104','defaultProfilePicture.jpg','General','Darrel','Quinn','Chaney','May 1, 1953',1,'AB+','Fur',728,'Single','admin2@gmail.com','Feb 24, 2025');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A14697','defaultProfilePicture.jpg','General','Akeem','Raymond','Clinton','Jan 29, 1966',0,'AB+','Shilluk',759,'Married','user1@gmail.com','Feb 25, 2025'),
   ('A09831','defaultProfilePicture.jpg','General','Simon','Jack','Deborah','Jun 1, 1993',1,'B+','Balanda',161,'Married','user1@gmail.com','May 30, 2023'),
@@ -550,7 +550,7 @@ VALUES
   ('A90427','defaultProfilePicture.jpg','General','Candice','Quon','Micah','Jan 15, 1995',0,'A-','Balanda',202,'Single','user1@gmail.com','Nov 7, 2022'),
   ('A07060','defaultProfilePicture.jpg','General','Macey','Tyler','Caldwell','Jun 20, 1978',0,'O-','Azandi',243,'Single','user1@gmail.com','Jan 20, 2023'),
   ('A86844','defaultProfilePicture.jpg','General','Gwendolyn','Alec','Reece','Aug 3, 1994',0,'B+','Luo',207,'Married','user1@gmail.com','Mar 16, 2023');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A85568','defaultProfilePicture.jpg','Major','Jenna','Roanna','Lucas','Jun 4, 1970',1,'B-','Shilluk',832,'Married','admin1@gmail.com','May 7, 2023'),
   ('A67229','defaultProfilePicture.jpg','Lt','Ingrid','Deacon','Gabriel','May 5, 1952',1,'B-','Bari',480,'Married','user1@gmail.com','Nov 2, 2024'),
@@ -572,7 +572,7 @@ VALUES
   ('A62724','defaultProfilePicture.jpg','General','Madonna','McKenzie','Athena','Dec 7, 1962',1,'O+','Bari',640,'Married','user2@gmail.com','Jul 14, 2024'),
   ('A44118','defaultProfilePicture.jpg','General','Aline','Bethany','Helen','Jun 6, 1995',1,'A-','Balanda',536,'Married','admin2@gmail.com','Oct 27, 2023'),
   ('A78142','defaultProfilePicture.jpg','General','Tanek','Amethyst','Beverly','Jun 8, 1964',1,'AB-','Nuer',169,'Married','user1@gmail.com','Aug 3, 2024');
-INSERT INTO [myTable] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
+INSERT INTO [sspdf].[dbo].[PersonalDetail] (MilitaryNo,ProfilePicture,SoldierRank,FirstName,MiddleName,LastName,DateOfBirth,Gender,BloodGroup,Ethnicity,ShieldNo,MaritalStatus,CreatedBy,CreatedOn)
 VALUES
   ('A77193','defaultProfilePicture.jpg','General','Scarlet','Tarik','Olympia','Jul 20, 2000',0,'AB+','Shilluk',464,'Single','user1@gmail.com','Dec 1, 2023'),
   ('A76436','defaultProfilePicture.jpg','General','Selma','Raphael','Eric','Aug 24, 1968',1,'A-','Azandi',689,'Married','user2@gmail.com','May 12, 2024'),
