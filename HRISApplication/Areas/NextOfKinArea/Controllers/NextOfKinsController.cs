@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.NextOfKinArea.Controllers
     public class NextOfKinsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public NextOfKinsController(SspdfContext context)
         {
@@ -62,9 +65,17 @@ namespace HRISApplication.Areas.NextOfKinArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Occupation,TelephoneNo,MilitaryNo")] NextOfKin nextOfKin)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(NextOfKin),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(nextOfKin);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = nextOfKin.MilitaryNo });
             }
@@ -100,11 +111,19 @@ namespace HRISApplication.Areas.NextOfKinArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Language),
+                CreatedOn = DateTime.UtcNow,
+            };
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(nextOfKin);
                     await _context.SaveChangesAsync();
                 }
@@ -149,9 +168,17 @@ namespace HRISApplication.Areas.NextOfKinArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(NextOfKin),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var nextOfKin = await _context.NextOfKins.FindAsync(id);
             if (nextOfKin != null)
             {
+                _context.Add(log);
                 _context.NextOfKins.Remove(nextOfKin);
             }
 

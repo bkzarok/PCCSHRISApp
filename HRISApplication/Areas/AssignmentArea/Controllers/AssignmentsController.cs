@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
 using System.Net;
+using HRISApplication.Areas.AddressArea.Models;
 
 namespace HRISApplication.Areas.AssignmentArea.Controllers
 {
@@ -14,6 +15,9 @@ namespace HRISApplication.Areas.AssignmentArea.Controllers
     public class AssignmentsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public AssignmentsController(SspdfContext context)
         {
@@ -63,9 +67,16 @@ namespace HRISApplication.Areas.AssignmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Unit,PeriodFrom,PeriodTo,PositionHeld,MilitaryNo")] Assignment assignment)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Assignment),
+                CreatedOn = DateTime.UtcNow,
+            };
             if (ModelState.IsValid)
             {
                 _context.Add(assignment);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { Id = assignment.MilitaryNo });
             }
@@ -102,10 +113,18 @@ namespace HRISApplication.Areas.AssignmentArea.Controllers
                 return NotFound();
             }
 
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Assignment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(assignment);
                     await _context.SaveChangesAsync();
                 }
@@ -150,9 +169,17 @@ namespace HRISApplication.Areas.AssignmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Assignment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var assignment = await _context.Assignments.FindAsync(id);
             if (assignment != null)
             {
+                _context.Add(log);
                 _context.Assignments.Remove(assignment);
             }
 

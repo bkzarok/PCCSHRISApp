@@ -22,7 +22,7 @@ namespace HRISApplication.Areas.Controllers
         private static readonly string CREATE_ACTION = "CREATED";
         private static readonly string DELETED_ACTION = "DELETED";
         private static readonly string EDITED_ACTION = "EDITED";
-
+        private readonly object soldierGenderCount;
         private IWebHostEnvironment _env;
         public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
         {
@@ -67,18 +67,32 @@ namespace HRISApplication.Areas.Controllers
                group s by s.BloodGroup into g
                select new WordCount { Word =g.Key, Count = g.Count() };
 
-            var soldierGenderCount =
+            var soldierEthnicityCount =
                from s in _context.PersonalDetails
                group s by s.Gender into g
                select new WordCount { Word = g.Key ? "Male":"Female", Count = g.Count() };
+
+            var ethnicitydCount =
+              from s in _context.PersonalDetails
+              group s by s.Ethnicity into g
+              select new WordCount { Word = g.Key, Count = g.Count() };
 
             var soldierBirthDayCount =
                from s in _context.PersonalDetails
                group s by s.DateOfBirth into g
                select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
 
-                
+            
             List<WordCount> newwordscount = new List<WordCount>();
+
+            DateTime dateTime1989 = DateTime.Parse("01-01-1989");
+            DateTime dateTime1984 = DateTime.Parse("01-01-1984");
+
+            var date19891984 = new WordCount
+            {
+                Word = "1989-1984",
+                Count = 0
+            };
 
             DateTime dateTime1996 = DateTime.Parse("01-01-1996");
             DateTime dateTime1990 = DateTime.Parse("01-01-1990");
@@ -123,19 +137,29 @@ namespace HRISApplication.Areas.Controllers
                 {
                     date19961990.Count++;
                 }
+                if (dateTime < dateTime1989 && dateTime > dateTime1984)
+                {
+                    date20011997.Count++;
+                }
+                if (dateTime < dateTime1996)
+                {
+                    date19891984.Count++;
+                }
             }
 
             newwordscount.Add(date20022005);
             newwordscount.Add(date20011997);
             newwordscount.Add(date19961990);
-            
+            newwordscount.Add(date19891984);
+
 
 
             var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
                 IEnumerable<WordCount>, IEnumerable<WordCount>>(
                 soldierRankCount.ToList(),
                 soldierBloodGroupCount.ToList(),
-                soldierGenderCount.ToList(),
+                //soldierGenderCount.ToList(),
+                soldierEthnicityCount.ToList(),
                 newwordscount);
 
             return View(mycharts);

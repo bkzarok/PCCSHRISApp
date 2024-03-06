@@ -37,6 +37,16 @@
         <div class="col-md" style="margin-top:50px">
             <div class="card">
                 <div class="card-header">
+                    <h4>Ethnicity Count</h4>
+                </div>
+                <canvas id="ethnicityBarChart"></canvas>
+
+            </div>
+        </div>
+
+        <div class="col-md" style="margin-top:50px">
+            <div class="card">
+                <div class="card-header">
                     <h4>BirthDay Count</h4>
                 </div>
                 <canvas id="birthdayLineChart"></canvas>
@@ -55,6 +65,7 @@
         var rankcount = @Html.Raw(Json.Serialize(Model.Item1));
         var bloodGroupCount = @Html.Raw(Json.Serialize(Model.Item2));
         var genderCount = @Html.Raw(Json.Serialize(Model.Item3));
+        var ethnicityCount = @Html.Raw(Json.Serialize(Model.Item3));
         var birthdayCount = @Html.Raw(Json.Serialize(Model.Item4));
 
         console.log(JSON.stringify(rankcount));
@@ -143,7 +154,7 @@
         const genderData = {
             labels: genderWords,
             datasets: [{
-                label: '# of Ranks',
+                label: '# of Genders',
                 data: genderCounts,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -166,6 +177,46 @@
                 borderWidth: 1
             }]
         };
+
+        console.log(JSON.stringify(ethnicityCount));
+
+        var ethnicityWords = ethnicityCount.map(function (item) {
+
+            return `${item.word}`;
+        });
+
+        var ethnicityCounts = ethnicityCount.map(function (item) {
+            return `${item.count}`;
+        });
+
+
+        const ethnicityData = {
+            labels: ethnicityWords,
+            datasets: [{
+                label: '# of Ethnicities',
+                data: ethnicityCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
 
         var birthdayWords = birthdayCount.map(function (item) {
 

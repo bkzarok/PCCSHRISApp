@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.LanguageArea.Controllers
     public class LanguagesController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string EDITED_ACTION = "EDITED";
+        private static readonly string DELETED_ACTION = "DELETED";
 
         public LanguagesController(SspdfContext context)
         {
@@ -59,9 +62,17 @@ namespace HRISApplication.Areas.LanguageArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Type,Name,FluencyLevel,MilitaryNo")] Language language)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Language),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(language);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = language.MilitaryNo });
             }
@@ -97,11 +108,19 @@ namespace HRISApplication.Areas.LanguageArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Language),
+                CreatedOn = DateTime.UtcNow,
+            };
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(language);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +164,17 @@ namespace HRISApplication.Areas.LanguageArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Language),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var language = await _context.Languages.FindAsync(id);
             if (language != null)
             {
+                _context.Add(log);
                 _context.Languages.Remove(language);
             }
 

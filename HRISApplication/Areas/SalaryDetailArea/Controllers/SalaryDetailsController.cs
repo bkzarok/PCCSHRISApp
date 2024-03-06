@@ -14,6 +14,9 @@ namespace HRISApplication.Areas.SalaryDetailArea.Controllers
     public class SalaryDetailsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public SalaryDetailsController(SspdfContext context)
         {
@@ -72,9 +75,17 @@ namespace HRISApplication.Areas.SalaryDetailArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Grade,BasicPay,Cola,ResponsibiltyAllowance,RepresentationAllowance,HouseAllowance,GrossTotal,Pit,Pension,TotalDeduction,NetPay,MilitaryNo")] SalaryDetail salaryDetail)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(SalaryDetail),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(salaryDetail);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { Id = salaryDetail.MilitaryNo });
             }
@@ -110,11 +121,18 @@ namespace HRISApplication.Areas.SalaryDetailArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(SalaryDetail),
+                CreatedOn = DateTime.UtcNow,
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(salaryDetail);
                     await _context.SaveChangesAsync();
                 }
@@ -159,9 +177,16 @@ namespace HRISApplication.Areas.SalaryDetailArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(SalaryDetail),
+                CreatedOn = DateTime.UtcNow,
+            };
             var salaryDetail = await _context.SalaryDetails.FindAsync(id);
             if (salaryDetail != null)
             {
+                _context.Add(log);
                 _context.SalaryDetails.Remove(salaryDetail);
             }
 

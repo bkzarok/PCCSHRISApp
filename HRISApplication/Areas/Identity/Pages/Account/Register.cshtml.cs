@@ -127,7 +127,7 @@ namespace HRISApplication.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            Input = new InputModel()
+             Input = new InputModel()
             {
                 Role = _roleManager.Roles.Where(x => x.Name == "Admin").FirstOrDefault().Name,
             };

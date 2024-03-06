@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.ChildArea.Controllers
     public class ChildrenController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public ChildrenController(SspdfContext context)
         {
@@ -62,9 +65,17 @@ namespace HRISApplication.Areas.ChildArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,DateOfBirth,Occupation,MilitaryNo")] Child child)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Child),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(child);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = child.MilitaryNo });
             }
@@ -96,6 +107,13 @@ namespace HRISApplication.Areas.ChildArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DateOfBirth,Occupation,MilitaryNo")] Child child)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Child),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (id != child.Id)
             {
                 return NotFound();
@@ -105,6 +123,7 @@ namespace HRISApplication.Areas.ChildArea.Controllers
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(child);
                     await _context.SaveChangesAsync();
                 }
@@ -149,9 +168,17 @@ namespace HRISApplication.Areas.ChildArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Child),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var child = await _context.Children.FindAsync(id);
             if (child != null)
             {
+                _context.Add(log);
                 _context.Children.Remove(child);
             }
 

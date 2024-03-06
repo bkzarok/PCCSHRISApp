@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.SpouseArea.Controllers
     public class SpousesController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public SpousesController(SspdfContext context)
         {
@@ -60,9 +63,17 @@ namespace HRISApplication.Areas.SpouseArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Type,State,County,Occupation,TelephoneNo,MilitaryNo")] Spouse spouse)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Spouse),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(spouse);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = spouse.MilitaryNo });
             }
@@ -98,11 +109,17 @@ namespace HRISApplication.Areas.SpouseArea.Controllers
             {
                 return NotFound();
             }
-
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Spouse),
+                CreatedOn = DateTime.UtcNow,
+            };
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(spouse);
                     await _context.SaveChangesAsync();
                 }
@@ -146,9 +163,16 @@ namespace HRISApplication.Areas.SpouseArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Spouse),
+                CreatedOn = DateTime.UtcNow,
+            };
             var spouse = await _context.Spouses.FindAsync(id);
             if (spouse != null)
             {
+                _context.Add(log);
                 _context.Spouses.Remove(spouse);
             }
 

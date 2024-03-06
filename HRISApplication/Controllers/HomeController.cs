@@ -10,6 +10,7 @@ namespace HRISApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SspdfContext _context;
+        
 
         public HomeController(ILogger<HomeController> logger, SspdfContext context)
         {
@@ -33,6 +34,11 @@ namespace HRISApplication.Controllers
                from s in _context.PersonalDetails
                group s by s.Gender into g
                select new WordCount { Word = g.Key ? "Male" : "Female", Count = g.Count() };
+
+            var ethnicityCount =
+               from s in _context.PersonalDetails
+               group s by s.Ethnicity into g
+               select new WordCount { Word = g.Key, Count = g.Count() };
 
             var soldierBirthDayCount =
                from s in _context.PersonalDetails
@@ -99,6 +105,7 @@ namespace HRISApplication.Controllers
                 soldierRankCount.ToList(),
                 soldierBloodGroupCount.ToList(),
                 soldierGenderCount.ToList(),
+                //soldierEthnicityCount.ToList(),
                 newwordscount);
 
             return View(mycharts);
