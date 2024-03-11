@@ -27,8 +27,7 @@
         <thead class="table-dark">
             <tr>
                 <th>
-                    @* <i class="fa-solid fa-sort"></i> *@
-                   @*  <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">@Html.DisplayNameFor(model => model.First().MilitaryNo)</a> *@
+                    
                     @Html.DisplayNameFor(model => model.First().MilitaryNo)
                 </th>
                 <th>
@@ -74,7 +73,7 @@
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model) {
+ @*    @foreach (var item in Model) {
             <tr>
                  <td>
                     @Html.DisplayFor(modelItem => item.MilitaryNo)
@@ -82,9 +81,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.SoldierRank)
                 </td>
-                @* <td>
-                    <img class="img-responsive " src="data:image/jpeg;base64,@Convert.ToBase64String(item.ProfilePicture)" style="max-height:200px; max-width: 200px;"/>
-                </td> *@
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
@@ -100,14 +97,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.BloodGroup)
                 </td>
-                @* <td>
-                    @Html.DisplayFor(modelItem => item.Ethnicity)
-                </td> *@
+              
                 <td>
                     @Html.DisplayFor(modelItem => item.ShieldNo)
                 </td>
                 <td>
-                   @*  @Html.DisplayFor(modelItem => item.Gender) *@
+                 
 
                         @if (item.Gender)
                         {
@@ -119,10 +114,8 @@
                             @:Female
                         }
                     </td>
-                @* <td>
-                    @Html.DisplayFor(modelItem => item.MaritalStatus)
-                </td> *@
-                 <td class ="text-nowrap">
+             
+                <td class ="text-nowrap">
                     <a asp-action="Edit" asp-route-id="@item.MilitaryNo" title="Edit" ><i class="fa-solid fa-gear"></i></a> |
                     <a asp-action="Details" asp-route-id="@item.MilitaryNo" title="Details" ><i class="fa-solid fa-circle-info text-black"></i></a> |
                     <a asp-action="Delete" asp-route-id="@item.MilitaryNo" title="Delete" ><i class="fa-solid fa-trash text-danger"></i></a>
@@ -147,44 +140,19 @@
                         <option value="15">Salary Details</option>
                         <option value="16">Files</option>
 
-                           
-
                     </select>
                 </td>
                 <td class="text-nowrap">
-                        <a href="javascript:void(0);" class="moreInfoIndex" data-id="@item.MilitaryNo" title="More Settings" ><i class="fa-solid fa-bars"></i></a>
-                   @*  <a href="javascript:void(0);" class="moreInfoDetails" data-id="@item.MilitaryNo">Details</a> |
-                    <a href="javascript:void(0);" class="moreInfoDelete" data-id="@item.MilitaryNo">Delete</a> | *@
+                        <a href="javascript:void(0);" class="moreInfoIndex" data-id="@item.MilitaryNo" title="More Settings" ><i class="fa-solid fa-bars"></i></a>            
                         <a asp-action="DetailsAll" asp-route-id="@item.MilitaryNo" title="Details"><i class="fa-solid fa-circle-info text-black"></i></a> |
 
                 </td>
             </tr>
-    }
+    } *@
         </tbody>
     </table>
 </div>
-@* @{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a> *@
-@* <p>
-    Total: @(Model.Tot)
-</p> *@
 
 @section scripts{
 
@@ -197,7 +165,7 @@
 
 
             var table = $('#personalDetailsTable').DataTable({
-                lengthChange: false,
+                "dom": "lBftrip",
                 buttons: [
                     'copy',
                     'excel',
@@ -206,33 +174,90 @@
                         pageSize: 'TABLOID',
                         footer: true,
                         exportOptions:
-                            {
-                                columns: [0,1,2,3,4,5,6,7,8]
-                            }
+                        {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        }
                     },
                     'csv',
                     'colvis',
-                ]
+                ],
+
+
+                ajax: {
+                    url: "PersonalDetailsArea/PersonalDetails/GetPersonalDetails",
+                    type: "POST",
+                },
+                processing: true,
+                serverSide: true,
+                filter: true,
+                columns: [
+                    { data: "militaryNo" },
+                    { data: "soldierRank" },
+                    { data: "firstName" },
+                    { data: "middleName" },
+                    { data: "lastName" },
+                    { data: "dateOfBirth" },
+                    { data: "bloodGroup" },
+                    { data: "shieldNo" },
+                    { data: "gender" },
+                    {
+                        data: 'militaryNo', render: function (data, type, row, meta) {
+                            return '<div class="text-nowrap"><a href="PersonalDetailsArea/PersonalDetails/Edit?id=' + data + '" id="editPersonalDetail" title="Edit" ><i class="fa-solid fa-gear"></i></a> | ' +
+                                '<a href="PersonalDetailsArea/PersonalDetails/Details?id=' + data + '" id="detailsPersonalDetail" title="Details" ><i class="fa-solid fa-circle-info text-black"></i></a> | ' +
+                                '<a href="PersonalDetailsArea/PersonalDetails/Delete?id=' + data + '" id="deletePersonalDetail" title="Delete" ><i class="fa-solid fa-trash text-danger"></i></a></div>';
+                        }
+                    },                
+                    {
+                        data: 'militaryNo', render: function (data, type, row, meta) {
+                            return '<select name="moreInfo" id="'+data+'-id">'
+                               +' <option value="0">Please Select</option>'
+                                +'<option value="1">Address</option>'
+                                +'<option value="2">Next of Kin</option>'
+                                +'<option value="3">Enrollment</option>'
+                                +'<option value="4">Training</option>'
+                                +'<option value="5">Battle</option>'
+                                +'<option value="6">Assignment</option>'
+                                +'<option value="7">School</option>'
+                                +'<option value="8">Language</option>'
+                                +'<option value="9">Child</option>'
+                                +'<option value="10">Promotion</option>'
+                                +'<option value="11">Imprisonment</option>'
+                                +'<option value="12">Parent</option>'
+                                +'<option value="13">Spouse</option>'
+                                +'<option value="14">Health Condition</option>'
+                                +'<option value="15">Salary Details</option>'
+                                +'<option value="16">Files</option></select>';
+                        }
+                    },
+                    {
+                        data: 'militaryNo', render: function (data, type, row, meta) {
+                            return ' <a href="javascript:void(0);" class="moreInfoIndex"  title="More Settings" ><i class="fa-solid fa-bars"></i></a> | '
+                            +'<a href="PersonalDetailsArea/PersonalDetails/DetailsAll?id=' + data + '" title="Details"><i class="fa-solid fa-circle-info text-black"></i></a> ';
+                        }                        
+                     },                   
+                ],
+
+                lengthChange: false,
+               
+
             });
 
             table.buttons().container()
                 .appendTo('#personalDetailsTable_wrapper .col-md-6:eq(0)');
-        });
+    
 
-        $(function () {
+            $('#personalDetailsTable tbody').on('click', '.moreInfoIndex', function () {
+                var data = table.row($(this).parents('tr')).data();
 
-            $('.moreInfoIndex').click(function () {
-
-                var $buttonClicked = $(this);
-                var militaryNo = $buttonClicked.attr('data-id');
+                var militaryNo = data["militaryNo"];
 
                 var dropdown = $('#' + militaryNo + '-id');
-                
+
                 var selectedValue = dropdown.val();
 
                 console.log(selectedValue + ' ___ ' + '#' + militaryNo + '-id');
 
-                switch (selectedValue) { 
+                switch (selectedValue) {
                     case '1':
                         window.location.href = 'AddressArea/Addresses/Index?id=' + militaryNo;
                         break;
@@ -284,9 +309,9 @@
                     default:
                         break;
                 }
+           
             });
         });
-
 
 
     </script>

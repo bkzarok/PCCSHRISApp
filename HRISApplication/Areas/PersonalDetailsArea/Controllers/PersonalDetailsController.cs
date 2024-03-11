@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using HRISApplication.Models.ChartModels;
+using Azure;
+
 
 namespace HRISApplication.Areas.Controllers
 {
@@ -33,8 +35,51 @@ namespace HRISApplication.Areas.Controllers
 
         // GET: PersonalDetails
         public async Task<IActionResult> Index()
-        {            
-            return View(await _context.PersonalDetails.ToListAsync());
+        {
+            
+            //return View(await _context.PersonalDetails.ToListAsync());
+           return View(new List<PersonalDetail>());
+        }
+
+        [HttpPost]
+        public JsonResult GetPersonalDetails()
+        {
+            int totalRecord = 0;
+            int filterRecord = 0;
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+            int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+            var data = _context.Set<PersonalDetail>().AsQueryable();
+            //get total count of data in table
+            totalRecord = data.Count();
+            // search data when search value found
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                data = data.Where(x => x.FirstName.ToLower().Contains(searchValue.ToLower())
+                || x.MiddleName.ToLower().Contains(searchValue.ToLower()) ||
+                x.LastName.ToLower().Contains(searchValue.ToLower()) ||
+                x.SoldierRank.ToString().ToLower().Contains(searchValue.ToLower()));
+            }
+            // get total count of records after search
+            filterRecord = data.Count();
+            //sort data
+            if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+                data = data.OrderBy(s => sortColumn + " " + sortColumnDirection);
+            //pagination
+            var empList = data.Skip(skip).Take(pageSize).ToList();
+            var returnObj = new
+            {
+                draw = draw,
+                recordsTotal = totalRecord,
+                recordsFiltered = filterRecord,
+                data = empList
+            };
+
+
+            return Json(returnObj);
         }
 
         // GET: PersonalDetails/Details/5
