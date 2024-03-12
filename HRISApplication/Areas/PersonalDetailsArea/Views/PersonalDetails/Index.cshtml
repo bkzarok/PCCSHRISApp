@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HRISApplication.Models.PersonalDetail>
+﻿@model PaginatedList<HRISApplication.Models.PersonalDetail>
 
 @{
     ViewData["Title"] = "Index";
@@ -20,16 +20,14 @@
     </div>
 </div>
 
-
-
 <div class="table-responsive">
     <table class="table table-striped table-bordered" id="personalDetailsTable" style="width:100%">
         <thead class="table-dark">
             <tr>
                 <th>
-                    @* <i class="fa-solid fa-sort"></i> *@
-                   @*  <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">@Html.DisplayNameFor(model => model.First().MilitaryNo)</a> *@
-                    @Html.DisplayNameFor(model => model.First().MilitaryNo)
+                    <i class="fa-solid fa-sort"></i> 
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["MilitayNoSortParm"]">@Html.DisplayNameFor(model => model.First().MilitaryNo)</a>
+                    @* @Html.DisplayNameFor(model => model.First().MilitaryNo) *@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().SoldierRank)
@@ -38,20 +36,22 @@
                     @Html.DisplayNameFor(model => model.First().ProfilePicture)
                 </th> *@
                 <th>
-                    @* <i class="fa-solid fa-sort"></i> *@
-                    @* <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">@Html.DisplayNameFor(model => model.First().FirstName)</a> *@
-                    @Html.DisplayNameFor(model => model.First().FirstName)
+                    <i class="fa-solid fa-sort"></i> 
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">@Html.DisplayNameFor(model => model.First().FirstName)</a>
+                   @*  @Html.DisplayNameFor(model => model.First().FirstName) *@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().MiddleName)
                 </th>
                 <th>
-                    @* <i class="fa-solid fa-sort"></i> *@
-                    @* <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">@Html.DisplayNameFor(model => model.First().LastName)</a> *@
+                    @* <i class="fa-solid fa-sort"></i>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">@Html.DisplayNameFor(model => model.First().LastName)</a> *@
                     @Html.DisplayNameFor(model => model.First().LastName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().DateOfBirth)
+                    <i class="fa-solid fa-sort"></i>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateOfBirthSortParm"]">@Html.DisplayNameFor(model => model.First().DateOfBirth)</a>
+                    @* @Html.DisplayNameFor(model => model.First().DateOfBirth) *@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().BloodGroup)
@@ -163,7 +163,10 @@
         </tbody>
     </table>
 </div>
-@* @{
+
+Page @Model.PageIndex of @Model.TotalPages - Total @Model.TotalCount
+
+@{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
@@ -181,23 +184,20 @@
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @nextDisabled">
     Next
-</a> *@
-@* <p>
-    Total: @(Model.Tot)
-</p> *@
+</a>
+
 
 @section scripts{
 
-    
-
-
     <script type="text/javascript">
-
         $(document).ready(function () {
-
 
             var table = $('#personalDetailsTable').DataTable({
                 lengthChange: false,
+                info: false,
+                ordering:false,
+                //searching: false,
+                paging:false,
                 buttons: [
                     'copy',
                     'excel',

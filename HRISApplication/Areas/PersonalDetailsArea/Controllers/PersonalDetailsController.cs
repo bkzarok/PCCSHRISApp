@@ -16,25 +16,64 @@ namespace HRISApplication.Areas.Controllers
 {
     [Area("PersonalDetailsArea")]
     [Authorize(Roles = "Admin, User")]
-    public class PersonalDetailsController : Controller
+    public class PersonalDetailsController(SspdfContext context, IWebHostEnvironment env) : Controller
     {
-        private readonly SspdfContext _context;
+        private readonly SspdfContext _context = context;
         private static readonly string CREATE_ACTION = "CREATED";
         private static readonly string DELETED_ACTION = "DELETED";
         private static readonly string EDITED_ACTION = "EDITED";
         private readonly object soldierGenderCount;
-        private IWebHostEnvironment _env;
-        public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
-        {
-            _context = context;
-            _env = env;
-            
-        }
+        private IWebHostEnvironment _env = env;
+
+
 
         // GET: PersonalDetails
-        public async Task<IActionResult> Index()
-        {            
-            return View(await _context.PersonalDetails.ToListAsync());
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateOfBirthSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var personalDetails = from s in _context.PersonalDetails
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                personalDetails = personalDetails.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    personalDetails = personalDetails.OrderByDescending(s => s.LastName);
+                    break;
+                case "Date":
+                    personalDetails = personalDetails.OrderBy(s => s.DateOfBirth);
+                    break;
+                case "date_desc":
+                    personalDetails = personalDetails.OrderByDescending(s => s.DateOfBirth);
+                    break;
+                default:
+                    personalDetails = personalDetails.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<PersonalDetail>.CreateAsync(personalDetails.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: PersonalDetails/Details/5
