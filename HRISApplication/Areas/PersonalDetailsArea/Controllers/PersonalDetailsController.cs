@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using HRISApplication.Models.ChartModels;
-using Azure;
-
 
 namespace HRISApplication.Areas.Controllers
 {
@@ -67,7 +58,14 @@ namespace HRISApplication.Areas.Controllers
             filterRecord = data.Count();
             //sort data
             if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
-                data = data.OrderBy(s => sortColumn + " " + sortColumnDirection);
+            {
+                if(sortColumnDirection.Equals("asc"))
+                    data = PersonalDetailOrderByASC(data, sortColumn);
+
+                data = PersonalDetailOrderByDESC(data, sortColumn);
+                
+            }
+                
             //pagination
             var empList = data.Skip(skip).Take(pageSize).ToList();
             var returnObj = new
@@ -81,6 +79,8 @@ namespace HRISApplication.Areas.Controllers
 
             return Json(returnObj);
         }
+
+
 
         // GET: PersonalDetails/Details/5
         public async Task<IActionResult> Details(string id)
@@ -196,8 +196,6 @@ namespace HRISApplication.Areas.Controllers
             newwordscount.Add(date20011997);
             newwordscount.Add(date19961990);
             newwordscount.Add(date19891984);
-
-
 
             var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
                 IEnumerable<WordCount>, IEnumerable<WordCount>>(
@@ -393,6 +391,67 @@ namespace HRISApplication.Areas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+       private IQueryable<PersonalDetail> PersonalDetailOrderByASC(IQueryable<PersonalDetail> query, string orderColumn)
+        {
+            switch(orderColumn)
+            {
+                case "MilitaryNo":
+                    return query.OrderBy(q => q.MilitaryNo);
+                case "SoldierRank":
+                    return query.OrderBy(q => q.SoldierRank);
+                case "FirstName":
+
+                    return query.OrderBy(q => q.FirstName);
+                case "MiddleName":
+
+                    return query.OrderBy(q => q.MiddleName);
+                case "LastName":
+
+                    return query.OrderBy(q => q.LastName);
+                case "DateOfBirth":
+
+                    return query.OrderBy(q => q.DateOfBirth);
+                case "ShieldNo":
+
+                    return query.OrderBy(q => q.ShieldNo);
+                case "Gender":
+
+                    return query.OrderBy(q => q.Gender);
+                default : return query.OrderBy(q => q.FirstName);
+            }
+        }
+
+        private IQueryable<PersonalDetail> PersonalDetailOrderByDESC(IQueryable<PersonalDetail> query, string orderColumn)
+        {
+            switch (orderColumn)
+            {
+                case "MilitaryNo":
+                    return query.OrderByDescending(q => q.MilitaryNo);
+                case "SoldierRank":
+                    return query.OrderByDescending(q => q.SoldierRank);
+                case "FirstName":
+
+                    return query.OrderByDescending(q => q.FirstName);
+                case "MiddleName":
+
+                    return query.OrderByDescending(q => q.MiddleName);
+                case "LastName":
+
+                    return query.OrderByDescending(q => q.LastName);
+                case "DateOfBirth":
+
+                    return query.OrderByDescending(q => q.DateOfBirth);
+                case "ShieldNo":
+
+                    return query.OrderByDescending(q => q.ShieldNo);
+                case "Gender":
+
+                    return query.OrderByDescending(q => q.Gender);
+                default: return query.OrderByDescending(q => q.FirstName);
+            }
+        }
+
         private async Task<PersonalDetail> PersonalDetailIncludeAll(PersonalDetail personalDetail, string id)
         {
             personalDetail.Children = await _context.Children.Where(x => x.MilitaryNo == id).ToListAsync();
@@ -413,6 +472,11 @@ namespace HRISApplication.Areas.Controllers
 
             return personalDetail;
         }
+
+
+
+
+
 
         // A recursive function that searches for a property in an object and sets it to null
         public static void SetPropertyToNull(object obj, string propertyName)
