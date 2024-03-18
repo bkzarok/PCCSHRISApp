@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.ImprisonmentArea.Controllers
     public class ImprisonmentsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public ImprisonmentsController(SspdfContext context)
         {
@@ -59,9 +62,17 @@ namespace HRISApplication.Areas.ImprisonmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Imprisoned,Place,ForHowLong,Conviction,ExplainTheReason,MilitaryNo")] Imprisonment imprisonment)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Imprisonment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(imprisonment);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = imprisonment.MilitaryNo });
             }
@@ -98,10 +109,18 @@ namespace HRISApplication.Areas.ImprisonmentArea.Controllers
                 return NotFound();
             }
 
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Imprisonment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(imprisonment);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +164,17 @@ namespace HRISApplication.Areas.ImprisonmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Imprisonment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var imprisonment = await _context.Imprisonments.FindAsync(id);
             if (imprisonment != null)
             {
+                _context.Add(log);
                 _context.Imprisonments.Remove(imprisonment);
             }
 

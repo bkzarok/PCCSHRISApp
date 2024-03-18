@@ -10,6 +10,7 @@ namespace HRISApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SspdfContext _context;
+        
 
         public HomeController(ILogger<HomeController> logger, SspdfContext context)
         {
@@ -34,74 +35,51 @@ namespace HRISApplication.Controllers
                group s by s.Gender into g
                select new WordCount { Word = g.Key ? "Male" : "Female", Count = g.Count() };
 
+            var ethnicityCount =
+               from s in _context.PersonalDetails
+               group s by s.Ethnicity into g
+               select new WordCount { Word = g.Key, Count = g.Count() };
+
             var soldierBirthDayCount =
                from s in _context.PersonalDetails
-               group s by s.DateOfBirth into g
+               group s by s.DateOfBirth.Year-DateTime.Now.Year  into g
                select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
-
-
-            List<WordCount> newwordscount = new List<WordCount>();
-
-            DateTime dateTime1996 = DateTime.Parse("01-01-1996");
-            DateTime dateTime1990 = DateTime.Parse("01-01-1990");
-
-            var date19961990 = new WordCount
-            {
-                Word = "1996-1990",
-                Count = 0
-            };
-
-            DateTime dateTime2001 = DateTime.Parse("01-01-2001");
-            DateTime dateTime1997 = DateTime.Parse("01-01-1997");
-
-
-            var date20011997 = new WordCount
-            {
-                Word = "2001-1997",
-                Count = 0
-            };
-
-            DateTime dateTime2002 = DateTime.Parse("01-01-2002");
-            DateTime dateTime2005 = DateTime.Parse("01-01-2005");
-
-            var date20022005 = new WordCount
-            {
-                Word = "2002-2005",
-                Count = 0
-            };
-
-            foreach (var s in soldierBirthDayCount)
-            {
-                DateTime dateTime = DateTime.Parse(s.Word);
-                if (dateTime < dateTime2005 && dateTime > dateTime2002)
-                {
-                    date20022005.Count++;
-                }
-
-                if (dateTime < dateTime2001 && dateTime > dateTime1997)
-                {
-                    date20011997.Count++;
-                }
-                if (dateTime < dateTime1996)
-                {
-                    date19961990.Count++;
-                }
-            }
-
-            newwordscount.Add(date20022005);
-            newwordscount.Add(date20011997);
-            newwordscount.Add(date19961990);
-
-
-
+                                                   
             var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
-                IEnumerable<WordCount>, IEnumerable<WordCount>>(
+                IEnumerable<WordCount>, IEnumerable<WordCount>, IEnumerable<WordCount>>(
                 soldierRankCount.ToList(),
                 soldierBloodGroupCount.ToList(),
                 soldierGenderCount.ToList(),
-                newwordscount);
+                ethnicityCount.ToList(),
+                soldierBirthDayCount.ToList());
 
             return View(mycharts);
+        }
+
+        private  string CalculateAgeRange(DateTime dateOfBirth)
+        {
+            int age = DateTime.Now.Year - dateOfBirth.Year;
+            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                age--; // Adjust for leap years
+
+            if (age <= 15)
+                return "0-15";
+            else if (age >= 16 && age <= 18)
+                return "15-18";
+            else if (age >= 19 && age <= 21)
+                return "19-21";
+            else if (age >= 22 && age <= 25)
+                return "22-25";
+            else if (age >= 26 && age <= 35)
+                return "26-35";
+            else if (age >= 36 && age <= 45)
+                return "36-45";
+            else if (age >= 46 && age <= 55)
+                return "46-55";
+            else if (age >= 56 && age <= 69)
+                return "56-69";
+            else 
+                return "70 and Over";
         }
 
         public IActionResult Privacy()

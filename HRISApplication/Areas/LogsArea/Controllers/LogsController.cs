@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.LogsArea.Controllers
     public class LogsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public LogsController(SspdfContext context)
         {

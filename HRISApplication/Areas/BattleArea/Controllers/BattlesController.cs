@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.BattleArea.Controllers
     public class BattlesController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public BattlesController(SspdfContext context)
         {
@@ -60,9 +63,17 @@ namespace HRISApplication.Areas.BattleArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateOfBattle,PlaceOfBattle,InjurySustained,TypeOfInjury,MilitaryNo")] Battle battle)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Battle),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(battle);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = battle.MilitaryNo });
             }
@@ -94,6 +105,13 @@ namespace HRISApplication.Areas.BattleArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DateOfBattle,PlaceOfBattle,InjurySustained,TypeOfInjury,MilitaryNo")] Battle battle)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Battle),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (id != battle.Id)
             {
                 return NotFound();
@@ -103,6 +121,7 @@ namespace HRISApplication.Areas.BattleArea.Controllers
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(battle);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +164,17 @@ namespace HRISApplication.Areas.BattleArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Battle),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var battle = await _context.Battles.FindAsync(id);
             if (battle != null)
             {
+                _context.Add(log);
                 _context.Battles.Remove(battle);
             }
 

@@ -17,8 +17,6 @@
         </div>
        @*<p class="lead">the Permanent Command Council Secretariat a division of the South Sudan People Defence Forces located at Bilpham Juba South Sudan</p> *@
     </div>
-
-
 </div>
 
 <div class="float-end">
@@ -30,7 +28,14 @@
 
     <div class="col-md" style="margin-top:50px;">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePicture)"  alt="Card image cap">
+            @if (Model.ProfilePicture != null)
+            {
+                <img class="img-responsive img-round" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePicture)" style="max-height:200px; max-width: 200px;" />
+            }
+            else
+            {
+                <img class="img-responsive img-round" src="~/Images//defaultProfilePicture.jpg" style="max-height:200px; max-width: 200px;" />
+            }
             <div class="card-body">
                 <h5 class="card-title">Profile Picture</h5>
                 <p class="card-text">Official Profile Picture</p>

@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.TrainingArea.Controllers
     public class TrainingsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string EDITED_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "CREATED";
 
         public TrainingsController(SspdfContext context)
         {
@@ -60,6 +63,12 @@ namespace HRISApplication.Areas.TrainingArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TrainingType,TrainingCenter,Place,PeriodFrom,PeriodTo,MilitaryNo")] Training training)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Training),
+                CreatedOn = DateTime.UtcNow,
+            };
             if (ModelState.IsValid)
             {
                 _context.Add(training);
@@ -98,11 +107,18 @@ namespace HRISApplication.Areas.TrainingArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Training),
+                CreatedOn = DateTime.UtcNow,
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(training);
                     await _context.SaveChangesAsync();
                 }
@@ -146,9 +162,17 @@ namespace HRISApplication.Areas.TrainingArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Training),
+                CreatedOn = DateTime.UtcNow,
+            };
             var training = await _context.Training.FindAsync(id);
             if (training != null)
             {
+                _context.Add(log);
                 _context.Training.Remove(training);
             }
 

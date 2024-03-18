@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.EnrollmentArea.Controllers
     public class EnrollmentsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public EnrollmentsController(SspdfContext context)
         {
@@ -62,9 +65,17 @@ namespace HRISApplication.Areas.EnrollmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateOfEnrollment,PlaceOfEnrollment,ServiceOutsideSspdf,PeriodFrom,PeriodTo,MilitaryNo")] Enrollment enrollment)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Enrollment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(enrollment);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), "PersonalDetials", new { Area = "PersonalDetailsArea" });
             }
@@ -96,6 +107,13 @@ namespace HRISApplication.Areas.EnrollmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DateOfEnrollment,PlaceOfEnrollment,ServiceOutsideSspdf,PeriodFrom,PeriodTo,MilitaryNo")] Enrollment enrollment)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Enrollment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (id != enrollment.Id)
             {
                 return NotFound();
@@ -105,6 +123,7 @@ namespace HRISApplication.Areas.EnrollmentArea.Controllers
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(enrollment);
                     await _context.SaveChangesAsync();
                 }
@@ -148,9 +167,17 @@ namespace HRISApplication.Areas.EnrollmentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Enrollment),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var enrollment = await _context.Enrollments.FindAsync(id);
             if (enrollment != null)
             {
+                _context.Add(log);
                 _context.Enrollments.Remove(enrollment);
             }
 

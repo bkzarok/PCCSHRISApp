@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.PromotionArea.Controllers
     public class PromotionsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public PromotionsController(SspdfContext context)
         {
@@ -60,9 +63,17 @@ namespace HRISApplication.Areas.PromotionArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SoldierRank,DateOfPromotion,MilitaryNo")] Promotion promotion)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Promotion),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(promotion);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = promotion.MilitaryNo });
             }
@@ -99,10 +110,18 @@ namespace HRISApplication.Areas.PromotionArea.Controllers
                 return NotFound();
             }
 
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Promotion),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(promotion);
                     await _context.SaveChangesAsync();
                 }
@@ -147,9 +166,17 @@ namespace HRISApplication.Areas.PromotionArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Promotion),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var promotion = await _context.Promotions.FindAsync(id);
             if (promotion != null)
             {
+                _context.Add(log);
                 _context.Promotions.Remove(promotion);
             }
 

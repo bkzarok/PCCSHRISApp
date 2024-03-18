@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.ParentArea.Controllers
     public class ParentsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public ParentsController(SspdfContext context)
         {
@@ -59,9 +62,17 @@ namespace HRISApplication.Areas.ParentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Parent1,Name,Occupation,Dependency,HelpProvided,MilitaryNo")] Parent parent)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Parent),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(parent);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = parent.MilitaryNo });
             }
@@ -97,11 +108,18 @@ namespace HRISApplication.Areas.ParentArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Parent),
+                CreatedOn = DateTime.UtcNow,
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(parent);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +163,17 @@ namespace HRISApplication.Areas.ParentArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Parent),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var parent = await _context.Parents.FindAsync(id);
             if (parent != null)
             {
+                _context.Add(log);
                 _context.Parents.Remove(parent);
             }
 

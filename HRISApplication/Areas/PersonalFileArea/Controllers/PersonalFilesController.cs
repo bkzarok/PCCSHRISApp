@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.PersonalFileArea.Controllers
     public class PersonalFilesController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         private IWebHostEnvironment _env;
 
@@ -65,6 +68,13 @@ namespace HRISApplication.Areas.PersonalFileArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,FormFile, Location,CreateBy,CreatedOn,MilitaryNo")] PersonalFile personalFile)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(PersonalFile),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 string uploadsFolder = Path.Combine(_env.ContentRootPath, "Content\\Images");
@@ -85,6 +95,7 @@ namespace HRISApplication.Areas.PersonalFileArea.Controllers
                 personalFile.CreatedOn = DateTime.Now;
                 personalFile.CreateBy = User.Identity != null ? User.Identity.Name : "NoUser";
                 _context.Add(personalFile);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = personalFile.MilitaryNo });
             }
@@ -121,10 +132,18 @@ namespace HRISApplication.Areas.PersonalFileArea.Controllers
                 return NotFound();
             }
 
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(PersonalFile),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(personalFile);
                     await _context.SaveChangesAsync();
                 }
@@ -169,9 +188,17 @@ namespace HRISApplication.Areas.PersonalFileArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(PersonalFile),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var personalFile = await _context.PersonalFile.FindAsync(id);
             if (personalFile != null)
             {
+                _context.Add(log);
                 _context.PersonalFile.Remove(personalFile);
             }
 

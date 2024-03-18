@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.HealthConditionArea.Controllers
     public class HealthConditionsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public HealthConditionsController(SspdfContext context)
         {
@@ -59,9 +62,17 @@ namespace HRISApplication.Areas.HealthConditionArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("HaveAhealthCondition,IfYesExplain,DegreeOfHealthProblem,WhenStarted,MilitaryNo")] HealthCondition healthCondition)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Battle),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(healthCondition);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = healthCondition.MilitaryNo });
             }
@@ -97,11 +108,18 @@ namespace HRISApplication.Areas.HealthConditionArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(HealthCondition),
+                CreatedOn = DateTime.UtcNow,
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(healthCondition);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +163,17 @@ namespace HRISApplication.Areas.HealthConditionArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(HealthCondition),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var healthCondition = await _context.HealthConditions.FindAsync(id);
             if (healthCondition != null)
             {
+                _context.Add(log);
                 _context.HealthConditions.Remove(healthCondition);
             }
 

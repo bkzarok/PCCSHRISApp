@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HRISApplication.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using HRISApplication.Models.ChartModels;
 
@@ -22,7 +15,7 @@ namespace HRISApplication.Areas.Controllers
         private static readonly string CREATE_ACTION = "CREATED";
         private static readonly string DELETED_ACTION = "DELETED";
         private static readonly string EDITED_ACTION = "EDITED";
-
+        private readonly object soldierGenderCount;
         private IWebHostEnvironment _env;
         public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
         {
@@ -33,9 +26,61 @@ namespace HRISApplication.Areas.Controllers
 
         // GET: PersonalDetails
         public async Task<IActionResult> Index()
-        {            
-            return View(await _context.PersonalDetails.ToListAsync());
+        {
+            
+            //return View(await _context.PersonalDetails.ToListAsync());
+           return View(new List<PersonalDetail>());
         }
+
+        [HttpPost]
+        public JsonResult GetPersonalDetails()
+        {
+            int totalRecord = 0;
+            int filterRecord = 0;
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            int pageSize = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+            int skip = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+            var data = _context.Set<PersonalDetail>().AsQueryable();
+            //get total count of data in table
+            totalRecord = data.Count();
+            // search data when search value found
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                data = data.Where(x => x.FirstName.ToLower().Contains(searchValue.ToLower())
+                || x.MiddleName.ToLower().Contains(searchValue.ToLower()) ||
+                x.LastName.ToLower().Contains(searchValue.ToLower()) ||
+                x.SoldierRank.ToString().ToLower().Contains(searchValue.ToLower()));
+            }
+            // get total count of records after search
+            filterRecord = data.Count();
+            //sort data
+            if (!string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortColumnDirection))
+            {
+                if(sortColumnDirection.Equals("asc"))
+                    data = PersonalDetailOrderByASC(data, sortColumn);
+
+                data = PersonalDetailOrderByDESC(data, sortColumn);
+                
+            }
+                
+            //pagination
+            var empList = data.Skip(skip).Take(pageSize).ToList();
+            var returnObj = new
+            {
+                draw = draw,
+                recordsTotal = totalRecord,
+                recordsFiltered = filterRecord,
+                data = empList
+            };
+
+
+            return Json(returnObj);
+        }
+
+
 
         // GET: PersonalDetails/Details/5
         public async Task<IActionResult> Details(string id)
@@ -67,18 +112,32 @@ namespace HRISApplication.Areas.Controllers
                group s by s.BloodGroup into g
                select new WordCount { Word =g.Key, Count = g.Count() };
 
-            var soldierGenderCount =
+            var soldierEthnicityCount =
                from s in _context.PersonalDetails
                group s by s.Gender into g
                select new WordCount { Word = g.Key ? "Male":"Female", Count = g.Count() };
+
+            var ethnicitydCount =
+              from s in _context.PersonalDetails
+              group s by s.Ethnicity into g
+              select new WordCount { Word = g.Key, Count = g.Count() };
 
             var soldierBirthDayCount =
                from s in _context.PersonalDetails
                group s by s.DateOfBirth into g
                select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
 
-                
+            
             List<WordCount> newwordscount = new List<WordCount>();
+
+            DateTime dateTime1989 = DateTime.Parse("01-01-1989");
+            DateTime dateTime1984 = DateTime.Parse("01-01-1984");
+
+            var date19891984 = new WordCount
+            {
+                Word = "1989-1984",
+                Count = 0
+            };
 
             DateTime dateTime1996 = DateTime.Parse("01-01-1996");
             DateTime dateTime1990 = DateTime.Parse("01-01-1990");
@@ -123,19 +182,27 @@ namespace HRISApplication.Areas.Controllers
                 {
                     date19961990.Count++;
                 }
+                if (dateTime < dateTime1989 && dateTime > dateTime1984)
+                {
+                    date20011997.Count++;
+                }
+                if (dateTime < dateTime1996)
+                {
+                    date19891984.Count++;
+                }
             }
 
             newwordscount.Add(date20022005);
             newwordscount.Add(date20011997);
             newwordscount.Add(date19961990);
-            
-
+            newwordscount.Add(date19891984);
 
             var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
                 IEnumerable<WordCount>, IEnumerable<WordCount>>(
                 soldierRankCount.ToList(),
                 soldierBloodGroupCount.ToList(),
-                soldierGenderCount.ToList(),
+                //soldierGenderCount.ToList(),
+                soldierEthnicityCount.ToList(),
                 newwordscount);
 
             return View(mycharts);
@@ -186,7 +253,7 @@ namespace HRISApplication.Areas.Controllers
             }
             else
             {
-                var file = System.IO.File.ReadAllBytes("~/logo.png");
+                var file = System.IO.File.ReadAllBytes("/Images/defaultProfilePicture.jpg");
                 personalDetail.ProfilePicture = file.ToArray();
             }
 
@@ -225,9 +292,19 @@ namespace HRISApplication.Areas.Controllers
                 return NotFound();
             }
 
-            var sm = new MemoryStream(personalDetail.ProfilePicture);
-            personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-
+            if (personalDetail.ProfilePicture != null)
+            {
+                var sm = new MemoryStream(personalDetail.ProfilePicture);
+                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
+            }
+            else
+            {
+               
+                var file = System.IO.File.ReadAllBytes(_env.WebRootPath+"/Images/defaultProfilePicture.jpg");
+                personalDetail.ProfilePicture = file.ToArray();
+                var sm = new MemoryStream(personalDetail.ProfilePicture);
+                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
+            }
           //personalDetail.ProfilePicture;
             return View(personalDetail);
         }
@@ -324,6 +401,67 @@ namespace HRISApplication.Areas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+       private IQueryable<PersonalDetail> PersonalDetailOrderByASC(IQueryable<PersonalDetail> query, string orderColumn)
+        {
+            switch(orderColumn)
+            {
+                case "MilitaryNo":
+                    return query.OrderBy(q => q.MilitaryNo);
+                case "SoldierRank":
+                    return query.OrderBy(q => q.SoldierRank);
+                case "FirstName":
+
+                    return query.OrderBy(q => q.FirstName);
+                case "MiddleName":
+
+                    return query.OrderBy(q => q.MiddleName);
+                case "LastName":
+
+                    return query.OrderBy(q => q.LastName);
+                case "DateOfBirth":
+
+                    return query.OrderBy(q => q.DateOfBirth);
+                case "ShieldNo":
+
+                    return query.OrderBy(q => q.ShieldNo);
+                case "Gender":
+
+                    return query.OrderBy(q => q.Gender);
+                default : return query.OrderBy(q => q.FirstName);
+            }
+        }
+
+        private IQueryable<PersonalDetail> PersonalDetailOrderByDESC(IQueryable<PersonalDetail> query, string orderColumn)
+        {
+            switch (orderColumn)
+            {
+                case "MilitaryNo":
+                    return query.OrderByDescending(q => q.MilitaryNo);
+                case "SoldierRank":
+                    return query.OrderByDescending(q => q.SoldierRank);
+                case "FirstName":
+
+                    return query.OrderByDescending(q => q.FirstName);
+                case "MiddleName":
+
+                    return query.OrderByDescending(q => q.MiddleName);
+                case "LastName":
+
+                    return query.OrderByDescending(q => q.LastName);
+                case "DateOfBirth":
+
+                    return query.OrderByDescending(q => q.DateOfBirth);
+                case "ShieldNo":
+
+                    return query.OrderByDescending(q => q.ShieldNo);
+                case "Gender":
+
+                    return query.OrderByDescending(q => q.Gender);
+                default: return query.OrderByDescending(q => q.FirstName);
+            }
+        }
+
         private async Task<PersonalDetail> PersonalDetailIncludeAll(PersonalDetail personalDetail, string id)
         {
             personalDetail.Children = await _context.Children.Where(x => x.MilitaryNo == id).ToListAsync();
@@ -344,6 +482,11 @@ namespace HRISApplication.Areas.Controllers
 
             return personalDetail;
         }
+
+
+
+
+
 
         // A recursive function that searches for a property in an object and sets it to null
         public static void SetPropertyToNull(object obj, string propertyName)

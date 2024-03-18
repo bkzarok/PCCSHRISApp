@@ -13,6 +13,9 @@ namespace HRISApplication.Areas.SchoolArea.Controllers
     public class SchoolsController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public SchoolsController(SspdfContext context)
         {
@@ -59,9 +62,17 @@ namespace HRISApplication.Areas.SchoolArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SchoolLevel,Name,Place,PeriodFrom,PeriodTo,FieldOfTraining,CertificateAcquired,MilitaryNo")] School school)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(School),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(school);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = school.MilitaryNo });
             }
@@ -97,11 +108,18 @@ namespace HRISApplication.Areas.SchoolArea.Controllers
             {
                 return NotFound();
             }
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(School),
+                CreatedOn = DateTime.UtcNow,
+            };
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(school);
                     await _context.SaveChangesAsync();
                 }
@@ -145,9 +163,16 @@ namespace HRISApplication.Areas.SchoolArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(School),
+                CreatedOn = DateTime.UtcNow,
+            };
             var school = await _context.Schools.FindAsync(id);
             if (school != null)
             {
+                _context.Add(log);
                 _context.Schools.Remove(school);
             }
 

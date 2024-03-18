@@ -14,6 +14,9 @@ namespace HRISApplication.Areas.AddressArea.Controllers
     public class AddressesController : Controller
     {
         private readonly SspdfContext _context;
+        private static readonly string CREATE_ACTION = "CREATED";
+        private static readonly string DELETED_ACTION = "DELETED";
+        private static readonly string EDITED_ACTION = "EDITED";
 
         public AddressesController(SspdfContext context)
         {
@@ -67,11 +70,20 @@ namespace HRISApplication.Areas.AddressArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Country,State,Counuty,Payam,Boma,MilitaryNo")] Address address)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = CREATE_ACTION + " " + nameof(Address),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(address);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), "PersonalDetails", new { Area = "PersonalDetailsArea" });
+            
             }
             ViewData["MilitaryNo"] = address.MilitaryNo;
             return View(address);
@@ -105,11 +117,17 @@ namespace HRISApplication.Areas.AddressArea.Controllers
             {
                 return NotFound();
             }
-
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = EDITED_ACTION + " " + nameof(Address),
+                CreatedOn = DateTime.UtcNow,
+            };
             if (ModelState.IsValid)
             {
                 try
                 {
+                    _context.Add(log);
                     _context.Update(address);
                     await _context.SaveChangesAsync();
                 }
@@ -154,9 +172,17 @@ namespace HRISApplication.Areas.AddressArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var log = new Log
+            {
+                UserName = User.Identity != null ? User.Identity.Name : "NoUser",
+                Action = DELETED_ACTION + " " + nameof(Address),
+                CreatedOn = DateTime.UtcNow,
+            };
+
             var address = await _context.Addresses.FindAsync(id);
             if (address != null)
             {
+                _context.Add(log);
                 _context.Addresses.Remove(address);
             }
 

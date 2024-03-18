@@ -14,7 +14,7 @@ public partial class PersonalDetail
     public string MilitaryNo { get; set; } = null!;
 
     [ValidateNever]
-    public byte[] ProfilePicture { get; set; } = null!;
+    public byte[]? ProfilePicture { get; set; } = null!;
 
 
     [ValidateNever]
