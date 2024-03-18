@@ -1,4 +1,4 @@
-﻿@model Tuple<IEnumerable<WordCount>, IEnumerable<WordCount> , IEnumerable<WordCount> ,IEnumerable<WordCount> >;
+﻿@model Tuple<IEnumerable<WordCount>, IEnumerable<WordCount> , IEnumerable<WordCount> ,IEnumerable<WordCount>, IEnumerable<WordCount> >;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -88,8 +88,8 @@
         var rankcount = @Html.Raw(Json.Serialize(Model.Item1));
         var bloodGroupCount = @Html.Raw(Json.Serialize(Model.Item2));
         var genderCount = @Html.Raw(Json.Serialize(Model.Item3));
-        var ethnicityCount = @Html.Raw(Json.Serialize(Model.Item3));
-        var birthdayCount = @Html.Raw(Json.Serialize(Model.Item4));
+        var ethnicityCount = @Html.Raw(Json.Serialize(Model.Item4));
+        var birthdayCount = @Html.Raw(Json.Serialize(Model.Item5));
 
         console.log(JSON.stringify(rankcount));
 

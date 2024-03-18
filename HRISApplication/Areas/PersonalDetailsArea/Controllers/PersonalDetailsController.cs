@@ -253,7 +253,7 @@ namespace HRISApplication.Areas.Controllers
             }
             else
             {
-                var file = System.IO.File.ReadAllBytes("~/logo.png");
+                var file = System.IO.File.ReadAllBytes("/Images/defaultProfilePicture.jpg");
                 personalDetail.ProfilePicture = file.ToArray();
             }
 
@@ -292,9 +292,19 @@ namespace HRISApplication.Areas.Controllers
                 return NotFound();
             }
 
-            var sm = new MemoryStream(personalDetail.ProfilePicture);
-            personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-
+            if (personalDetail.ProfilePicture != null)
+            {
+                var sm = new MemoryStream(personalDetail.ProfilePicture);
+                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
+            }
+            else
+            {
+               
+                var file = System.IO.File.ReadAllBytes(_env.WebRootPath+"/Images/defaultProfilePicture.jpg");
+                personalDetail.ProfilePicture = file.ToArray();
+                var sm = new MemoryStream(personalDetail.ProfilePicture);
+                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
+            }
           //personalDetail.ProfilePicture;
             return View(personalDetail);
         }

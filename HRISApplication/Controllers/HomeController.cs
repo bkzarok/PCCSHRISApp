@@ -42,18 +42,9 @@ namespace HRISApplication.Controllers
 
             var soldierBirthDayCount =
                from s in _context.PersonalDetails
-               group s by s.DateOfBirth.Year-DateTime.Now.Year into g
+               group s by s.DateOfBirth.Year-DateTime.Now.Year  into g
                select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
-
-            var getbierdat = from s in _context.PersonalDetails
-                             select new
-                             {
-                                 s.DateOfBirth 
-
-                                 
-                             }.DateOfBirth ;
-
-           
+                                                   
             var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
                 IEnumerable<WordCount>, IEnumerable<WordCount>, IEnumerable<WordCount>>(
                 soldierRankCount.ToList(),
