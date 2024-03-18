@@ -98,114 +98,27 @@ namespace HRISApplication.Areas.Controllers
 
             return View(personalDetail);
         }
-
-        public async Task<IActionResult> PersonalCharts() {
-
-
-            var soldierRankCount =
-              from s in _context.PersonalDetails
-              group s by s.SoldierRank into g
-              select new WordCount { Word = g.Key, Count = g.Count() };
-
+        
+        //GET: PersonalDetails/RankChart
+        public async Task<IActionResult> BloodGroupChart()
+        {
             var soldierBloodGroupCount =
                from s in _context.PersonalDetails
                group s by s.BloodGroup into g
-               select new WordCount { Word =g.Key, Count = g.Count() };
+               select new WordCount { Word = g.Key, Count = g.Count() };
 
-            var soldierEthnicityCount =
+            return View(await soldierBloodGroupCount.ToListAsync());
+        }
+
+        //GET: PersonalDetails/RankChart
+        public async Task<IActionResult> RankChart()
+        {
+            var rankCount =
                from s in _context.PersonalDetails
-               group s by s.Gender into g
-               select new WordCount { Word = g.Key ? "Male":"Female", Count = g.Count() };
+               group s by s.SoldierRank into g
+               select new WordCount { Word = g.Key, Count = g.Count() };
 
-            var ethnicitydCount =
-              from s in _context.PersonalDetails
-              group s by s.Ethnicity into g
-              select new WordCount { Word = g.Key, Count = g.Count() };
-
-            var soldierBirthDayCount =
-               from s in _context.PersonalDetails
-               group s by s.DateOfBirth into g
-               select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
-
-            
-            List<WordCount> newwordscount = new List<WordCount>();
-
-            DateTime dateTime1989 = DateTime.Parse("01-01-1989");
-            DateTime dateTime1984 = DateTime.Parse("01-01-1984");
-
-            var date19891984 = new WordCount
-            {
-                Word = "1989-1984",
-                Count = 0
-            };
-
-            DateTime dateTime1996 = DateTime.Parse("01-01-1996");
-            DateTime dateTime1990 = DateTime.Parse("01-01-1990");
-
-            var date19961990 = new WordCount
-            {
-                Word = "1996-1990",
-                Count = 0
-            };
-
-            DateTime dateTime2001 = DateTime.Parse("01-01-2001");
-            DateTime dateTime1997 = DateTime.Parse("01-01-1997");
-
-
-            var date20011997= new WordCount
-            {
-                Word = "2001-1997",
-                Count = 0
-            };
-
-            DateTime dateTime2002 = DateTime.Parse("01-01-2002");
-            DateTime dateTime2005 = DateTime.Parse("01-01-2005");
-
-            var date20022005 = new WordCount {
-                Word = "2002-2005",
-                Count = 0
-            };
-
-            foreach (var s in soldierBirthDayCount)
-            {             
-                DateTime dateTime = DateTime.Parse(s.Word);
-                if (dateTime < dateTime2005 && dateTime > dateTime2002)
-                {
-                    date20022005.Count++;
-                }
-
-                if (dateTime < dateTime2001 && dateTime > dateTime1997)
-                {
-                    date20011997.Count++;
-                }
-                if (dateTime < dateTime1996 )
-                {
-                    date19961990.Count++;
-                }
-                if (dateTime < dateTime1989 && dateTime > dateTime1984)
-                {
-                    date20011997.Count++;
-                }
-                if (dateTime < dateTime1996)
-                {
-                    date19891984.Count++;
-                }
-            }
-
-            newwordscount.Add(date20022005);
-            newwordscount.Add(date20011997);
-            newwordscount.Add(date19961990);
-            newwordscount.Add(date19891984);
-
-            var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
-                IEnumerable<WordCount>, IEnumerable<WordCount>>(
-                soldierRankCount.ToList(),
-                soldierBloodGroupCount.ToList(),
-                //soldierGenderCount.ToList(),
-                soldierEthnicityCount.ToList(),
-                newwordscount);
-
-            return View(mycharts);
+            return View(await rankCount.ToListAsync());
         }
 
         // GET: PersonalDetails/Details/5
