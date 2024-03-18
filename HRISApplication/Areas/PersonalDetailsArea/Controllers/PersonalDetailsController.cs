@@ -253,7 +253,7 @@ namespace HRISApplication.Areas.Controllers
             }
             else
             {
-                var file = System.IO.File.ReadAllBytes("/Images/defaultProfilePicture.jpg");
+                var file = System.IO.File.ReadAllBytes(_env.WebRootPath + "/Images/defaultProfilePicture.jpg");
                 personalDetail.ProfilePicture = file.ToArray();
             }
 
