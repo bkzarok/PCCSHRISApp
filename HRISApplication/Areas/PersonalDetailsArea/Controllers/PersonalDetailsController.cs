@@ -228,10 +228,10 @@ namespace HRISApplication.Areas.Controllers
         [Authorize(Roles = "Admin")]  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
+        public async Task<IActionResult> Edit(string MilitaryNo, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
             "CreatedBy,CreatedOn, ModifiedBy, ModifiedOn")] PersonalDetail personalDetail)
         {
-            if (id != personalDetail.MilitaryNo)
+            if (MilitaryNo != personalDetail.MilitaryNo)
             {
                 return NotFound();
             }
@@ -291,9 +291,9 @@ namespace HRISApplication.Areas.Controllers
         // POST: PersonalDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string MilitaryNo)
         {
-            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == id);
+            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == MilitaryNo);
 
 
             var log = new Log
@@ -304,7 +304,7 @@ namespace HRISApplication.Areas.Controllers
             };
             if (personalDetail != null)
             {
-               personalDetail = await PersonalDetailIncludeAll(personalDetail, id);
+               personalDetail = await PersonalDetailIncludeAll(personalDetail, MilitaryNo);
                 _context.Add(log);
                 _context.PersonalDetails.Remove(personalDetail);
             }
