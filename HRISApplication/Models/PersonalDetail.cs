@@ -18,9 +18,9 @@ public partial class PersonalDetail
     public byte[]? ProfilePicture { get; set; } = null!;
 
 
-    [NotMapped]
-    [BindNever]
+    
     [ValidateNever]
+    [NotMapped]
     public IFormFile FormFile { get; set; } = null!;
 
     public string SoldierRank { get; set; } = null!;

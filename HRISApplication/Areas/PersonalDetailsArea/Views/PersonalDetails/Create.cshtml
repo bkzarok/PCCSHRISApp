@@ -108,17 +108,7 @@
         const form = document.getElementById('createPersonalDetail');
         form.addEventListener('submit', (event) => {
             // Prevent the default form submission
-            event.preventDefault();
-
-            // Custom validation logic
-            const fileInput = form.querySelector('input[type="file"]');
-            if (fileInput.files.length === 0) {
-
-                // Optionally, you can focus on the file input for user convenience:
-                fileInput.focus();
-                form.submit();
-                //return; // Prevent form submission
-            }
+            event.preventDefault();          
             form.submit();
             // If validation passes, you can submit the form:
 
