@@ -59,9 +59,9 @@
                     @* <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">@Html.DisplayNameFor(model => model.First().LastName)</a> *@
                     @Html.DisplayNameFor(model => model.First().LastName)
                 </th>
-                <th>
+               @*  <th>
                     @Html.DisplayNameFor(model => model.First().DateOfBirth)
-                </th>
+                </th> *@
                 <th>
                     @Html.DisplayNameFor(model => model.First().BloodGroup)
                 </th>
@@ -71,9 +71,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.First().ShieldNo)
                 </th>
-                <th>
+              @*   <th>
                     @Html.DisplayNameFor(model => model.First().Gender)
-                </th>
+                </th> *@
                @*  <th>
                     @Html.DisplayNameFor(model => model.First().MaritalStatus)
                 </th> *@
@@ -190,14 +190,14 @@
                     { data: "middleName", name: "MiddleName"},
                     { data: "lastName" , name: "LastName"},
 
-                    { data: "dateOfBirth", render: function (data, type, row, meta) {
-                        var date = new Date(data);
-                        return  date.toLocaleDateString('en-GB');
-                    },  name: "DateOfBirth"},
+                    // { data: "dateOfBirth", render: function (data, type, row, meta) {
+                    //     var date = new Date(data);
+                    //     return  date.toLocaleDateString('en-GB');
+                    // },  name: "DateOfBirth"},
 
 
                     { data: "bloodGroup" , name: "BloodGroup"},
-                    { data: "shieldNo" , name: "ShieldNo"},
+                    // { data: "shieldNo" , name: "ShieldNo"},
 
                     { data: "gender",  render: function (data, type, row, meta) {
                         return data ? 'Male' : 'Female';
@@ -253,7 +253,7 @@
                         footer: true,
                         exportOptions:
                         {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                            columns: [0, 1, 2, 3, 4, 5, 6]
                         }
                     },
                     'csv',

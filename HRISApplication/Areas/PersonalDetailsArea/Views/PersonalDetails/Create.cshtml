@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="Create" id="createPersonalDetail" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MilitaryNo" class="control-label"></label>
@@ -103,4 +103,25 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const form = document.getElementById('createPersonalDetail');
+        form.addEventListener('submit', (event) => {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Custom validation logic
+            const fileInput = form.querySelector('input[type="file"]');
+            if (fileInput.files.length === 0) {
+
+                // Optionally, you can focus on the file input for user convenience:
+                fileInput.focus();
+                form.submit();
+                //return; // Prevent form submission
+            }
+            form.submit();
+            // If validation passes, you can submit the form:
+
+        });
+    </script>
 }

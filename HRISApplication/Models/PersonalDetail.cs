@@ -1,5 +1,6 @@
 ﻿
 using HRISApplication.Areas.AddressArea.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using NuGet.Packaging.Core;
 using System;
@@ -17,9 +18,9 @@ public partial class PersonalDetail
     public byte[]? ProfilePicture { get; set; } = null!;
 
 
-    [ValidateNever]
     [NotMapped]
-    
+    [BindNever]
+    [ValidateNever]
     public IFormFile FormFile { get; set; } = null!;
 
     public string SoldierRank { get; set; } = null!;

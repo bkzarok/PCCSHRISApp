@@ -163,12 +163,7 @@ namespace HRISApplication.Areas.Controllers
                 var ms = new MemoryStream();
                 personalDetail.FormFile.CopyTo(ms);
                 personalDetail.ProfilePicture = ms.ToArray();
-            }
-            else
-            {
-                var file = System.IO.File.ReadAllBytes("/Images/defaultProfilePicture.jpg");
-                personalDetail.ProfilePicture = file.ToArray();
-            }
+            }            
 
             var log = new Log
             {
@@ -205,20 +200,7 @@ namespace HRISApplication.Areas.Controllers
                 return NotFound();
             }
 
-            if (personalDetail.ProfilePicture != null)
-            {
-                var sm = new MemoryStream(personalDetail.ProfilePicture);
-                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-            }
-            else
-            {
-               
-                var file = System.IO.File.ReadAllBytes(_env.WebRootPath+"/Images/defaultProfilePicture.jpg");
-                personalDetail.ProfilePicture = file.ToArray();
-                var sm = new MemoryStream(personalDetail.ProfilePicture);
-                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-            }
-          //personalDetail.ProfilePicture;
+   
             return View(personalDetail);
         }
 
@@ -231,10 +213,12 @@ namespace HRISApplication.Areas.Controllers
         public async Task<IActionResult> Edit(string MilitaryNo, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
             "CreatedBy,CreatedOn, ModifiedBy, ModifiedOn")] PersonalDetail personalDetail)
         {
+
             if (MilitaryNo != personalDetail.MilitaryNo)
             {
                 return NotFound();
             }
+
             var log = new Log
             {
                 UserName = User.Identity != null ? User.Identity.Name : "NoUser",
@@ -246,6 +230,15 @@ namespace HRISApplication.Areas.Controllers
             {
                 personalDetail.ModifiedBy = User.Identity != null ? User.Identity.Name : "NoUser"; 
                 personalDetail.ModifiedOn = DateTime.UtcNow;
+
+                //Assign the profilepicture to a byte array
+                if (personalDetail.FormFile != null)
+                {
+                    var ms = new MemoryStream();
+                    personalDetail.FormFile.CopyTo(ms);
+                    personalDetail.ProfilePicture = ms.ToArray();
+                }               
+
                 try
                 {
                     _context.Add(log);
@@ -294,7 +287,6 @@ namespace HRISApplication.Areas.Controllers
         public async Task<IActionResult> DeleteConfirmed(string MilitaryNo)
         {
             var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == MilitaryNo);
-
 
             var log = new Log
             {

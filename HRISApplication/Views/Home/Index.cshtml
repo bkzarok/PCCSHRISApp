@@ -30,7 +30,7 @@
     <div class="row">
 
         <div class="col-md" style="margin-top:50px">
-            <div class="card">
+            <div class="card" style="width:30rem;" >
                 <div class="card-header">
                     <h4>Rank Count</h4>
                 </div>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="col-md" style="margin-top:50px">
-            <div class="card">
+            <div class="card" style="width:30rem;">
                 <div class="card-header">
                     <h4>BloodGroup Count</h4>
                 </div>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-md" style="margin-top:50px">
-            <div class="card">
+            <div class="card" style="width:30rem;">
                 <div class="card-header">
                     <h4>Gender Count</h4>
                 </div>
@@ -58,17 +58,17 @@
         </div>
 
         <div class="col-md" style="margin-top:50px">
-            <div class="card">
+            <div class="card" style="width:30rem;">
                 <div class="card-header">
                     <h4>Ethnicity Count</h4>
                 </div>
-                <canvas id="ethnicityBarChart"></canvas>
+                <canvas id="ethnicityChart"></canvas>
 
             </div>
         </div>
 
         <div class="col-md" style="margin-top:50px">
-            <div class="card">
+            <div class="card" style="width:30rem;">
                 <div class="card-header">
                     <h4>BirthDay Count</h4>
                 </div>
@@ -281,6 +281,8 @@
         const bloodGroupBarChart = document.getElementById('bloodGroupBarChart');
         const genderDoughnutChart = document.getElementById('genderDoughnutChart');
         const birthdayLineChart = document.getElementById('birthdayLineChart');
+        const ethinicityChart = document.getElementById('ethnicityChart');
+
 
         new Chart(rankBarChart, {
             type: 'doughnut',
@@ -321,6 +323,18 @@
         new Chart(birthdayLineChart, {
             type: 'bar',
             data: birthdayData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ethinicityChart, {
+            type: 'doughnut',
+            data: ethnicityData,
             options: {
                 scales: {
                     y: {

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form asp-action="Edit" id="editPersonalDetail"enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MilitaryNo" />
 
@@ -29,7 +29,6 @@
 
             <input asp-for="ProfilePicture" type="hidden" />
 
-            <input  type="radio"/>
 
             <div class="form-group">
                 <label asp-for="FormFile" class="control-label"></label>
@@ -79,9 +78,13 @@
                 <span asp-validation-for="ShieldNo" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Gender" /> @Html.DisplayNameFor(model => model.Gender)
-                </label>
+
+               
+                @Html.DisplayNameFor(model => model.Gender)
+
+                @Html.RadioButtonFor(model => model.Gender, true, false)@Html.Label("Male")
+                @Html.RadioButtonFor(model => model.Gender, false, false)@Html.Label("Female")
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaritalStatus" class="control-label"></label>
@@ -107,4 +110,28 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        const form = document.getElementById('editPersonalDetail');
+        form.addEventListener('submit', (event) => {
+            // Prevent the default form submission
+            event.preventDefault();
+            console.log("WE are here");
+
+            // Custom validation logic
+            const fileInput = form.querySelector('input[type="file"]');
+            if (fileInput.files.length === 0) {
+                
+                // Optionally, you can focus on the file input for user convenience:
+                fileInput.focus();
+                form.submit();
+                //return; // Prevent form submission
+            }
+            form.submit();
+            // If validation passes, you can submit the form:
+            
+        });
+    </script>
+  
+
 }
