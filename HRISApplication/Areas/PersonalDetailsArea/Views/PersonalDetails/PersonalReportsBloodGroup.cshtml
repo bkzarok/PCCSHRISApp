@@ -1,0 +1,85 @@
+﻿@model IEnumerable<HRISApplication.Models.ChartModels.WordWordCount>
+
+@{
+    ViewData["Title"] = "Index";
+    var highIndex = Model.FirstOrDefault().WordCount.Count;
+    var index = 0;
+}
+
+<table class="table" id="reportsTable">
+    <thead>
+        <tr>
+            <th>
+                No.
+            </th>
+
+            @foreach (var item in Model.FirstOrDefault().WordCount)
+            {
+                <th>
+                    @item.Word
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var wordwordcount in Model)
+        {
+            <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => wordwordcount.Word)
+                    </td>
+                @foreach (var wordcount in wordwordcount.WordCount)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => wordcount.Count)
+                    </td>
+                    index++;
+                }          
+                
+                @while (highIndex < index)
+                {
+                    highIndex++;
+                    <td>
+                       
+                    </td>                    
+                }
+                @index = 0;
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function (){
+
+            var table = $('#reportsTable').DataTable({
+                dom: "lBftrip",
+                lengthChange: true,
+                buttons: [
+                    'copy',
+                    'excel',
+                    {
+                        extend: 'pdfHtml5',
+                        pageSize: 'TABLOID',
+                        footer: true,
+                       
+                    },
+                    'csv',
+                    'colvis',
+                ],
+            
+            });
+
+            table.buttons().container()
+                .appendTo('#reportsTable_wrapper .col-md-4:eq(0)');
+
+        });
+
+    </script>
+}

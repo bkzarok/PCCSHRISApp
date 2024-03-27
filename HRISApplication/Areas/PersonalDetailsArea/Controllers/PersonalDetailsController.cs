@@ -4,6 +4,7 @@ using HRISApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Reflection;
 using HRISApplication.Models.ChartModels;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace HRISApplication.Areas.Controllers
 {
@@ -17,17 +18,16 @@ namespace HRISApplication.Areas.Controllers
         private static readonly string EDITED_ACTION = "EDITED";
         private readonly object soldierGenderCount;
         private IWebHostEnvironment _env;
+
         public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
         {
             _context = context;
-            _env = env;
-            
+            _env = env;            
         }
 
         // GET: PersonalDetails
         public async Task<IActionResult> Index()
-        {
-            
+        {            
             //return View(await _context.PersonalDetails.ToListAsync());
            return View(new List<PersonalDetail>());
         }
@@ -62,8 +62,7 @@ namespace HRISApplication.Areas.Controllers
                 if(sortColumnDirection.Equals("asc"))
                     data = PersonalDetailOrderByASC(data, sortColumn);
 
-                data = PersonalDetailOrderByDESC(data, sortColumn);
-                
+                data = PersonalDetailOrderByDESC(data, sortColumn);                
             }
                 
             //pagination
@@ -75,12 +74,8 @@ namespace HRISApplication.Areas.Controllers
                 recordsFiltered = filterRecord,
                 data = empList
             };
-
-
             return Json(returnObj);
         }
-
-
 
         // GET: PersonalDetails/Details/5
         public async Task<IActionResult> Details(string id)
@@ -108,6 +103,51 @@ namespace HRISApplication.Areas.Controllers
                select new WordCount { Word = g.Key, Count = g.Count() };
 
             return View(await soldierBloodGroupCount.ToListAsync());
+        }
+
+        //GET: PersonalDetails/PersonalReportsRank
+        public async Task<IActionResult> PersonalReportsRank()
+        {
+            var assignments = _context.Assignments.Include(m => m.MilitaryNoNavigation).ToList();
+
+
+            var unitMiliNo = from s in assignments
+                             group s by s.Unit into unitG
+                             select new WordWordCount {
+                                 Word = unitG.First().Unit,
+                                 WordCount = unitG.GroupBy(x => x.MilitaryNoNavigation.SoldierRank)
+                                 .Select(g => new
+                                 WordCount
+                                 {
+                                     Word = g.Key,
+                                     Count = g.Count()
+                                 }).OrderBy(x => x.Word).ToList()
+                             };
+           
+            return View(unitMiliNo);
+        }
+
+        //GET: PersonalDetails/PersonalReportsRank
+        public async Task<IActionResult> PersonalReportsBloodGroup()
+        {
+          var assignments = _context.Assignments.Include(m => m.MilitaryNoNavigation).ToList();
+
+
+            var unitMiliNo = from s in assignments
+                             group s by s.Unit into unitG
+                             select new WordWordCount
+                             {
+                                 Word = unitG.First().Unit,
+                                 WordCount = unitG.GroupBy(x => x.MilitaryNoNavigation.BloodGroup)
+                                 .Select(g => new
+                                 WordCount
+                                 {
+                                     Word = g.Key,
+                                     Count = g.Count()
+                                 }).OrderBy(x => x.Word).ToList()
+                             };
+
+            return View(unitMiliNo);
         }
 
         //GET: PersonalDetails/RankChart
@@ -155,8 +195,6 @@ namespace HRISApplication.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MilitaryNo,SoldierRank,FormFile,ProfilePicture,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus")] PersonalDetail personalDetail)
         {
-
-
             //Assign the profilepicture to a byte array
             if (personalDetail.FormFile != null)
             {
