@@ -4,6 +4,7 @@ using HRISApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Reflection;
 using HRISApplication.Models.ChartModels;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace HRISApplication.Areas.Controllers
 {
@@ -17,17 +18,16 @@ namespace HRISApplication.Areas.Controllers
         private static readonly string EDITED_ACTION = "EDITED";
         private readonly object soldierGenderCount;
         private IWebHostEnvironment _env;
+
         public PersonalDetailsController(SspdfContext context, IWebHostEnvironment env)
         {
             _context = context;
-            _env = env;
-            
+            _env = env;            
         }
 
         // GET: PersonalDetails
         public async Task<IActionResult> Index()
-        {
-            
+        {            
             //return View(await _context.PersonalDetails.ToListAsync());
            return View(new List<PersonalDetail>());
         }
@@ -62,8 +62,7 @@ namespace HRISApplication.Areas.Controllers
                 if(sortColumnDirection.Equals("asc"))
                     data = PersonalDetailOrderByASC(data, sortColumn);
 
-                data = PersonalDetailOrderByDESC(data, sortColumn);
-                
+                data = PersonalDetailOrderByDESC(data, sortColumn);                
             }
                 
             //pagination
@@ -75,12 +74,8 @@ namespace HRISApplication.Areas.Controllers
                 recordsFiltered = filterRecord,
                 data = empList
             };
-
-
             return Json(returnObj);
         }
-
-
 
         // GET: PersonalDetails/Details/5
         public async Task<IActionResult> Details(string id)
@@ -98,114 +93,72 @@ namespace HRISApplication.Areas.Controllers
 
             return View(personalDetail);
         }
-
-        public async Task<IActionResult> PersonalCharts() {
-
-
-            var soldierRankCount =
-              from s in _context.PersonalDetails
-              group s by s.SoldierRank into g
-              select new WordCount { Word = g.Key, Count = g.Count() };
-
+        
+        //GET: PersonalDetails/RankChart
+        public async Task<IActionResult> BloodGroupChart()
+        {
             var soldierBloodGroupCount =
                from s in _context.PersonalDetails
                group s by s.BloodGroup into g
-               select new WordCount { Word =g.Key, Count = g.Count() };
+               select new WordCount { Word = g.Key, Count = g.Count() };
 
-            var soldierEthnicityCount =
+            return View(await soldierBloodGroupCount.ToListAsync());
+        }
+
+        //GET: PersonalDetails/PersonalReportsRank
+        public async Task<IActionResult> PersonalReportsRank()
+        {
+            var assignments = _context.Assignments.Include(m => m.MilitaryNoNavigation).ToList();
+
+
+            var unitMiliNo = from s in assignments
+                             group s by s.Unit into unitG
+                             select new WordWordCount {
+                                 Word = unitG.First().Unit,
+                                 WordCount = unitG.GroupBy(x => x.MilitaryNoNavigation.SoldierRank)
+                                 .Select(g => new
+                                 WordCount
+                                 {
+                                     Word = g.Key,
+                                     Count = g.Count()
+                                 }).OrderBy(x => x.Word).ToList()
+                             };
+           
+            return View(unitMiliNo);
+        }
+
+        //GET: PersonalDetails/PersonalReportsRank
+        public async Task<IActionResult> PersonalReportsBloodGroup()
+        {
+          var assignments = _context.Assignments.Include(m => m.MilitaryNoNavigation).ToList();
+
+
+            var unitMiliNo = from s in assignments
+                             group s by s.Unit into unitG
+                             select new WordWordCount
+                             {
+                                 Word = unitG.First().Unit,
+                                 WordCount = unitG.GroupBy(x => x.MilitaryNoNavigation.BloodGroup)
+                                 .Select(g => new
+                                 WordCount
+                                 {
+                                     Word = g.Key,
+                                     Count = g.Count()
+                                 }).OrderBy(x => x.Word).ToList()
+                             };
+
+            return View(unitMiliNo);
+        }
+
+        //GET: PersonalDetails/RankChart
+        public async Task<IActionResult> RankChart()
+        {
+            var rankCount =
                from s in _context.PersonalDetails
-               group s by s.Gender into g
-               select new WordCount { Word = g.Key ? "Male":"Female", Count = g.Count() };
+               group s by s.SoldierRank into g
+               select new WordCount { Word = g.Key, Count = g.Count() };
 
-            var ethnicitydCount =
-              from s in _context.PersonalDetails
-              group s by s.Ethnicity into g
-              select new WordCount { Word = g.Key, Count = g.Count() };
-
-            var soldierBirthDayCount =
-               from s in _context.PersonalDetails
-               group s by s.DateOfBirth into g
-               select new WordCount { Word = g.Key.ToString(), Count = g.Count() };
-
-            
-            List<WordCount> newwordscount = new List<WordCount>();
-
-            DateTime dateTime1989 = DateTime.Parse("01-01-1989");
-            DateTime dateTime1984 = DateTime.Parse("01-01-1984");
-
-            var date19891984 = new WordCount
-            {
-                Word = "1989-1984",
-                Count = 0
-            };
-
-            DateTime dateTime1996 = DateTime.Parse("01-01-1996");
-            DateTime dateTime1990 = DateTime.Parse("01-01-1990");
-
-            var date19961990 = new WordCount
-            {
-                Word = "1996-1990",
-                Count = 0
-            };
-
-            DateTime dateTime2001 = DateTime.Parse("01-01-2001");
-            DateTime dateTime1997 = DateTime.Parse("01-01-1997");
-
-
-            var date20011997= new WordCount
-            {
-                Word = "2001-1997",
-                Count = 0
-            };
-
-            DateTime dateTime2002 = DateTime.Parse("01-01-2002");
-            DateTime dateTime2005 = DateTime.Parse("01-01-2005");
-
-            var date20022005 = new WordCount {
-                Word = "2002-2005",
-                Count = 0
-            };
-
-            foreach (var s in soldierBirthDayCount)
-            {             
-                DateTime dateTime = DateTime.Parse(s.Word);
-                if (dateTime < dateTime2005 && dateTime > dateTime2002)
-                {
-                    date20022005.Count++;
-                }
-
-                if (dateTime < dateTime2001 && dateTime > dateTime1997)
-                {
-                    date20011997.Count++;
-                }
-                if (dateTime < dateTime1996 )
-                {
-                    date19961990.Count++;
-                }
-                if (dateTime < dateTime1989 && dateTime > dateTime1984)
-                {
-                    date20011997.Count++;
-                }
-                if (dateTime < dateTime1996)
-                {
-                    date19891984.Count++;
-                }
-            }
-
-            newwordscount.Add(date20022005);
-            newwordscount.Add(date20011997);
-            newwordscount.Add(date19961990);
-            newwordscount.Add(date19891984);
-
-            var mycharts = new Tuple<IEnumerable<WordCount>, IEnumerable<WordCount>,
-                IEnumerable<WordCount>, IEnumerable<WordCount>>(
-                soldierRankCount.ToList(),
-                soldierBloodGroupCount.ToList(),
-                //soldierGenderCount.ToList(),
-                soldierEthnicityCount.ToList(),
-                newwordscount);
-
-            return View(mycharts);
+            return View(await rankCount.ToListAsync());
         }
 
         // GET: PersonalDetails/Details/5
@@ -242,20 +195,13 @@ namespace HRISApplication.Areas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MilitaryNo,SoldierRank,FormFile,ProfilePicture,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus")] PersonalDetail personalDetail)
         {
-
-
             //Assign the profilepicture to a byte array
             if (personalDetail.FormFile != null)
             {
                 var ms = new MemoryStream();
                 personalDetail.FormFile.CopyTo(ms);
                 personalDetail.ProfilePicture = ms.ToArray();
-            }
-            else
-            {
-                var file = System.IO.File.ReadAllBytes(_env.WebRootPath + "/Images/defaultProfilePicture.jpg");
-                personalDetail.ProfilePicture = file.ToArray();
-            }
+            }            
 
             var log = new Log
             {
@@ -292,20 +238,7 @@ namespace HRISApplication.Areas.Controllers
                 return NotFound();
             }
 
-            if (personalDetail.ProfilePicture != null)
-            {
-                var sm = new MemoryStream(personalDetail.ProfilePicture);
-                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-            }
-            else
-            {
-               
-                var file = System.IO.File.ReadAllBytes(_env.WebRootPath+"/Images/defaultProfilePicture.jpg");
-                personalDetail.ProfilePicture = file.ToArray();
-                var sm = new MemoryStream(personalDetail.ProfilePicture);
-                personalDetail.FormFile = new FormFile(sm, 0, personalDetail.ProfilePicture.Length, "FormFile", "TempFileName");
-            }
-          //personalDetail.ProfilePicture;
+   
             return View(personalDetail);
         }
 
@@ -315,13 +248,15 @@ namespace HRISApplication.Areas.Controllers
         [Authorize(Roles = "Admin")]  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
+        public async Task<IActionResult> Edit(string MilitaryNo, [Bind("MilitaryNo,SoldierRank,ProfilePicture,FormFile,FirstName,MiddleName,LastName,DateOfBirth,BloodGroup,Ethnicity,ShieldNo,Gender,MaritalStatus," +
             "CreatedBy,CreatedOn, ModifiedBy, ModifiedOn")] PersonalDetail personalDetail)
         {
-            if (id != personalDetail.MilitaryNo)
+
+            if (MilitaryNo != personalDetail.MilitaryNo)
             {
                 return NotFound();
             }
+
             var log = new Log
             {
                 UserName = User.Identity != null ? User.Identity.Name : "NoUser",
@@ -333,6 +268,15 @@ namespace HRISApplication.Areas.Controllers
             {
                 personalDetail.ModifiedBy = User.Identity != null ? User.Identity.Name : "NoUser"; 
                 personalDetail.ModifiedOn = DateTime.UtcNow;
+
+                //Assign the profilepicture to a byte array
+                if (personalDetail.FormFile != null)
+                {
+                    var ms = new MemoryStream();
+                    personalDetail.FormFile.CopyTo(ms);
+                    personalDetail.ProfilePicture = ms.ToArray();
+                }               
+
                 try
                 {
                     _context.Add(log);
@@ -378,10 +322,9 @@ namespace HRISApplication.Areas.Controllers
         // POST: PersonalDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string MilitaryNo)
         {
-            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == id);
-
+            var personalDetail = await _context.PersonalDetails.FirstOrDefaultAsync(x => x.MilitaryNo == MilitaryNo);
 
             var log = new Log
             {
@@ -391,7 +334,7 @@ namespace HRISApplication.Areas.Controllers
             };
             if (personalDetail != null)
             {
-               personalDetail = await PersonalDetailIncludeAll(personalDetail, id);
+               personalDetail = await PersonalDetailIncludeAll(personalDetail, MilitaryNo);
                 _context.Add(log);
                 _context.PersonalDetails.Remove(personalDetail);
             }

@@ -46,10 +46,16 @@
 
                            </div>
                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" aria-haspopup="true">Reports</a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link text-dark" asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="PersonalReportsRank">Rank Reports</a>
+                                <a class="nav-link text-dark" asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="PersonalReportsBloodGroup">BloodGroup Reports</a>
+                                <a class="nav-link text-dark" asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="PersonalReportsRank">Reports</a>
+                                <a class="nav-link text-dark" asp-area="PersonalDetailsArea" asp-controller="PersonalDetails" asp-action="PersonalReportsRank">Reports</a>
+                            </div>
                         </li>
+                      
 
 
                     </ul>
