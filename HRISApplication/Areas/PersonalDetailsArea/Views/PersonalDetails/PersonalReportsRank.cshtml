@@ -9,84 +9,93 @@
     Dictionary<string, int> rowTotal = new Dictionary<string, int>();
 }
 
-<table class="table">
 
 
-    <thead>
-        <tr>
-           
-            <th>
-            </th>
-            @foreach (var item in Model.FirstOrDefault().WordCount)
-            {
-                <th>
-                    @item.Word
 
-                </th>
-            }
-           
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var wordwordcount in Model)
-        {
+@if(Model.Count() != 0 )
+{
+    <table class="table">
+        <thead>
             <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => wordwordcount.Word)
-                </td>
-                @foreach(var wordcount in wordwordcount.WordCount)
+                <th>
+                </th>
+                @foreach (var item in Model.FirstOrDefault().WordCount)
                 {
-                    addcolums += wordcount.Count;
-                    <td>
-                        @Html.DisplayFor(modelItem => wordcount.Count)
-                    </td>
+                    <th>
+                        @item.Word
 
-
-                    int value =0;
-                    @if (rowTotal.TryGetValue(wordcount.Word,out value))
-                    {
-                        value += wordcount.Count;
-
-                        rowTotal[wordcount.Word] = value;
-                    }
-                    else
-                    {
-                        rowTotal.Add(wordcount.Word, wordcount.Count);
-                    }                  
+                    </th>
                 }
-                
-               @*  <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-gear"></i></a> |
-                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info text-black"></i></a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
-                </td> *@
-                <td>
-                   @addcolums
 
-                </td>
+                <th>Total</th>
             </tr>
-            addcolums = 0;
-        }
-
-        <tr>
-            <td>Total</td>
-            @{
-                rowTotal.OrderBy(x => x.Key);
-                var totatOfTotal = 0;
-            }
-            @foreach(var item in rowTotal)
+        </thead>
+        <tbody>
+            @foreach (var wordwordcount in Model)
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                totatOfTotal += item.Value;
-            }
-            <td>
-                @totatOfTotal
-            </td>
+                <tr>
 
-        </tr>
-    </tbody>
-</table>
+                    <td>
+                        @Html.DisplayFor(modelItem => wordwordcount.Word)
+                    </td>
+                    @foreach (var wordcount in wordwordcount.WordCount)
+                    {
+                        addcolums += wordcount.Count;
+                        <td>
+                            @Html.DisplayFor(modelItem => wordcount.Count)
+                        </td>
+
+
+                        int value = 0;
+                        @if (rowTotal.TryGetValue(wordcount.Word, out value))
+                        {
+                            value += wordcount.Count;
+
+                            rowTotal[wordcount.Word] = value;
+                        }
+                        else
+                        {
+                            rowTotal.Add(wordcount.Word, wordcount.Count);
+                        }
+                    }
+
+                    @*  <td>
+            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-gear"></i></a> |
+            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info text-black"></i></a> |
+            <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+            </td> *@
+                    <td>
+                        @addcolums
+
+                    </td>
+                </tr>
+                addcolums = 0;
+            }
+
+            <tr>
+                <td>Total</td>
+                @{
+                    rowTotal.OrderBy(x => x.Key);
+                    var totatOfTotal = 0;
+                }
+                @foreach (var item in rowTotal)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    totatOfTotal += item.Value;
+                }
+                <td>
+                    @totatOfTotal
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>The Model is empty</h2>
+}
+

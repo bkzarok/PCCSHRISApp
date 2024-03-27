@@ -163,7 +163,7 @@ INSERT INTO [Assignment] (Unit,PeriodFrom,PeriodTo,PositionHeld,MilitaryNo)
 VALUES
   ('Division1','Jul 8, 1982','Apr 7, 2015','Manager','A76571'),
   ('Division2','Aug 31, 1971','May 5, 2008','Assistant','A64955'),
-  ('Division2','May 17, 1998','Feb 8, 2011','Officer','A83682'),~
+  ('Division2','May 17, 1998','Feb 8, 2011','Officer','A83682'),
   ('Division4','Oct 9, 1989','Mar 10, 2019','Manager','A75785'),
   ('Division2','May 8, 1981','Nov 8, 2010','Medical','A49222'),
   ('Division4','Aug 18, 1993','Feb 24, 2021','Lawyer','A04280'),
